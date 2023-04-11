@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "102007304767",
+    "project_id": "flutter-course-fcc",
+    "storage_bucket": "flutter-course-fcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102007304767:android:060580bb90939af840fe8a",
+        "android_client_info": {
+          "package_name": "com.baalho.okaychata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "102007304767-51vrha2f0muqp7r7jo2fqd2en1hm6m5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbhKdL55orppgjP-3tqbu6yQQXFcinCQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "102007304767-51vrha2f0muqp7r7jo2fqd2en1hm6m5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
