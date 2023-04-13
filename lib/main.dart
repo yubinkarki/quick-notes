@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import "package:firebase_auth/firebase_auth.dart";
+import 'package:okaychata/firebase_options.dart';
+import 'package:okaychata/views/login_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MaterialApp(
       title: 'Nice',
@@ -9,19 +14,19 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const HomePage(),
+      home: const RegisterView(),
     ),
   );
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -47,42 +52,68 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Register"),
       ),
-      body: Container(
-        color: Colors.teal[50],
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              TextField(
-                controller: _email,
-                decoration: const InputDecoration(
-                  hintText: "Enter your email",
-                ),
-              ),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  hintText: "Enter your password",
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  final email = _email.text;
-                  final password = _password.text;
-
-                  final response =
-                      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-
-                  print("Login response: $response");
-                },
-                child: const Text("Register"),
-              ),
-            ],
-          ),
+      body: FutureBuilder(
+        future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
         ),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return Container(
+                color: Colors.teal[50],
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _email,
+                        keyboardType: TextInputType.emailAddress,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                          hintText: "Enter your email",
+                        ),
+                      ),
+                      TextField(
+                        controller: _password,
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                          hintText: "Enter your password",
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          final email = _email.text;
+                          final password = _password.text;
+
+                          try {
+                            final response = await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(email: email, password: password);
+
+                            print("Register response: $response");
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == "weak-password") {
+                              print("Password is too weak.");
+                            } else if (e.code == "email-already-in-use") {
+                              print("This email is already in use.");
+                            } else {
+                              print("Something else happened, $e");
+                            }
+                          }
+                        },
+                        child: const Text("Register"),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+
+            default:
+              return const Text("Loading");
+          }
+        },
       ),
     );
   }
