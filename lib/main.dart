@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:okaychata/firebase_options.dart';
 import 'package:okaychata/views/login_view.dart';
+import 'package:okaychata/views/register_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,10 @@ void main() {
         primarySwatch: Colors.teal,
       ),
       home: const HomePage(),
+      routes: {
+        "/login/": (context) => const LoginView(),
+        "/register/": (context) => const RegisterView(),
+      },
     ),
   );
 }
@@ -25,43 +30,38 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            final user = FirebaseAuth.instance.currentUser;
 
-              if (user?.emailVerified ?? false) {
-                return Container(
-                  color: Colors.green[100],
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Email is verified",
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ],
+            if (user?.emailVerified ?? false) {
+              return const LoginView();
+            } else {
+              return const VerifyEmailView();
+            }
+
+          default:
+            return Container(
+              color: Colors.teal[50],
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Loading...",
+                    style: TextStyle(fontSize: 35),
                   ),
-                );
-              } else {
-                return const VerifyEmailView();
-              }
-
-            default:
-              return const Text("Loading...");
-          }
-        },
-      ),
+                ],
+              ),
+            );
+        }
+      },
     );
   }
 }
@@ -76,23 +76,28 @@ class VerifyEmailView extends StatefulWidget {
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text("Please verify your email."),
-        Container(
-          margin: const EdgeInsets.only(top: 10),
-          child: TextButton(
-            onPressed: () async {
-              final user = FirebaseAuth.instance.currentUser;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Verify your email"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text("Please verify your email."),
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: TextButton(
+              onPressed: () async {
+                final user = FirebaseAuth.instance.currentUser;
 
-              await user?.sendEmailVerification();
-            },
-            child: const Text("Send email verification"),
-          ),
-        )
-      ],
+                await user?.sendEmailVerification();
+              },
+              child: const Text("Send email verification"),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
