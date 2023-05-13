@@ -39,17 +39,60 @@ class HomePage extends StatelessWidget {
               final user = FirebaseAuth.instance.currentUser;
 
               if (user?.emailVerified ?? false) {
-                print("You are verified.");
+                return Container(
+                  color: Colors.green[100],
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Email is verified",
+                        style: TextStyle(fontSize: 35),
+                      ),
+                    ],
+                  ),
+                );
               } else {
-                print("You need to verify your email first.");
+                return const VerifyEmailView();
               }
-              return const Text("Done");
 
             default:
-              return const Text("Loading");
+              return const Text("Loading...");
           }
         },
       ),
+    );
+  }
+}
+
+class VerifyEmailView extends StatefulWidget {
+  const VerifyEmailView({Key? key}) : super(key: key);
+
+  @override
+  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+}
+
+class _VerifyEmailViewState extends State<VerifyEmailView> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text("Please verify your email."),
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          child: TextButton(
+            onPressed: () async {
+              final user = FirebaseAuth.instance.currentUser;
+
+              await user?.sendEmailVerification();
+            },
+            child: const Text("Send email verification"),
+          ),
+        )
+      ],
     );
   }
 }
