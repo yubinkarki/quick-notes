@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import "dart:developer" as devtools show log;
 
 import 'package:okaychata/firebase_options.dart';
 import 'package:okaychata/views/login_view.dart';
 import 'package:okaychata/views/register_view.dart';
+import 'package:okaychata/views/verify_email_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,65 +41,107 @@ class HomePage extends StatelessWidget {
           case ConnectionState.done:
             final user = FirebaseAuth.instance.currentUser;
 
-            if (user?.emailVerified ?? false) {
-              return const LoginView();
+            if (user != null) {
+              if (user.emailVerified) {
+                print("Email is verified.");
+              } else {
+                return const VerifyEmailView();
+              }
             } else {
-              return const VerifyEmailView();
+              return const LoginView();
             }
 
+            return const NotesView();
+
           default:
-            return Container(
-              color: Colors.teal[50],
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Loading...",
-                    style: TextStyle(fontSize: 35),
-                  ),
-                ],
-              ),
-            );
+            return const CircularProgressIndicator();
         }
       },
     );
   }
 }
 
-class VerifyEmailView extends StatefulWidget {
-  const VerifyEmailView({Key? key}) : super(key: key);
+enum MenuAction { logout, nothing }
+
+class NotesView extends StatefulWidget {
+  const NotesView({super.key});
 
   @override
-  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+  State<NotesView> createState() => _NotesViewState();
 }
 
-class _VerifyEmailViewState extends State<VerifyEmailView> {
+class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Verify your email"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text("Please verify your email."),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: TextButton(
-              onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
+        title: const Text("Main UI"),
+        actions: [
+          PopupMenuButton<MenuAction>(
+            onSelected: (value) async {
+              switch (value) {
+                case MenuAction.logout:
+                  final shouldLogout = await showLogoutDialog(context);
 
-                await user?.sendEmailVerification();
-              },
-              child: const Text("Send email verification"),
-            ),
-          )
+                  devtools.log(shouldLogout.toString());
+                  break;
+
+                case MenuAction.nothing:
+                  devtools.log("This is nothing.");
+                  break;
+              }
+            },
+            itemBuilder: (context) {
+              return const [
+                PopupMenuItem<MenuAction>(
+                  value: MenuAction.logout,
+                  child: Text("Log Out"),
+                ),
+                PopupMenuItem<MenuAction>(
+                  value: MenuAction.nothing,
+                  child: Text("Nothing"),
+                ),
+              ];
+            },
+          ),
         ],
+      ),
+      body: Container(
+        color: Colors.green[200],
+        alignment: Alignment.center,
+        child: const Text(
+          "Hello World",
+          style: TextStyle(
+            fontSize: 40,
+          ),
+        ),
       ),
     );
   }
+}
+
+Future<bool> showLogoutDialog(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Log Out"),
+        content: const Text("Are you sure you want to log out?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: const Text("Log Out"),
+          ),
+        ],
+      );
+    },
+  ).then((value) => value ?? false);
 }
