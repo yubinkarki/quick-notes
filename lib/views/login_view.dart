@@ -36,8 +36,10 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Container(
         color: Colors.teal[50],
+        
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 0),
+          
           child: Column(
             children: [
               TextField(
