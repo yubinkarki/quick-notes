@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import "package:firebase_auth/firebase_auth.dart";
+import 'dart:math';
 
-import 'package:okaychata/firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer' as devtools show log;
+
+import 'package:okaychata/constants/routes.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -72,14 +74,14 @@ class _RegisterViewState extends State<RegisterView> {
                       final response =
                           await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
 
-                      print("Register response: $response");
+                      devtools.log("Register response: ${response.toString()}");
                     } on FirebaseAuthException catch (e) {
                       if (e.code == "weak-password") {
-                        print("Password is too weak.");
+                        devtools.log("Password is too weak.");
                       } else if (e.code == "email-already-in-use") {
-                        print("This email is already in use.");
+                        devtools.log("This email is already in use.");
                       } else {
-                        print("Something else happened, $e");
+                        devtools.log("Something else happened, $e");
                       }
                     }
                   },
@@ -89,7 +91,7 @@ class _RegisterViewState extends State<RegisterView> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login/',
+                    loginRoute,
                     (route) => false,
                   );
                 },

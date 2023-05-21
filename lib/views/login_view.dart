@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import "package:firebase_auth/firebase_auth.dart";
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer' as devtools show log;
+
+import 'package:okaychata/constants/routes.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -36,10 +39,8 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Container(
         color: Colors.teal[50],
-        
         child: Padding(
           padding: const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 0),
-          
           child: Column(
             children: [
               TextField(
@@ -64,19 +65,26 @@ class _LoginViewState extends State<LoginView> {
                 margin: const EdgeInsets.only(top: 20),
                 child: TextButton(
                   onPressed: () async {
+                    FocusManager.instance.primaryFocus?.unfocus(); // Removing input focus to dismiss keyboard.
+
                     final email = _email.text;
                     final password = _password.text;
 
                     try {
-                      final response =
-                          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
 
-                      print("Login response: $response");
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        notesRoute,
+                        (route) => false,
+                      );
                     } on FirebaseAuthException catch (e) {
                       if (e.code == "user-not-found") {
-                        print("User not found.");
+                        devtools.log("User not found.");
                       } else if (e.code == "wrong-password") {
-                        print("Incorrect password.");
+                        devtools.log("Incorrect password.");
                       }
                     }
                   },
@@ -86,7 +94,7 @@ class _LoginViewState extends State<LoginView> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/register/',
+                    registerRoute,
                     (route) => false,
                   );
                 },
