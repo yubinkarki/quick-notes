@@ -1,6 +1,6 @@
-# okaychata
+# Trying Out Flutter
 
-A new Flutter project.
+A new Flutter mobile application with user authentication from Firebase.
 
 ## Getting Started
 
