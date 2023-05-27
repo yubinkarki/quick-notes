@@ -1,8 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:developer' as devtools show log;
 
 import 'package:okaychata/constants/routes.dart';
+import 'package:okaychata/utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -65,22 +66,53 @@ class _RegisterViewState extends State<RegisterView> {
                 margin: const EdgeInsets.only(top: 20),
                 child: TextButton(
                   onPressed: () async {
+                    FocusManager.instance.primaryFocus?.unfocus(); // Removing input focus to dismiss keyboard.
+
                     final email = _email.text;
                     final password = _password.text;
 
                     try {
-                      final response =
-                          await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
 
-                      devtools.log("Register response: ${response.toString()}");
+                      final user = FirebaseAuth.instance.currentUser;
+
+                      await user?.sendEmailVerification();
+
+                      // Idk about this. Just satisfying a linter error.
+                      if (!mounted) return;
+
+                      // Don't use 'BuildContext's across async gaps.
+                      Navigator.of(context).pushNamed(verifyEmailRoute);
                     } on FirebaseAuthException catch (e) {
                       if (e.code == "weak-password") {
-                        devtools.log("Password is too weak.");
+                        showErrorDialog(
+                          context,
+                          "Weak password",
+                        );
                       } else if (e.code == "email-already-in-use") {
-                        devtools.log("This email is already in use.");
+                        showErrorDialog(
+                          context,
+                          "This email is already used",
+                        );
+                      } else if (e.code == "invalid-email") {
+                        showErrorDialog(
+                          context,
+                          "Invalid email address",
+                        );
                       } else {
-                        devtools.log("Something else happened, $e");
+                        showErrorDialog(
+                          context,
+                          "Error: ${e.code}",
+                        );
                       }
+                    } catch (e) {
+                      showErrorDialog(
+                        context,
+                        e.toString(),
+                      );
                     }
                   },
                   child: const Text("Register"),
