@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer' as devtools show log;
 
-import 'package:okaychata/main.dart';
 import 'package:okaychata/constants/routes.dart';
+import 'package:okaychata/utilities/show_logout_dialog.dart';
 
 enum MenuAction { logout, nothing }
 
