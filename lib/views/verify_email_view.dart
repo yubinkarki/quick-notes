@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:okaychata/constants/routes.dart';
 
 class VerifyEmailView extends StatefulWidget {
@@ -36,7 +37,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 30),
             child: TextButton(
               onPressed: () async {
                 final user = FirebaseAuth.instance.currentUser;
@@ -51,15 +52,15 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             child: TextButton(
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
-                
+
                 if (!mounted) return;
 
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                  registerRoute,
+                  loginRoute,
                   (route) => false,
                 );
               },
-              child: const Text("Restart"),
+              child: const Text("Go to Login screen"),
             ),
           )
         ],
