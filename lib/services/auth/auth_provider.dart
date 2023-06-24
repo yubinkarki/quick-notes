@@ -1,6 +1,8 @@
 import "package:okaychata/services/auth/auth_user.dart" show AuthUser;
 
 abstract class AuthProvider {
+  Future<void> initialize();
+
   AuthUser? get currentUser;
 
   Future<AuthUser> logIn({
