@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:okaychata/constants/routes.dart';
+import 'package:okaychata/enums/menu_action.dart';
 import 'package:okaychata/utilities/show_logout_dialog.dart';
-
-enum MenuAction { logout, nothing }
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
