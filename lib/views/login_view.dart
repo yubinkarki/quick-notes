@@ -82,12 +82,14 @@ class _LoginViewState extends State<LoginView> {
                       final password = _password.text;
 
                       try {
-                        await AuthService.factoryFirebase().logIn(
+                        final firebaseAuthService = AuthService.factoryFirebase();
+
+                        await firebaseAuthService.logIn(
                           email: email,
                           password: password,
                         );
 
-                        final user = AuthService.factoryFirebase().currentUser;
+                        final user = firebaseAuthService.currentUser;
 
                         if (!mounted) return;
 
