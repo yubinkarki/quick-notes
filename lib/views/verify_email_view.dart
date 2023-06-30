@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:okaychata/constants/routes.dart';
+import 'package:okaychata/services/auth/auth_service.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -40,9 +40,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             margin: const EdgeInsets.only(top: 30),
             child: TextButton(
               onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
-
-                await user?.sendEmailVerification();
+                AuthService.factoryFirebase().sendEmailVerification();
               },
               child: const Text("Send email verification"),
             ),
@@ -51,7 +49,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             margin: const EdgeInsets.only(top: 10),
             child: TextButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
+                AuthService.factoryFirebase().logOut();
 
                 if (!mounted) return;
 
