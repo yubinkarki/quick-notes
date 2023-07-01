@@ -40,14 +40,16 @@ void main() {
     );
 
     test('Signup should delegate to login function', () async {
-      final badEmail = await provider.signUp(email: "foo@bar.com", password: "password");
+      // Including await on this signUp function will break this test.
+      final badEmail = provider.signUp(email: "foo@bar.com", password: "password");
 
       expect(
         badEmail,
         throwsA(const TypeMatcher<UserNotFoundAuthException>()),
       );
 
-      final badPassword = await provider.signUp(email: "email@bar.com", password: "foobar");
+      // Same as above.
+      final badPassword = provider.signUp(email: "email@bar.com", password: "foobar");
 
       expect(
         badPassword,
@@ -126,9 +128,7 @@ class MockAuthProvider implements AuthProvider {
   Future<void> sendEmailVerification() async {
     if (!isInitialized) throw NotInitializedException();
 
-    final user = _user;
-
-    if (user == null) throw UserNotFoundAuthException();
+    if (_user == null) throw UserNotFoundAuthException();
 
     const newUser = AuthUser(isEmailVerified: true);
 
