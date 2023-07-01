@@ -1,10 +1,10 @@
-import "package:firebase_core/firebase_core.dart";
+import "package:firebase_core/firebase_core.dart" show Firebase;
 import "package:firebase_auth/firebase_auth.dart" show FirebaseAuth, FirebaseAuthException;
 
-import "package:okaychata/firebase_options.dart"; // Created by Firebase CLI.
-import "package:okaychata/services/auth/auth_user.dart";
-import "package:okaychata/services/auth/auth_provider.dart";
 import "package:okaychata/services/auth/auth_exceptions.dart";
+import "package:okaychata/services/auth/auth_user.dart" show AuthUser;
+import "package:okaychata/firebase_options.dart" show DefaultFirebaseOptions; // Created by Firebase CLI.
+import "package:okaychata/services/auth/auth_provider.dart" show AuthProvider;
 
 // Implementing the abstract class. Needs to fulfill the contract of the interface.
 class FirebaseAuthProvider implements AuthProvider {

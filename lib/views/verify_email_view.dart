@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/services/auth/auth_service.dart';
+import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);

@@ -1,12 +1,13 @@
-import 'package:okaychata/services/auth/auth_user.dart';
-import 'package:okaychata/services/auth/auth_provider.dart';
-import 'package:okaychata/services/auth/firebase_auth_provider.dart';
+import 'package:okaychata/services/auth/auth_user.dart' show AuthUser;
+import 'package:okaychata/services/auth/auth_provider.dart' show AuthProvider;
+import 'package:okaychata/services/auth/firebase_auth_provider.dart' show FirebaseAuthProvider;
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;
 
   const AuthService(this.provider);
 
+  // This factory constructor is calling the default constructor above.
   factory AuthService.factoryFirebase() => AuthService(FirebaseAuthProvider());
 
   @override

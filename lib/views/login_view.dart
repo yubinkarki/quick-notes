@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/services/auth/auth_service.dart';
-import 'package:okaychata/utilities/show_error_dialog.dart';
 import 'package:okaychata/services/auth/auth_exceptions.dart';
+import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
+import 'package:okaychata/utilities/show_error_dialog.dart' show showErrorDialog;
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
