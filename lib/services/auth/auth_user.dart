@@ -1,4 +1,5 @@
 import "package:flutter/foundation.dart" show immutable;
+
 import "package:firebase_auth/firebase_auth.dart" show User;
 
 @immutable
