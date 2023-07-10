@@ -81,6 +81,10 @@ class _LoginViewState extends State<LoginView> {
                       final email = _email.text;
                       final password = _password.text;
 
+                      await Future.delayed(const Duration(milliseconds: 300));
+
+                      if (!mounted) return;
+
                       try {
                         final firebaseAuthService = AuthService.factoryFirebase();
 
