@@ -10,6 +10,79 @@ import 'package:okaychata/services/note/note_exceptions.dart';
 class NoteService {
   Database? _db;
 
+  Future<DatabaseUser> getUser({required String email}) async {
+    final db = _getDatabase();
+
+    final getResult = await db.query(
+      userTable,
+      limit: 1,
+      where: "email = ?",
+      whereArgs: [email.toLowerCase()],
+    );
+
+    if (getResult.isEmpty) {
+      throw UserDoesNotExistException();
+    } else {
+      return DatabaseUser.fromRow(getResult.first);
+    }
+  }
+
+  // Create a new entry in user table.
+  Future<DatabaseUser> createUser({required String email}) async {
+    final db = _getDatabase();
+
+    final createResult = await db.query(
+      userTable,
+      limit: 1,
+      where: "email = ?",
+      whereArgs: [email.toLowerCase()],
+    );
+
+    if (createResult.isNotEmpty) {
+      throw UserAlreadyExistsException();
+    }
+
+    final int insertedUserId = await db.insert(userTable, {emailColumn: email.toLowerCase()});
+
+    return DatabaseUser(id: insertedUserId, email: email);
+  }
+
+  // Delete one row from user table.
+  Future<void> deleteUser({required String email}) async {
+    final db = _getDatabase();
+
+    final deleteResult = await db.delete(
+      userTable,
+      where: "email = ?",
+      whereArgs: [email.toLowerCase()],
+    );
+
+    if (deleteResult != 1) {
+      throw CouldNotDeleteUserException();
+    }
+  }
+
+  Database _getDatabase() {
+    final db = _db;
+
+    if (db == null) {
+      throw DatabaseNotOpenException();
+    } else {
+      return db;
+    }
+  }
+
+  Future<void> close() async {
+    final db = _db;
+
+    if (db == null) {
+      throw DatabaseAlreadyOpenException();
+    } else {
+      await db.close();
+      _db = null;
+    }
+  }
+
   Future<void> open() async {
     if (_db != null) {
       throw DatabaseAlreadyOpenException();
@@ -23,6 +96,10 @@ class NoteService {
       final db = await openDatabase(dbPath); // Open database from given path.
 
       _db = db;
+
+      await db.execute(createUserTable);
+
+      await db.execute(createNoteTable);
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsDirectory();
     }
