@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/utilities/app_router.dart' show AppRouter;
+import 'package:okaychata/navigation/app_router.dart' show AppRouter;
 
 void main() {
   // To call native code by Firebase before running application.
