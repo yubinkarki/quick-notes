@@ -9,3 +9,9 @@ class CouldNotDeleteUserException implements Exception {}
 class UserAlreadyExistsException implements Exception {}
 
 class UserDoesNotExistException implements Exception {}
+
+class CouldNotDeleteNoteException implements Exception {}
+
+class CouldNotFindNoteException implements Exception {}
+
+class CouldNotUpdateNoteException implements Exception {}
