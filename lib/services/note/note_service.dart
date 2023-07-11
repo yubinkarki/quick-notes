@@ -10,6 +10,95 @@ import 'package:okaychata/services/note/note_exceptions.dart';
 class NoteService {
   Database? _db;
 
+  Future<DatabaseNote> updateNote({required DatabaseNote note, required String newText}) async {
+    final db = _getDatabase();
+
+    await getNote(id: note.id);
+
+    final updateCount = await db.update(noteTable, {
+      textColumn: newText,
+      isSyncedWithCloudColumn: 0,
+    });
+
+    if (updateCount == 0) {
+      throw CouldNotUpdateNoteException();
+    } else {
+      return await getNote(id: note.id);
+    }
+  }
+
+  Future<Iterable<DatabaseNote>> getAllNotes() async {
+    final db = _getDatabase();
+
+    final notes = await db.query(noteTable);
+
+    return notes.map((note) => DatabaseNote.fromRow(note));
+  }
+
+  Future<DatabaseNote> getNote({required int id}) async {
+    final db = _getDatabase();
+
+    final notes = await db.query(
+      noteTable,
+      limit: 1,
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (notes.isEmpty) {
+      throw CouldNotFindNoteException();
+    } else {
+      return DatabaseNote.fromRow(notes.first);
+    }
+  }
+
+  Future<void> deleteAllNotes() async {
+    final db = _getDatabase();
+
+    await db.delete(noteTable);
+  }
+
+  Future<void> deleteNote({required int id}) async {
+    final db = _getDatabase();
+
+    final deletedCount = await db.delete(
+      noteTable,
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (deletedCount == 0) {
+      throw CouldNotDeleteNoteException();
+    }
+  }
+
+  Future<DatabaseNote> createNote({required DatabaseUser owner}) async {
+    final db = _getDatabase();
+    const String text = "";
+
+    // Make sure owner exists in the database.
+    final dbUser = await getUser(email: owner.email);
+
+    if (dbUser != owner) {
+      throw UserDoesNotExistException();
+    }
+
+    // Create a note.
+    final noteId = await db.insert(
+      noteTable,
+      {userIdColumn: owner.id, textColumn: text, isSyncedWithCloudColumn: 1},
+    );
+
+    final note = DatabaseNote(
+      id: noteId,
+      userId: owner.id,
+      text: text,
+      isSyncedWithCloud: true,
+    );
+
+    return note;
+  }
+
   Future<DatabaseUser> getUser({required String email}) async {
     final db = _getDatabase();
 
