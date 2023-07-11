@@ -7,7 +7,7 @@ class PageNotFoundView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("Page not found"),
+        child: Text("Oops! Page not found"),
       ),
     );
   }
