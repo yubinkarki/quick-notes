@@ -24,8 +24,16 @@ class AppRouter {
       case notesRoute:
         return MaterialPageRoute(builder: (context) => const NotesView());
 
+      // Using a fade animation for this view.
       case newNoteRoute:
-        return MaterialPageRoute(builder: (context) => const NewNoteView());
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const NewNoteView(),
+          settings: settings,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
 
       case verifyEmailRoute:
         return MaterialPageRoute(builder: (context) => const VerifyEmailView());
