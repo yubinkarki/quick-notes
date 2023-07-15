@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'login_view.dart';
-import 'notes_view.dart';
+import 'note/notes_view.dart';
 import 'verify_email_view.dart';
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
 
