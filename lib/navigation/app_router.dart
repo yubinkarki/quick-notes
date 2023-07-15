@@ -6,8 +6,8 @@ import 'package:okaychata/views/note/notes_view.dart';
 import 'package:okaychata/views/auth/login_view.dart';
 import 'package:okaychata/views/auth/register_view.dart';
 import 'package:okaychata/views/note/new_note_view.dart';
-import 'package:okaychata/views/page_not_found_view.dart';
 import 'package:okaychata/views/auth/verify_email_view.dart';
+import 'package:okaychata/views/invalid/page_not_found_view.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
