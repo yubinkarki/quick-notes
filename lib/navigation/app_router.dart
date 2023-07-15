@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:okaychata/views/home_view.dart';
 import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/views/login_view.dart';
-import 'package:okaychata/views/register_view.dart';
+import 'package:okaychata/views/auth/home_view.dart';
 import 'package:okaychata/views/note/notes_view.dart';
-import 'package:okaychata/views/verify_email_view.dart';
+import 'package:okaychata/views/auth/login_view.dart';
+import 'package:okaychata/views/auth/register_view.dart';
 import 'package:okaychata/views/note/new_note_view.dart';
 import 'package:okaychata/views/page_not_found_view.dart';
+import 'package:okaychata/views/auth/verify_email_view.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
