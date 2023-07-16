@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import 'package:okaychata/constants/colors.dart';
 import 'package:okaychata/constants/routes.dart';
+import 'package:okaychata/themes/dark_theme.dart';
+import 'package:okaychata/themes/light_theme.dart';
 import 'package:okaychata/navigation/app_router.dart' show AppRouter;
 
 void main() {
   // To call native code by Firebase before running application.
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      systemNavigationBarColor: CustomColors.black,
+    ),
+  );
 
   runApp(const MyApp());
 }
@@ -18,9 +28,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Nice',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
+      theme: lightTheme(context),
+      darkTheme: darkTheme(context),
+      themeMode: ThemeMode.system,
       onGenerateRoute: AppRouter.generateRoute,
       initialRoute: homeRoute,
     );
