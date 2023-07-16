@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 
 Future<bool> showLogoutDialog(BuildContext context) {
+  final TextTheme textTheme = Theme.of(context).textTheme;
+
   return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text("Log Out"),
-        content: const Text("Are you sure you want to log out?"),
+        title: Text("Logout", style: textTheme.labelLarge),
+        content: Text(
+          "Are you sure you want to log out?",
+          style: textTheme.labelMedium,
+        ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text("Cancel"),
+            child: Text("Cancel", style: textTheme.labelMedium),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: const Text("Log Out"),
+            child: Text("Logout", style: textTheme.labelMedium),
           ),
         ],
       );
