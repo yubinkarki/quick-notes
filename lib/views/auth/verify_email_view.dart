@@ -13,61 +13,81 @@ class VerifyEmailView extends StatefulWidget {
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Verify your email"),
+        title: Text(
+          "Verify your email",
+          style: textTheme.titleLarge,
+        ),
       ),
-      body: Row(
-        children: [
-          Flexible(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 50, right: 50),
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: const Text(
-                    "We've sent you an email verification. Please open it to verify your account.",
-                    textAlign: TextAlign.center,
+      body: ColoredBox(
+        color: Theme.of(context).colorScheme.background,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 50, right: 50),
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      "We've sent you an email verification. Please open it to verify your account.",
+                      textAlign: TextAlign.center,
+                      style: textTheme.labelSmall,
+                    ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 50, right: 50),
-                  child: const Text(
-                    "If you haven't received a verification email yet, press the button below.",
-                    textAlign: TextAlign.center,
+                  Container(
+                    padding: const EdgeInsets.only(left: 50, right: 50),
+                    child: Text(
+                      "If you haven't received a verification email yet, press the button below.",
+                      textAlign: TextAlign.center,
+                      style: textTheme.labelSmall,
+                    ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 30),
-                  child: TextButton(
-                    onPressed: () async {
-                      AuthService.factoryFirebase().sendEmailVerification();
-                    },
-                    child: const Text("Send email verification"),
+                  Container(
+                    width: 260.0,
+                    height: 60.0,
+                    margin: const EdgeInsets.only(top: 60),
+                    child: OutlinedButton(
+                      onPressed: () async {
+                        AuthService.factoryFirebase().sendEmailVerification();
+                      },
+                      child: Text(
+                        "Send email verification",
+                        style: textTheme.labelMedium,
+                      ),
+                    ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: TextButton(
-                    onPressed: () async {
-                      AuthService.factoryFirebase().logOut();
+                  Container(
+                    width: 260.0,
+                    height: 60.0,
+                    margin: const EdgeInsets.only(top: 20),
+                    child: OutlinedButton(
+                      onPressed: () async {
+                        AuthService.factoryFirebase().logOut();
 
-                      if (!mounted) return;
+                        if (!mounted) return;
 
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        loginRoute,
-                        (route) => false,
-                      );
-                    },
-                    child: const Text("Go to Login screen"),
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          loginRoute,
+                          (route) => false,
+                        );
+                      },
+                      child: Text(
+                        "Go to Login screen",
+                        style: textTheme.labelMedium,
+                      ),
+                    ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
