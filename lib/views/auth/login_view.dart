@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:okaychata/constants/colors.dart';
 import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/services/auth/auth_exceptions.dart';
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
@@ -34,9 +35,14 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: Text(
+          "Login",
+          style: textTheme.titleLarge!.copyWith(color: CustomColors.white),
+        ),
       ),
       body: GestureDetector(
         // This is to dismiss keyboard when tapped anywhere on the screen.
@@ -49,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
           }
         },
         child: Container(
-          color: Colors.teal[50],
+          color: Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 0),
             child: Column(
@@ -73,7 +79,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 50),
                   child: TextButton(
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus(); // Removing input focus to dismiss keyboard.
@@ -125,9 +131,13 @@ class _LoginViewState extends State<LoginView> {
                         );
                       }
                     },
-                    child: const Text("Login"),
+                    child: Text(
+                      "Login",
+                      style: textTheme.labelMedium,
+                    ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -135,8 +145,11 @@ class _LoginViewState extends State<LoginView> {
                       (route) => false,
                     );
                   },
-                  child: const Text("Go to Register"),
-                )
+                  child: Text(
+                    "Go to Register",
+                    style: textTheme.labelMedium,
+                  ),
+                ),
               ],
             ),
           ),

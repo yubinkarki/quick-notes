@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:okaychata/constants/colors.dart';
 import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/enums/menu_action.dart' show MenuAction;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
@@ -35,10 +36,21 @@ class _NotesViewState extends State<NotesView> {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Your Notes"),
+        title: Text(
+          "Your Notes",
+          style: textTheme.labelLarge!.copyWith(color: CustomColors.white),
+        ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(newNoteRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               switch (value) {
@@ -62,14 +74,20 @@ class _NotesViewState extends State<NotesView> {
               }
             },
             itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: Text("Log Out"),
-                ),
+              return [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.nothing,
-                  child: Text("Nothing"),
+                  child: Text(
+                    "Nothing",
+                    style: textTheme.labelMedium,
+                  ),
+                ),
+                PopupMenuItem<MenuAction>(
+                  value: MenuAction.logout,
+                  child: Text(
+                    "Logout",
+                    style: textTheme.labelMedium,
+                  ),
                 ),
               ];
             },
@@ -85,15 +103,14 @@ class _NotesViewState extends State<NotesView> {
                 stream: _noteService.allNotes,
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
+                    case ConnectionState.active:
                     case ConnectionState.waiting:
                       return Container(
-                        color: Colors.green[200],
+                        color: Theme.of(context).colorScheme.background,
                         alignment: Alignment.center,
-                        child: const Text(
+                        child: Text(
                           "Waiting for all notes...",
-                          style: TextStyle(
-                            fontSize: 30,
-                          ),
+                          style: textTheme.labelLarge,
                         ),
                       );
 

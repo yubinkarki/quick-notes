@@ -34,6 +34,8 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register"),
@@ -49,7 +51,7 @@ class _RegisterViewState extends State<RegisterView> {
           }
         },
         child: Container(
-          color: Colors.teal[50],
+          color: Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -73,7 +75,7 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 50),
                   child: TextButton(
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus(); // Removing input focus to dismiss keyboard.
@@ -122,9 +124,13 @@ class _RegisterViewState extends State<RegisterView> {
                         );
                       }
                     },
-                    child: const Text("Register"),
+                    child: Text(
+                      "Register",
+                      style: textTheme.labelMedium,
+                    ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -132,8 +138,11 @@ class _RegisterViewState extends State<RegisterView> {
                       (route) => false,
                     );
                   },
-                  child: const Text("Go to Login"),
-                )
+                  child: Text(
+                    "Go to Login",
+                    style: textTheme.labelMedium,
+                  ),
+                ),
               ],
             ),
           ),
