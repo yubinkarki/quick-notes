@@ -42,7 +42,7 @@ TextTheme lightTextTheme(TextTheme base) {
     titleLarge: GoogleFonts.quicksand(
       fontWeight: FontWeight.w600,
       fontSize: 22,
-      color: CustomColors.white,
+      color: CustomColors.darkTeal,
       letterSpacing: 0.5,
     ),
   );
