@@ -38,7 +38,10 @@ class _RegisterViewState extends State<RegisterView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Register"),
+        title: Text(
+          "Register",
+          style: textTheme.titleLarge,
+        ),
       ),
       body: GestureDetector(
         // This is to dismiss keyboard when tapped anywhere on the screen.

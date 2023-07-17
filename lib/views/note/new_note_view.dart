@@ -83,7 +83,12 @@ class _NewNoteViewState extends State<NewNoteView> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("New Note")),
+      appBar: AppBar(
+        title: Text(
+          "New Note",
+          style: textTheme.titleLarge,
+        ),
+      ),
       body: FutureBuilder(
         future: createNewNote(),
         builder: (context, snapshot) {

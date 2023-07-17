@@ -41,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         title: Text(
           "Login",
-          style: textTheme.titleLarge!.copyWith(color: CustomColors.white),
+          style: textTheme.titleLarge,
         ),
       ),
       body: GestureDetector(

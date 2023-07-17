@@ -42,7 +42,7 @@ class _NotesViewState extends State<NotesView> {
       appBar: AppBar(
         title: Text(
           "Your Notes",
-          style: textTheme.labelLarge!.copyWith(color: CustomColors.white),
+          style: textTheme.titleLarge,
         ),
         actions: [
           IconButton(
