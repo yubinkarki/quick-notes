@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:okaychata/constants/routes.dart';
+import 'package:okaychata/views/note/note_list_view.dart';
 import 'package:okaychata/enums/menu_action.dart' show MenuAction;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
 import 'package:okaychata/utilities/dialog/show_logout_dialog.dart' show showLogoutDialog;
@@ -100,7 +101,12 @@ class _NotesViewState extends State<NotesView> {
                       if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                         final allNotes = snapshot.data as List<DatabaseNote>;
 
-                        return Container();
+                        return NoteListView(
+                          notes: allNotes,
+                          onDeleteNote: (note) async {
+                            await _noteService.deleteNote(id: note.id);
+                          },
+                        );
                       } else {
                         return const Scaffold(
                           body: Center(
