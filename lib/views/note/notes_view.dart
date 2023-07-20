@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:okaychata/constants/colors.dart';
 import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/enums/menu_action.dart' show MenuAction;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
-import 'package:okaychata/services/note/note_service.dart' show NoteService;
-import 'package:okaychata/utilities/show_logout_dialog.dart' show showLogoutDialog;
+import 'package:okaychata/utilities/dialog/show_logout_dialog.dart' show showLogoutDialog;
+import 'package:okaychata/services/note/note_service.dart' show NoteService, DatabaseNote;
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -25,13 +24,6 @@ class _NotesViewState extends State<NotesView> {
     _noteService.open();
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _noteService.close();
-
-    super.dispose();
   }
 
   @override
@@ -105,19 +97,25 @@ class _NotesViewState extends State<NotesView> {
                   switch (snapshot.connectionState) {
                     case ConnectionState.active:
                     case ConnectionState.waiting:
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        final allNotes = snapshot.data as List<DatabaseNote>;
+
+                        return Container();
+                      } else {
+                        return const Scaffold(
+                          body: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+
+                    default:
                       return Container(
                         color: Theme.of(context).colorScheme.background,
                         alignment: Alignment.center,
                         child: Text(
-                          "Waiting for all notes...",
+                          "Default case",
                           style: textTheme.labelLarge,
-                        ),
-                      );
-
-                    default:
-                      return const Scaffold(
-                        body: Center(
-                          child: CircularProgressIndicator(),
                         ),
                       );
                   }
