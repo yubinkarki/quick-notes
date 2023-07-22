@@ -98,21 +98,38 @@ class _NewNoteViewState extends State<NewNoteView> {
 
               _setupTextControllerListener();
 
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: _textController,
-                  keyboardType: TextInputType.multiline,
-                  minLines: 4,
-                  maxLines: null,
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                    constraints: BoxConstraints(
-                      maxHeight: 300.0,
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: TextField(
+                        controller: _textController,
+                        keyboardType: TextInputType.multiline,
+                        minLines: 4,
+                        maxLines: null,
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                          constraints: BoxConstraints(maxHeight: 250.0),
+                          border: OutlineInputBorder(),
+                          hintText: "Write your note here...",
+                        ),
+                      ),
                     ),
-                    border: OutlineInputBorder(),
-                    hintText: "Write your note here...",
-                  ),
+                    Container(
+                      width: 120.0,
+                      height: 45.0,
+                      margin: const EdgeInsets.only(top: 10, bottom: 50),
+                      child: OutlinedButton(
+                        onPressed: () async {},
+                        child: Text(
+                          "Save",
+                          style: textTheme.labelMedium,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
 
