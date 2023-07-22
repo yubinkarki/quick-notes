@@ -39,6 +39,7 @@ class _NotesViewState extends State<NotesView> {
         ),
         actions: [
           IconButton(
+            tooltip: "Add new note here",
             onPressed: () {
               Navigator.of(context).pushNamed(newNoteRoute);
             },
