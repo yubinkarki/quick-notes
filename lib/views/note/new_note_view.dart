@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:okaychata/services/auth/auth_service.dart';
 
+import 'package:okaychata/services/auth/auth_service.dart';
 import 'package:okaychata/services/note/note_service.dart';
 
 class NewNoteView extends StatefulWidget {
@@ -17,7 +17,7 @@ class _NewNoteViewState extends State<NewNoteView> {
 
   @override
   void initState() {
-    _noteService = NoteService();
+    // _noteService = NoteService();
     _textController = TextEditingController();
     super.initState();
   }
@@ -37,6 +37,14 @@ class _NewNoteViewState extends State<NewNoteView> {
   void _setupTextControllerListener() {
     _textController.removeListener(_textControllerListener);
     _textController.addListener(_textControllerListener);
+  }
+
+  void _handleSaveButton() async {
+    final text = _textController.text;
+
+    print("Input value: $text");
+
+    // await _noteService.updateNote(note: note, newText: text);
   }
 
   Future<DatabaseNote> createNewNote() async {
@@ -94,7 +102,7 @@ class _NewNoteViewState extends State<NewNoteView> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              _note = snapshot.data as DatabaseNote;
+              // _note = snapshot.data as DatabaseNote;
 
               _setupTextControllerListener();
 
@@ -122,7 +130,7 @@ class _NewNoteViewState extends State<NewNoteView> {
                       height: 45.0,
                       margin: const EdgeInsets.only(top: 10, bottom: 50),
                       child: OutlinedButton(
-                        onPressed: () async {},
+                        onPressed: _handleSaveButton,
                         child: Text(
                           "Save",
                           style: textTheme.labelMedium,
