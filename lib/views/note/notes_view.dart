@@ -109,20 +109,20 @@ class _NotesViewState extends State<NotesView> {
                           },
                         );
                       } else {
-                        return const Scaffold(
-                          body: Center(
-                            child: CircularProgressIndicator(),
+                        return Container(
+                          color: Theme.of(context).colorScheme.background,
+                          alignment: Alignment.center,
+                          child: Text(
+                            "There are no notes right now...",
+                            style: textTheme.labelMedium,
                           ),
                         );
                       }
 
                     default:
-                      return Container(
-                        color: Theme.of(context).colorScheme.background,
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Default case",
-                          style: textTheme.labelLarge,
+                      return const Scaffold(
+                        body: Center(
+                          child: CircularProgressIndicator(),
                         ),
                       );
                   }
