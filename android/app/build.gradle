@@ -58,6 +58,25 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "okaychata"
+
+    productFlavors {
+        dev {
+            dimension "okaychata"
+            resValue "string", "app_name", "okaychata-dev"
+            versionNameSuffix "-dev"
+        }
+        stag {
+            dimension "okaychata"
+            resValue "string", "app_name", "okaychata-stag"
+            versionNameSuffix "-stag"
+        }
+        prod {
+            dimension "okaychata"
+            resValue "string", "app_name", "okaychata"
+        }
+    }
 }
 
 flutter {
