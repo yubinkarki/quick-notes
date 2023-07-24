@@ -4,7 +4,7 @@ import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/views/note/note_list_view.dart';
 import 'package:okaychata/enums/menu_action.dart' show MenuAction;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
-import 'package:okaychata/utilities/dialog/show_logout_dialog.dart' show showLogoutDialog;
+import 'package:okaychata/utilities/dialogs/show_logout_dialog.dart' show showLogoutDialog;
 import 'package:okaychata/services/note/note_service.dart' show NoteService, DatabaseNote;
 
 class NotesView extends StatefulWidget {

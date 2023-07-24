@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:okaychata/services/note/note_service.dart';
-import 'package:okaychata/utilities/dialog/show_delete_dialog.dart';
+import 'package:okaychata/utilities/dialogs/show_delete_dialog.dart';
 
 typedef DeleteNoteCallback = void Function(DatabaseNote note);
 
