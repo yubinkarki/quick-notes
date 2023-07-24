@@ -5,7 +5,7 @@ import 'package:okaychata/views/auth/home_view.dart';
 import 'package:okaychata/views/note/notes_view.dart';
 import 'package:okaychata/views/auth/login_view.dart';
 import 'package:okaychata/views/auth/register_view.dart';
-import 'package:okaychata/views/note/new_note_view.dart';
+import 'package:okaychata/views/note/add_new_note_view.dart';
 import 'package:okaychata/views/auth/verify_email_view.dart';
 import 'package:okaychata/views/invalid/page_not_found_view.dart';
 
@@ -25,9 +25,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const NotesView());
 
       // Using a fade animation for this view.
-      case newNoteRoute:
+      case addNewNoteRoute:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const NewNoteView(),
+          pageBuilder: (context, animation, secondaryAnimation) => const AddNewNoteView(),
           settings: settings,
           transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
             opacity: animation,

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:okaychata/services/auth/auth_service.dart';
 import 'package:okaychata/services/note/note_service.dart';
 
-class NewNoteView extends StatefulWidget {
-  const NewNoteView({Key? key}) : super(key: key);
+class AddNewNoteView extends StatefulWidget {
+  const AddNewNoteView({Key? key}) : super(key: key);
 
   @override
-  State<NewNoteView> createState() => _NewNoteViewState();
+  State<AddNewNoteView> createState() => _AddNewNoteViewState();
 }
 
-class _NewNoteViewState extends State<NewNoteView> {
+class _AddNewNoteViewState extends State<AddNewNoteView> {
   DatabaseNote? _note;
   late final NoteService _noteService;
   late final TextEditingController _textController;
