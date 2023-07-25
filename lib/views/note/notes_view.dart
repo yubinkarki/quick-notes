@@ -22,7 +22,6 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _noteService = NoteService();
-    _noteService.open();
 
     super.initState();
   }
@@ -106,6 +105,12 @@ class _NotesViewState extends State<NotesView> {
                           notes: allNotes,
                           onDeleteNote: (note) async {
                             await _noteService.deleteNote(id: note.id);
+                          },
+                          onTapNote: (note) {
+                            Navigator.of(context).pushNamed(
+                              addNewNoteRoute,
+                              arguments: note,
+                            );
                           },
                         );
                       } else {
