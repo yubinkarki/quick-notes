@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:okaychata/services/auth/auth_service.dart';
 import 'package:okaychata/services/note/note_service.dart';
+import 'package:okaychata/utilities/generics/get_arguments.dart';
 
 class AddNewNoteView extends StatefulWidget {
   const AddNewNoteView({Key? key}) : super(key: key);
@@ -17,59 +18,32 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
 
   @override
   void initState() {
-    // _noteService = NoteService();
+    _noteService = NoteService();
     _textController = TextEditingController();
     super.initState();
   }
 
-  void _textControllerListener() async {
-    final note = _note;
+  Future<DatabaseNote?> populateTextField(BuildContext context) async {
+    final widgetNote = context.getArgument<DatabaseNote>();
 
-    if (note == null) {
-      return;
-    }
+    _note = widgetNote;
 
-    final text = _textController.text;
+    _textController.text = widgetNote?.text ?? "";
 
-    await _noteService.updateNote(note: note, newText: text);
-  }
-
-  void _setupTextControllerListener() {
-    _textController.removeListener(_textControllerListener);
-    _textController.addListener(_textControllerListener);
+    return widgetNote;
   }
 
   void _handleSaveButton() async {
     final text = _textController.text;
 
-    print("Input value: $text");
-
-    // await _noteService.updateNote(note: note, newText: text);
-  }
-
-  Future<DatabaseNote> createNewNote() async {
-    final existingNote = _note;
-
-    if (existingNote != null) {
-      return existingNote;
-    }
-
     final existingUser = AuthService.factoryFirebase().currentUser!;
     final email = existingUser.email!;
     final owner = await _noteService.getUser(email: email);
 
-    return await _noteService.createNote(owner: owner);
+    await _noteService.createNote(owner: owner, text: text);
   }
 
-  void _deleteNoteIfTextIsEmpty() async {
-    final note = _note;
-
-    if (_textController.text.isEmpty && note != null) {
-      await _noteService.deleteNote(id: note.id);
-    }
-  }
-
-  void _saveNoteIfTextNotEmpty() async {
+  void _handleUpdateButton() async {
     final note = _note;
     final text = _textController.text;
 
@@ -80,8 +54,6 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
 
   @override
   void dispose() {
-    _deleteNoteIfTextIsEmpty();
-    _saveNoteIfTextNotEmpty();
     _textController.dispose();
     super.dispose();
   }
@@ -89,6 +61,8 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final widgetNote = context.getArgument<DatabaseNote>();
+    final inputTextValue = widgetNote?.text;
 
     return Scaffold(
       appBar: AppBar(
@@ -98,14 +72,10 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         ),
       ),
       body: FutureBuilder(
-        future: createNewNote(),
+        future: populateTextField(context),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              // _note = snapshot.data as DatabaseNote;
-
-              _setupTextControllerListener();
-
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,13 +99,21 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
                       width: 120.0,
                       height: 45.0,
                       margin: const EdgeInsets.only(top: 10, bottom: 50),
-                      child: OutlinedButton(
-                        onPressed: _handleSaveButton,
-                        child: Text(
-                          "Save",
-                          style: textTheme.labelMedium,
-                        ),
-                      ),
+                      child: inputTextValue != null
+                          ? OutlinedButton(
+                              onPressed: _handleUpdateButton,
+                              child: Text(
+                                "Update",
+                                style: textTheme.labelMedium,
+                              ),
+                            )
+                          : OutlinedButton(
+                              onPressed: _handleSaveButton,
+                              child: Text(
+                                "Add",
+                                style: textTheme.labelMedium,
+                              ),
+                            ),
                     ),
                   ],
                 ),
