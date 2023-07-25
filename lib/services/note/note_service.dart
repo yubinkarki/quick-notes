@@ -143,11 +143,10 @@ class NoteService {
     }
   }
 
-  Future<DatabaseNote> createNote({required DatabaseUser owner}) async {
+  Future<DatabaseNote> createNote({required DatabaseUser owner, required String text}) async {
     await _ensureOpenDb();
 
     final db = _getDatabase();
-    const String text = "";
 
     // Make sure owner exists in the database.
     final dbUser = await getUser(email: owner.email);
