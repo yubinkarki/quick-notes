@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/views/note/note_list_view.dart';
 import 'package:okaychata/enums/menu_action.dart' show MenuAction;
+import 'package:okaychata/constants/colors.dart' show CustomColors;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
-import 'package:okaychata/utilities/dialogs/show_logout_dialog.dart' show showLogoutDialog;
 import 'package:okaychata/services/note/note_service.dart' show NoteService, DatabaseNote;
+import 'package:okaychata/utilities/dialogs/show_logout_dialog.dart' show showLogoutDialog;
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -24,6 +25,12 @@ class _NotesViewState extends State<NotesView> {
     _noteService = NoteService();
 
     super.initState();
+  }
+
+  Future<String> futureCreateUser() async {
+    await _noteService.getOrCreateUser(email: userEmail);
+
+    return Future.delayed(const Duration(seconds: 1), () => "Nice String");
   }
 
   @override
@@ -88,7 +95,7 @@ class _NotesViewState extends State<NotesView> {
         ],
       ),
       body: FutureBuilder(
-        future: _noteService.getOrCreateUser(email: userEmail),
+        future: futureCreateUser(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
@@ -96,8 +103,8 @@ class _NotesViewState extends State<NotesView> {
                 stream: _noteService.allNotes,
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
+                    case ConnectionState.done:
                     case ConnectionState.active:
-                    case ConnectionState.waiting:
                       if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                         final allNotes = snapshot.data as List<DatabaseNote>;
 
@@ -125,20 +132,14 @@ class _NotesViewState extends State<NotesView> {
                       }
 
                     default:
-                      return const Scaffold(
-                        body: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
+                      return const Placeholder(color: CustomColors.transparent);
                   }
                 },
               );
 
             default:
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
+              return const Center(
+                child: CircularProgressIndicator(),
               );
           }
         },
