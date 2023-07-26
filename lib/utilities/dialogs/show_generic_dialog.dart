@@ -1,4 +1,3 @@
-// This widget is not used.
 import 'package:flutter/material.dart';
 
 typedef DialogOptionBuilder<T> = Map<String, T?> Function();
