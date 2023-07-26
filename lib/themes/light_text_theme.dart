@@ -24,7 +24,6 @@ TextTheme lightTextTheme(TextTheme base) {
       color: CustomColors.darkTeal,
       letterSpacing: 0.5,
     ),
-
     // Used by input field text.
     titleSmall: GoogleFonts.quicksand(
       fontWeight: FontWeight.w600,
@@ -42,7 +41,7 @@ TextTheme lightTextTheme(TextTheme base) {
     titleLarge: GoogleFonts.quicksand(
       fontWeight: FontWeight.w600,
       fontSize: 22,
-      color: CustomColors.darkTeal,
+      color: CustomColors.white,
       letterSpacing: 0.5,
     ),
   );

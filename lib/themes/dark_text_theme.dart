@@ -24,7 +24,6 @@ TextTheme darkTextTheme(TextTheme base) {
       color: CustomColors.slightlyWhite,
       letterSpacing: 0.5,
     ),
-
     // Used by input field text.
     titleSmall: GoogleFonts.quicksand(
       fontWeight: FontWeight.w600,
@@ -38,6 +37,7 @@ TextTheme darkTextTheme(TextTheme base) {
       color: CustomColors.slightlyWhite,
       letterSpacing: 0.5,
     ),
+    // Appbar title.
     titleLarge: GoogleFonts.quicksand(
       fontWeight: FontWeight.w600,
       fontSize: 22,
