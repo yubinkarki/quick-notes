@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:okaychata/services/auth/auth_service.dart';
 import 'package:okaychata/services/note/note_service.dart';
 import 'package:okaychata/utilities/generics/get_arguments.dart';
+import 'package:okaychata/utilities/dialogs/show_generic_dialog.dart';
 
 class AddNewNoteView extends StatefulWidget {
   const AddNewNoteView({Key? key}) : super(key: key);
@@ -33,22 +34,68 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
     return widgetNote;
   }
 
-  void _handleSaveButton() async {
+  void _handleAddButton() async {
     final text = _textController.text;
 
-    final existingUser = AuthService.factoryFirebase().currentUser!;
-    final email = existingUser.email!;
-    final owner = await _noteService.getUser(email: email);
+    FocusManager.instance.primaryFocus?.unfocus();
 
-    await _noteService.createNote(owner: owner, text: text);
+    if (text.isEmpty) {
+      Future.delayed(
+        const Duration(milliseconds: 200),
+        () => showGenericDialog(
+          context: context,
+          title: "Error",
+          content: "Please write something to add",
+          optionsBuilder: () => {"Got It": null},
+        ),
+      );
+    } else {
+      final existingUser = AuthService.factoryFirebase().currentUser!;
+      final email = existingUser.email!;
+      final owner = await _noteService.getUser(email: email);
+
+      await _noteService.createNote(owner: owner, text: text);
+
+      Future.delayed(
+        const Duration(milliseconds: 200),
+        () => showGenericDialog(
+          context: context,
+          title: "Success",
+          content: "Note added successfully",
+          optionsBuilder: () => {"Great": null},
+        ),
+      );
+    }
   }
 
   void _handleUpdateButton() async {
     final note = _note;
     final text = _textController.text;
 
+    FocusManager.instance.primaryFocus?.unfocus();
+
     if (text.isNotEmpty && note != null) {
       await _noteService.updateNote(note: note, newText: text);
+
+      Future.delayed(
+        const Duration(milliseconds: 200),
+        () => showGenericDialog(
+          context: context,
+          title: "Success",
+          content: "Note updated successfully",
+          optionsBuilder: () => {"Great": null},
+        ),
+      );
+    } else {
+      Future.delayed(
+        const Duration(milliseconds: 200),
+        () => showGenericDialog(
+          context: context,
+          title: "Error",
+          content: "Please write something to update",
+          optionsBuilder: () => {"Got It": null},
+        ),
+      );
     }
   }
 
@@ -108,7 +155,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
                               ),
                             )
                           : OutlinedButton(
-                              onPressed: _handleSaveButton,
+                              onPressed: _handleAddButton,
                               child: Text(
                                 "Add",
                                 style: textTheme.labelMedium,
@@ -120,10 +167,8 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
               );
 
             default:
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
+              return const Center(
+                child: CircularProgressIndicator(),
               );
           }
         },
