@@ -45,7 +45,6 @@ class NoteService {
     final allNotes = await getAllNotes();
 
     _notes = allNotes.toList();
-
     _notesStreamController.add(_notes);
   }
 
@@ -58,10 +57,15 @@ class NoteService {
     await getNote(id: note.id);
 
     // Update database.
-    final updateCount = await db.update(noteTable, {
-      textColumn: newText,
-      isSyncedWithCloudColumn: 0,
-    });
+    final updateCount = await db.update(
+      noteTable,
+      {
+        textColumn: newText,
+        isSyncedWithCloudColumn: 0,
+      },
+      where: "id = ?",
+      whereArgs: [note.id],
+    );
 
     if (updateCount == 0) {
       throw CouldNotUpdateNoteException();
