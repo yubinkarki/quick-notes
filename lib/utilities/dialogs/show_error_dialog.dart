@@ -4,18 +4,20 @@ Future<void> showErrorDialog(
   BuildContext context,
   String text,
 ) {
+  final TextTheme textTheme = Theme.of(context).textTheme;
+
   return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text("An error occurred"),
+        title: Text("An error occurred", style: textTheme.labelLarge),
         content: Text(text),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text("Ok"),
+            child: Text("Ok", style: textTheme.labelMedium),
           ),
         ],
       );
