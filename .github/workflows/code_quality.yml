@@ -15,7 +15,7 @@ jobs:
         with:
           flutter-version: "3.10.5"
           channel: "stable"
-          
+
       - name: Install packages
         run: flutter pub get
 
@@ -24,6 +24,3 @@ jobs:
 
       - name: Run unit test
         run: flutter test test/auth_test.dart
-
-      - name: Print to console
-        run: echo "Nice one."
