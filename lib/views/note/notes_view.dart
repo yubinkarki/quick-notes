@@ -23,14 +23,13 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _noteService = NoteService();
-
     super.initState();
   }
 
   Future<String> futureCreateUser() async {
     await _noteService.getOrCreateUser(email: userEmail);
 
-    return Future.delayed(const Duration(seconds: 1), () => "Nice String");
+    return Future.delayed(const Duration(seconds: 1), () => "Delaying");
   }
 
   @override
@@ -39,10 +38,7 @@ class _NotesViewState extends State<NotesView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Your Notes",
-          style: textTheme.titleLarge,
-        ),
+        title: Text("Your Notes", style: textTheme.titleLarge),
         actions: [
           IconButton(
             tooltip: "Add new note here",
@@ -77,17 +73,11 @@ class _NotesViewState extends State<NotesView> {
               return [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.nothing,
-                  child: Text(
-                    "Nothing",
-                    style: textTheme.labelMedium,
-                  ),
+                  child: Text("Nothing", style: textTheme.labelMedium),
                 ),
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text(
-                    "Logout",
-                    style: textTheme.labelMedium,
-                  ),
+                  child: Text("Logout", style: textTheme.labelMedium),
                 ),
               ];
             },
