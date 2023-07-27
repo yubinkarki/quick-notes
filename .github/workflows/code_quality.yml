@@ -1,0 +1,26 @@
+name: code_quality
+
+on:
+  pull_request:
+    branches:
+      - main # Run on PR against main branch.
+
+jobs:
+  code_quality:
+    name: Check linters and run unit test
+    runs-on: ubuntu-latest # Run on Ubuntu server.
+    steps:
+      - uses: actions/checkout@v3 # Checkout current repo.
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.10.5"
+          channel: "stable"
+
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Linter check
+        run: flutter analyze
+
+      - name: Run unit test
+        run: flutter test test/auth_test.dart
