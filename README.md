@@ -61,4 +61,6 @@ samples, guidance on mobile development, and a full API reference.
 <img src="assets/screenshots/login_dark.jpg" width="230" height="500" />
 <img src="assets/screenshots/register_error_light.jpg" width="230" height="500" />
 <img src="assets/screenshots/verify_email_light.jpg" width="230" height="500" />
-<img src="assets/screenshots/new_note_success_dark.jpg" width="230" height="500" />
+<img src="assets/screenshots/new_note_success_dark.jpg" width="230" height="500" />  
+
+> Find more screenshots [here](./assets/screenshots/).
