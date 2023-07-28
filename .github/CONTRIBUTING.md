@@ -14,7 +14,7 @@ This project and everyone participating in it is governed by the [Contributor Co
 
 This section guides you through submitting a bug report for Flutter_Firebase. Following these guidelines helps maintainers and the community understand your report, reproduce the behavior, and find related reports.
 
-Before creating bug reports, please check [this list](#before-submitting-a-bug-report) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report). Fill out [the required template](./issue_templates/bug_report.md), the information it asks for helps us resolve issues faster.
+Before creating bug reports, please check [this list](#before-submitting-a-bug-report) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report). Fill out [the required template](./issue_template/BUG_REPORT.md), the information it asks for helps us resolve issues faster.
 
 > **Note:** If you find a **Closed** issue that seems like it is the same thing that you're experiencing, open a new issue and include a link to the original issue in the body of your new one.
 
@@ -26,7 +26,7 @@ Before creating bug reports, please check [this list](#before-submitting-a-bug-r
 
 #### How Do I Submit A (Good) Bug Report?
 
-Bugs are tracked as [GitHub issues](https://github.com/features/issues). After you've determined the nature of the problem, create an issue and provide the following information by filling in [the template](./issue_templates/bug_report.md).
+Bugs are tracked as [GitHub issues](https://github.com/features/issues). After you've determined the nature of the problem, create an issue and provide the following information by filling in [the template](./issue_template/BUG_REPORT.md).
 
 Explain the problem and include additional details to help maintainers reproduce the problem:
 
@@ -53,7 +53,7 @@ Include details about your configuration and environment:
 
 This section guides you through submitting an enhancement suggestion for Flutter_Firebase, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion and find related suggestions.
 
-Before creating enhancement suggestions, please check [this list](#before-submitting-an-enhancement-suggestion) as you might find out that you don't need to create one. When you are creating an enhancement suggestion, please [include as many details as possible](#how-do-i-submit-a-good-enhancement-suggestion). Fill in [the template](./issue_templates/feature_request.md), including the steps that you imagine you would take if the feature you're requesting existed.
+Before creating enhancement suggestions, please check [this list](#before-submitting-an-enhancement-suggestion) as you might find out that you don't need to create one. When you are creating an enhancement suggestion, please [include as many details as possible](#how-do-i-submit-a-good-enhancement-suggestion). Fill in [the template](./ISSUE_TEMPLATE/FEATURE_REQUEST.md), including the steps that you imagine you would take if the feature you're requesting existed.
 
 #### Before Submitting An Enhancement Suggestion
 
@@ -82,7 +82,7 @@ The process described here has several goals:
 
 Please follow these steps to have your contribution considered by the maintainers:
 
-1. Follow all instructions in [the template](./pull_request_templates/pull_request.md).
+1. Follow all instructions in [the template](./PULL_REQUEST_TEMPLATE.md).
 2. Follow appropriate [style guides](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo) and [proper commit conventions](https://www.conventionalcommits.org/en/v1.0.0/).
 3. After you submit your pull request, verify that all [status checks](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks) are passing. <details><summary>What if the status checks are failing?</summary>If a status check is failing, and you believe that the failure is unrelated to your change, please leave a comment on the pull request explaining why you believe the failure is unrelated. A maintainer will re-run the status check for you. If we conclude that the failure was a false positive, then we will open an issue to track that problem with our status check suite.</details>
 4. Follow proper [branching strategy](https://medium.com/@yubinkarki/git-branching-strategy-617e8b73c8e3). Checkout from the default branch to start working.
