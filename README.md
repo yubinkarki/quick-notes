@@ -7,6 +7,7 @@ A note taking mobile application built with Flutter and Firebase as the backend 
 - [Features](#features)
 - [Development Setup](#development-setup)
 - [Project Configuration](#project-configuration)
+- [Contributing](#contributing)
 - [Flutter Generated](#learn-flutter)
 - [App Screenshots](#app-screenshots)
 
@@ -43,6 +44,10 @@ flutter pub get
 flutter run || flutter run --flavor dev
 ```
 
+## Contributing
+
+We welcome and encourage any contributions to the project whether it be a bug report, bug fix or a new possible feature. If you would like to start with any contributions, please follow the [contributing guidelines](.github/CONTRIBUTING.md).
+
 ## Learn Flutter
 
 This project is a starting point for a Flutter application.
@@ -61,6 +66,6 @@ samples, guidance on mobile development, and a full API reference.
 <img src="assets/screenshots/login_dark.jpg" width="230" height="500" />
 <img src="assets/screenshots/register_error_light.jpg" width="230" height="500" />
 <img src="assets/screenshots/verify_email_light.jpg" width="230" height="500" />
-<img src="assets/screenshots/new_note_success_dark.jpg" width="230" height="500" />  
+<img src="assets/screenshots/new_note_success_dark.jpg" width="230" height="500" />
 
 > Find more screenshots [here](./assets/screenshots/).
