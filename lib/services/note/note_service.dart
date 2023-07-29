@@ -37,7 +37,7 @@ class NoteService {
       final currentUser = _user;
 
       if (currentUser != null) {
-        return note.id == currentUser.id;
+        return note.userId == currentUser.id;
       } else {
         throw UserNotSetException();
       }
