@@ -51,7 +51,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
       );
     } else {
       final existingUser = AuthService.factoryFirebase().currentUser!;
-      final email = existingUser.email!;
+      final email = existingUser.email;
       final owner = await _noteService.getUser(email: email);
 
       await _noteService.createNote(owner: owner, text: text);
