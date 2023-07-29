@@ -8,9 +8,11 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:okaychata/constants/notes.dart';
 import 'package:okaychata/services/note/note_exceptions.dart';
+import 'package:okaychata/utilities/generics/filter.dart' show Filter;
 
 class NoteService {
   Database? _db;
+  DatabaseUser? _user;
 
   List<DatabaseNote> _notes = [];
 
@@ -29,13 +31,39 @@ class NoteService {
 
   factory NoteService() => _shared;
 
-  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
+  // Getting all notes from current user only.
+  Stream<List<DatabaseNote>> get allNotes {
+    return _notesStreamController.stream.filter((note) {
+      final currentUser = _user;
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+      if (currentUser != null) {
+        return note.id == currentUser.id;
+      } else {
+        throw UserNotSetException();
+      }
+    });
+  }
+
+  Future<DatabaseUser> getOrCreateUser({
+    required String email,
+    bool setAsCurrentUser = true,
+  }) async {
     try {
-      return await getUser(email: email);
+      final existingUser = await getUser(email: email);
+
+      if (setAsCurrentUser) {
+        _user = existingUser;
+      }
+
+      return existingUser;
     } on UserDoesNotExistException {
-      return await createUser(email: email);
+      final createdUser = await createUser(email: email);
+
+      if (setAsCurrentUser) {
+        _user = createdUser;
+      }
+
+      return createdUser;
     } catch (e) {
       rethrow;
     }
