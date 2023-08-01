@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:okaychata/services/note/note_service.dart';
-import 'package:okaychata/utilities/dialogs/show_delete_dialog.dart';
+import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
+import 'package:okaychata/utilities/dialogs/show_delete_dialog.dart' show showLDeleteDialog;
 
-typedef NoteCallback = void Function(DatabaseNote note);
+typedef NoteCallback = void Function(CloudNote note);
 
 class NoteListView extends StatelessWidget {
-  final List<DatabaseNote> notes;
+  final Iterable<CloudNote> notes;
   final NoteCallback onDeleteNote;
   final NoteCallback onTapNote;
 
@@ -22,12 +22,10 @@ class NoteListView extends StatelessWidget {
     return ListView.builder(
       itemCount: notes.length,
       itemBuilder: (context, index) {
-        final note = notes[index];
+        final note = notes.elementAt(index);
 
         return ListTile(
-          onTap: () {
-            onTapNote(note);
-          },
+          onTap: () => onTapNote(note),
           title: Text(
             note.text,
             maxLines: 1,
