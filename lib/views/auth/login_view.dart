@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/services/auth/auth_exceptions.dart';
+import 'package:okaychata/constants/static_strings.dart' show AppStrings;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
+import 'package:okaychata/constants/value_manager.dart' show AppPadding, AppMargin;
 import 'package:okaychata/utilities/dialogs/show_error_dialog.dart' show showErrorDialog;
 
 class LoginView extends StatefulWidget {
@@ -39,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Login",
+          AppStrings.login,
           style: textTheme.titleLarge,
         ),
       ),
@@ -56,7 +58,12 @@ class _LoginViewState extends State<LoginView> {
         child: Container(
           color: Theme.of(context).colorScheme.background,
           child: Padding(
-            padding: const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 0),
+            padding: const EdgeInsets.only(
+              left: AppPadding.p20,
+              top: AppPadding.p20,
+              right: AppPadding.p20,
+              bottom: AppPadding.p20,
+            ),
             child: Column(
               children: [
                 TextField(
@@ -65,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: const InputDecoration(
-                    hintText: "Enter your email",
+                    hintText: AppStrings.enterEmail,
                   ),
                 ),
                 TextField(
@@ -74,11 +81,11 @@ class _LoginViewState extends State<LoginView> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: const InputDecoration(
-                    hintText: "Enter your password",
+                    hintText: AppStrings.enterPassword,
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 50),
+                  margin: const EdgeInsets.only(top: AppMargin.m50),
                   child: TextButton(
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus(); // Removing input focus to dismiss keyboard.
@@ -116,22 +123,22 @@ class _LoginViewState extends State<LoginView> {
                       } on UserNotFoundAuthException {
                         await showErrorDialog(
                           context,
-                          "User not found",
+                          AppStrings.noUser,
                         );
                       } on WrongPasswordAuthException {
                         await showErrorDialog(
                           context,
-                          "Incorrect password",
+                          AppStrings.incorrectPassword,
                         );
                       } on GenericAuthException {
                         await showErrorDialog(
                           context,
-                          "Authentication error",
+                          AppStrings.authError,
                         );
                       }
                     },
                     child: Text(
-                      "Login",
+                      AppStrings.login,
                       style: textTheme.labelMedium,
                     ),
                   ),
@@ -145,7 +152,7 @@ class _LoginViewState extends State<LoginView> {
                     );
                   },
                   child: Text(
-                    "Go to Register",
+                    AppStrings.goToRegister,
                     style: textTheme.labelMedium,
                   ),
                 ),
