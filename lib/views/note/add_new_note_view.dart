@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:okaychata/services/auth/auth_service.dart';
-import 'package:okaychata/services/note/note_service.dart';
-import 'package:okaychata/utilities/generics/get_arguments.dart';
-import 'package:okaychata/utilities/dialogs/show_generic_dialog.dart';
+import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
+import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
+import 'package:okaychata/services/cloud/cloud_storage.dart' show CloudStorage;
+import 'package:okaychata/utilities/generics/get_arguments.dart' show GetArgument;
+import 'package:okaychata/utilities/dialogs/show_generic_dialog.dart' show showGenericDialog;
 
 class AddNewNoteView extends StatefulWidget {
   const AddNewNoteView({Key? key}) : super(key: key);
@@ -13,19 +14,19 @@ class AddNewNoteView extends StatefulWidget {
 }
 
 class _AddNewNoteViewState extends State<AddNewNoteView> {
-  DatabaseNote? _note;
-  late final NoteService _noteService;
+  CloudNote? _note;
+  late final CloudStorage _noteService;
   late final TextEditingController _textController;
 
   @override
   void initState() {
-    _noteService = NoteService();
+    _noteService = CloudStorage();
     _textController = TextEditingController();
     super.initState();
   }
 
-  Future<DatabaseNote?> populateTextField(BuildContext context) async {
-    final widgetNote = context.getArgument<DatabaseNote>();
+  Future<CloudNote?> populateTextField(BuildContext context) async {
+    final widgetNote = context.getArgument<CloudNote>();
 
     _note = widgetNote;
 
@@ -51,10 +52,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
       );
     } else {
       final existingUser = AuthService.factoryFirebase().currentUser!;
-      final email = existingUser.email;
-      final owner = await _noteService.getUser(email: email);
+      final userId = existingUser.id;
 
-      await _noteService.createNote(owner: owner, text: text);
+      await _noteService.createNewNote(ownerUserId: userId);
 
       Future.delayed(
         const Duration(milliseconds: 200),
@@ -75,7 +75,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (text.isNotEmpty && note != null) {
-      await _noteService.updateNote(note: note, newText: text);
+      await _noteService.updateNote(documentId: note.documentId, text: text);
 
       Future.delayed(
         const Duration(milliseconds: 200),
@@ -108,7 +108,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final widgetNote = context.getArgument<DatabaseNote>();
+    final widgetNote = context.getArgument<CloudNote>();
     final inputTextValue = widgetNote?.text;
 
     return Scaffold(
