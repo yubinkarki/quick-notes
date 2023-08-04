@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:okaychata/constants/cloud_storage.dart';
-import 'package:okaychata/services/cloud/cloud_note.dart';
 import 'package:okaychata/services/cloud/cloud_storage_exceptions.dart';
+import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
 
 class CloudStorage {
   final notes = FirebaseFirestore.instance.collection("notes");
@@ -18,16 +18,15 @@ class CloudStorage {
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
     return notes.snapshots().map(
           (event) =>
-              event.docs
-              .map((doc) => CloudNote.fromSnapshot(doc))
+              event.docs.map((doc) => CloudNote.fromSnapshot(doc))
               .where((note) => note.ownerUserId == ownerUserId),
         );
   }
 
-  Future<CloudNote> createNewNote({required String ownerUserId}) async {
+  Future<CloudNote> createNewNote({required String ownerUserId, required String text}) async {
     final document = await notes.add({
       ownerUserIdFieldName: ownerUserId,
-      textFieldName: "",
+      textFieldName: text,
     });
 
     final fetchedNote = await document.get();
@@ -35,7 +34,7 @@ class CloudStorage {
     return CloudNote(
       documentId: fetchedNote.id,
       ownerUserId: ownerUserId,
-      text: "",
+      text: text,
     );
   }
 
