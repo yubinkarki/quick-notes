@@ -1,0 +1,57 @@
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Gradle and Flutter clean"
+  lane :clean do
+    gradle(task: "clean")
+
+    Dir.chdir "../.." do
+      sh("flutter", "clean")
+    end
+  end
+
+  desc "Submit a new Dev build to Firebase App Distribution"
+  lane :dev_distribution do |options|
+    clean
+
+    Dir.chdir "../.." do
+      sh("flutter build apk --release --flavor dev")
+    end
+
+    firebase_app_distribution(
+      app: "1:102007304767:android:469d2c3080022a9340fe8a",
+      groups: "heavenly-delusion",
+      release_notes: "Initial release note for dev build.",
+      firebase_cli_token: options[:firebase_token],
+      apk_path: "../build/app/outputs/flutter-apk/app-dev-release.apk"
+    )
+  end
+
+  desc "Submit a new Prod build to Firebase App Distribution"
+  lane :prod_distribution do |options|
+    clean
+
+    Dir.chdir "../.." do
+      sh("flutter build apk --release --flavor prod")
+    end
+
+    firebase_app_distribution(
+      app: "1:102007304767:android:060580bb90939af840fe8a",
+      groups: "heavenly-delusion",
+      release_notes: "Initial release note for prod build.",
+      firebase_cli_token: options[:firebase_token],
+      apk_path: "../build/app/outputs/flutter-apk/app-prod-release.apk"
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+end
