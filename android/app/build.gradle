@@ -94,6 +94,7 @@ android {
             resValue "string", "app_name", "okaychata"
         }
     }
+    namespace 'com.baalho.okaychata'
 }
 
 flutter {
