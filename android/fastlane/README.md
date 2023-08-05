@@ -39,14 +39,6 @@ Gradle and Flutter clean
 
 Submit a new Dev build to Firebase App Distribution
 
-### android prod_distribution
-
-```sh
-[bundle exec] fastlane android prod_distribution
-```
-
-Submit a new Prod build to Firebase App Distribution
-
 ### android deploy
 
 ```sh
