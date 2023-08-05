@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:102007304767:android:060580bb90939af840fe8a",
+        "mobilesdk_app_id": "1:102007304767:android:469d2c3080022a9340fe8a",
         "android_client_info": {
-          "package_name": "com.baalho.okaychata"
+          "package_name": "com.baalho.okaychata.dev"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "102007304767-51vrha2f0muqp7r7jo2fqd2en1hm6m5e.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "102007304767-m9tfn95emv2npjt99o2qtr2qubsturls.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baalho.okaychata"
+              }
             }
           ]
         }
