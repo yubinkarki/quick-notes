@@ -12,6 +12,7 @@ platform :android do
 
     Dir.chdir "../.." do
       sh("flutter clean")
+      sh("flutter pub get")
     end
   end
 
