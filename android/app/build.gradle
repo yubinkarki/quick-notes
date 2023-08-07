@@ -33,7 +33,6 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -50,6 +49,7 @@ android {
     }
 
     defaultConfig {
+        compileSdk 33
         applicationId "com.baalho.okaychata"
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
@@ -74,7 +74,7 @@ android {
         }
     }
 
-    flavorDimensions "default"
+    flavorDimensions = ["default"]
 
     productFlavors {
         dev {
@@ -103,6 +103,13 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
 }
