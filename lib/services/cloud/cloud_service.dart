@@ -4,15 +4,15 @@ import 'package:okaychata/constants/cloud_storage.dart';
 import 'package:okaychata/services/cloud/cloud_storage_exceptions.dart';
 import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
 
-class CloudStorage {
+class CloudService {
   final notes = FirebaseFirestore.instance.collection("notes");
 
-  static final CloudStorage _shared = CloudStorage._sharedInstance();
+  static final CloudService _shared = CloudService._sharedInstance();
 
   // Private constructor.
-  CloudStorage._sharedInstance();
+  CloudService._sharedInstance();
 
-  factory CloudStorage() => _shared;
+  factory CloudService() => _shared;
 
   // Custom formatting for this block.
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
