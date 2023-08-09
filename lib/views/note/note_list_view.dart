@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:share_plus/share_plus.dart' show Share;
+
 import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
 import 'package:okaychata/utilities/dialogs/show_delete_dialog.dart' show showLDeleteDialog;
 
@@ -32,15 +34,28 @@ class NoteListView extends StatelessWidget {
             softWrap: true,
             overflow: TextOverflow.ellipsis,
           ),
-          trailing: IconButton(
-            onPressed: () async {
-              final shouldDelete = await showLDeleteDialog(context);
+          trailing: Wrap(
+            spacing: 5,
+            children: <Widget>[
+              IconButton(
+                onPressed: () async {
+                  Share.share(note.text, subject: "Sharing a Note");
+                },
+                icon: const Icon(Icons.share),
+                iconSize: 20,
+              ),
+              IconButton(
+                onPressed: () async {
+                  final shouldDelete = await showLDeleteDialog(context);
 
-              if (shouldDelete) {
-                onDeleteNote(note);
-              }
-            },
-            icon: const Icon(Icons.delete),
+                  if (shouldDelete) {
+                    onDeleteNote(note);
+                  }
+                },
+                icon: const Icon(Icons.delete),
+                iconSize: 20,
+              ),
+            ],
           ),
         );
       },
