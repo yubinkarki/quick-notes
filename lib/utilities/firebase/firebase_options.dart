@@ -40,7 +40,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBbhKdL55orppgjP-3tqbu6yQQXFcinCQI',
-    appId: '1:102007304767:android:060580bb90939af840fe8a',
+    appId: '1:102007304767:android:469d2c3080022a9340fe8a',
     messagingSenderId: '102007304767',
     projectId: 'flutter-course-fcc',
     storageBucket: 'flutter-course-fcc.appspot.com',
@@ -48,11 +48,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDGP223UKpxqLgYBQAyJwUItL1-n9Mrn-A',
-    appId: '1:102007304767:ios:fcc9066613c2114540fe8a',
+    appId: '1:102007304767:ios:45ea840df534ab0840fe8a',
     messagingSenderId: '102007304767',
     projectId: 'flutter-course-fcc',
     storageBucket: 'flutter-course-fcc.appspot.com',
     iosClientId: '102007304767-m9tfn95emv2npjt99o2qtr2qubsturls.apps.googleusercontent.com',
-    iosBundleId: 'com.baalho.okaychata',
+    iosBundleId: 'com.baalho.okaychata.dev',
   );
 }
