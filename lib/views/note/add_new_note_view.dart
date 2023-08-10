@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
-import 'package:okaychata/services/cloud/cloud_storage.dart' show CloudStorage;
+import 'package:okaychata/services/cloud/cloud_service.dart' show CloudService;
 import 'package:okaychata/utilities/generics/get_arguments.dart' show GetArgument;
 import 'package:okaychata/utilities/dialogs/show_generic_dialog.dart' show showGenericDialog;
 
@@ -15,12 +15,12 @@ class AddNewNoteView extends StatefulWidget {
 
 class _AddNewNoteViewState extends State<AddNewNoteView> {
   CloudNote? _note;
-  late final CloudStorage _noteService;
+  late final CloudService _noteService;
   late final TextEditingController _textController;
 
   @override
   void initState() {
-    _noteService = CloudStorage();
+    _noteService = CloudService();
     _textController = TextEditingController();
     super.initState();
   }
@@ -54,7 +54,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
       final existingUser = AuthService.factoryFirebase().currentUser!;
       final userId = existingUser.id;
 
-      await _noteService.createNewNote(ownerUserId: userId);
+      await _noteService.createNewNote(ownerUserId: userId, text: text);
 
       Future.delayed(
         const Duration(milliseconds: 200),
