@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show SystemChrome, SystemUiOverlayStyle;
 
-import 'package:okaychata/constants/colors.dart';
 import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/themes/dark_theme.dart';
-import 'package:okaychata/themes/light_theme.dart';
+import 'package:okaychata/themes/dark_theme.dart' show darkTheme;
+import 'package:okaychata/themes/light_theme.dart' show lightTheme;
+import 'package:okaychata/constants/colors.dart' show CustomColors;
 import 'package:okaychata/navigation/app_router.dart' show AppRouter;
 
 void main() {
