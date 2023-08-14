@@ -28,7 +28,7 @@ class _NotesViewState extends State<NotesView> {
   }
 
   Future<String> fakeDelay() async {
-    return Future.delayed(const Duration(seconds: 1), () => "Delaying");
+    return Future.delayed(const Duration(milliseconds: 1500), () => "Delaying");
   }
 
   @override

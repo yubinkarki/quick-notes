@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'login_view.dart';
-import 'verify_email_view.dart';
-import 'package:okaychata/views/note/notes_view.dart';
+import 'login_view.dart' show LoginView;
+import 'verify_email_view.dart' show VerifyEmailView;
+import 'package:okaychata/views/note/notes_view.dart' show NotesView;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
 
 class HomeView extends StatelessWidget {
