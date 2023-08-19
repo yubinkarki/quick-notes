@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/services/auth/auth_exceptions.dart';
+import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
 import 'package:okaychata/constants/static_strings.dart' show AppStrings;
-import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
+import 'package:okaychata/bloc/auth/auth_event.dart' show AuthEventLogin;
 import 'package:okaychata/constants/value_manager.dart' show AppPadding, AppMargin;
 import 'package:okaychata/utilities/dialogs/show_error_dialog.dart' show showErrorDialog;
 
@@ -98,28 +101,7 @@ class _LoginViewState extends State<LoginView> {
                       if (!mounted) return;
 
                       try {
-                        final firebaseAuthService = AuthService.factoryFirebase();
-
-                        await firebaseAuthService.logIn(
-                          email: email,
-                          password: password,
-                        );
-
-                        final user = firebaseAuthService.currentUser;
-
-                        if (!mounted) return;
-
-                        if (user?.isEmailVerified ?? false) {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            notesRoute,
-                            (route) => false,
-                          );
-                        } else {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            verifyEmailRoute,
-                            (route) => false,
-                          );
-                        }
+                        context.read<AuthBloc>().add(AuthEventLogin(email, password));
                       } on UserNotFoundAuthException {
                         await showErrorDialog(
                           context,
