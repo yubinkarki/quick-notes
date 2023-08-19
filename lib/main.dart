@@ -1,16 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemChrome, SystemUiOverlayStyle;
-
-import 'package:flutter_bloc/flutter_bloc.dart' show MultiBlocProvider, BlocProvider;
-
-import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/themes/dark_theme.dart' show darkTheme;
-import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
-import 'package:okaychata/themes/light_theme.dart' show lightTheme;
-import 'package:okaychata/constants/colors.dart' show CustomColors;
-import 'package:okaychata/navigation/app_router.dart' show AppRouter;
-import 'package:okaychata/utilities/global/global_media_query.dart' show GlobalMediaQuery;
-import 'package:okaychata/services/auth/firebase_auth_provider.dart' show FirebaseAuthProvider;
+import 'package:okaychata/constants/common_imports.dart'
+    show
+        Key,
+        Widget,
+        runApp,
+        AuthBloc,
+        darkTheme,
+        ThemeMode,
+        AppRouter,
+        homeRoute,
+        lightTheme,
+        MaterialApp,
+        CustomColors,
+        BuildContext,
+        SystemChrome,
+        BlocProvider,
+        LayoutBuilder,
+        BoxConstraints,
+        StatelessWidget,
+        GlobalMediaQuery,
+        MultiBlocProvider,
+        SystemUiOverlayStyle,
+        FirebaseAuthProvider,
+        WidgetsFlutterBinding;
 
 void main() {
   // To call native code by Firebase before running application.
