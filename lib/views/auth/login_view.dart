@@ -1,14 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/services/auth/auth_exceptions.dart';
-import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
-import 'package:okaychata/constants/static_strings.dart' show AppStrings;
-import 'package:okaychata/bloc/auth/auth_event.dart' show AuthEventLogin;
-import 'package:okaychata/constants/value_manager.dart' show AppPadding, AppMargin;
-import 'package:okaychata/utilities/dialogs/show_error_dialog.dart' show showErrorDialog;
+import 'package:okaychata/constants/common_imports.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -29,11 +19,44 @@ class _LoginViewState extends State<LoginView> {
     super.initState();
   }
 
+  Future<void> _handleLogin(BuildContext context) async {
+    _dismissKeyboard(context);
+
+    final email = _email.text;
+    final password = _password.text;
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    if (!mounted) return;
+
+    context.read<AuthBloc>().add(AuthEventLogin(email, password));
+  }
+
+  void _handleNavigateToRegister(context) async {
+    _dismissKeyboard(context);
+
+    await Future.delayed(const Duration(milliseconds: 150));
+
+    if (!mounted) return;
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      registerRoute,
+      (route) => false,
+    );
+  }
+
+  void _dismissKeyboard(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
+  }
+
   @override
   void dispose() {
     _email.dispose();
     _password.dispose();
-
     super.dispose();
   }
 
@@ -43,21 +66,11 @@ class _LoginViewState extends State<LoginView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppStrings.login,
-          style: textTheme.titleLarge,
-        ),
+        title: Text(AppStrings.login, style: textTheme.titleLarge),
       ),
       body: GestureDetector(
-        // This is to dismiss keyboard when tapped anywhere on the screen.
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-
-          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus?.unfocus();
-          }
-        },
+        behavior: HitTestBehavior.translucent,
+        onTap: () => _dismissKeyboard(context),
         child: Container(
           color: Theme.of(context).colorScheme.background,
           child: Padding(
@@ -74,69 +87,42 @@ class _LoginViewState extends State<LoginView> {
                   keyboardType: TextInputType.emailAddress,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: AppStrings.enterEmail,
-                  ),
+                  decoration: const InputDecoration(hintText: AppStrings.enterEmail),
                 ),
                 TextField(
                   controller: _password,
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: AppStrings.enterPassword,
-                  ),
+                  decoration: const InputDecoration(hintText: AppStrings.enterPassword),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: AppMargin.m50),
-                  child: TextButton(
-                    onPressed: () async {
-                      FocusManager.instance.primaryFocus?.unfocus(); // Removing input focus to dismiss keyboard.
-
-                      final email = _email.text;
-                      final password = _password.text;
-
-                      await Future.delayed(const Duration(milliseconds: 300));
-
-                      if (!mounted) return;
-
-                      try {
-                        context.read<AuthBloc>().add(AuthEventLogin(email, password));
-                      } on UserNotFoundAuthException {
-                        await showErrorDialog(
-                          context,
-                          AppStrings.noUser,
-                        );
-                      } on WrongPasswordAuthException {
-                        await showErrorDialog(
-                          context,
-                          AppStrings.incorrectPassword,
-                        );
-                      } on GenericAuthException {
-                        await showErrorDialog(
-                          context,
-                          AppStrings.authError,
-                        );
+                  child: BlocListener<AuthBloc, AuthState>(
+                    listener: (BuildContext context, AuthState state) async {
+                      if (state is AuthStateLoggedOut) {
+                        if (state.exception is UserNotFoundAuthException) {
+                          await showErrorDialog(context, AppStrings.noUser);
+                        } else if (state.exception is WrongPasswordAuthException) {
+                          await showErrorDialog(context, AppStrings.incorrectPassword);
+                        } else if (state.exception is GenericAuthException) {
+                          await showErrorDialog(context, AppStrings.authError);
+                        }
                       }
                     },
-                    child: Text(
-                      AppStrings.login,
-                      style: textTheme.labelMedium,
+                    child: TextButton(
+                      onPressed: () => _handleLogin(context),
+                      child: Text(
+                        AppStrings.login,
+                        style: textTheme.labelMedium,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 10),
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      registerRoute,
-                      (route) => false,
-                    );
-                  },
-                  child: Text(
-                    AppStrings.goToRegister,
-                    style: textTheme.labelMedium,
-                  ),
+                  onPressed: () => _handleNavigateToRegister(context),
+                  child: Text(AppStrings.goToRegister, style: textTheme.labelMedium),
                 ),
               ],
             ),
