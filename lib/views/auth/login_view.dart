@@ -25,7 +25,7 @@ class _LoginViewState extends State<LoginView> {
     final email = _email.text;
     final password = _password.text;
 
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 200));
 
     if (!mounted) return;
 
@@ -105,7 +105,7 @@ class _LoginViewState extends State<LoginView> {
                           await showErrorDialog(context, AppStrings.noUser);
                         } else if (state.exception is WrongPasswordAuthException) {
                           await showErrorDialog(context, AppStrings.incorrectPassword);
-                        } else if (state.exception is GenericAuthException) {
+                        } else {
                           await showErrorDialog(context, AppStrings.authError);
                         }
                       }
