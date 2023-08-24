@@ -2,9 +2,9 @@ import 'dart:async' show StreamController;
 
 import 'package:flutter/foundation.dart' show immutable;
 
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart' show Database, openDatabase;
 
 import 'package:okaychata/constants/notes.dart';
 import 'package:okaychata/services/note/note_exceptions.dart';
