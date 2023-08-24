@@ -25,45 +25,11 @@ class _RegisterViewState extends State<RegisterView> {
     final email = _email.text;
     final password = _password.text;
 
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 200));
 
     if (!mounted) return;
 
-    try {
-      final firebaseAuthService = AuthService.factoryFirebase();
-
-      await firebaseAuthService.signUp(
-        email: email,
-        password: password,
-      );
-
-      await firebaseAuthService.sendEmailVerification();
-
-      // Don't use 'BuildContext's across async gaps.
-      if (!mounted) return;
-
-      Navigator.of(context).pushNamed(verifyEmailRoute);
-    } on WeakPasswordAuthException {
-      await showErrorDialog(
-        context,
-        "Weak password",
-      );
-    } on EmailAlreadyUsedAuthException {
-      await showErrorDialog(
-        context,
-        "Email is already used",
-      );
-    } on InvalidEmailAuthException {
-      await showErrorDialog(
-        context,
-        "Invalid email",
-      );
-    } on GenericAuthException {
-      await showErrorDialog(
-        context,
-        "Failed to register",
-      );
-    }
+    context.read<AuthBloc>().add(AuthEventRegister(email, password));
   }
 
   void _handleNavigateToLogin(context) async {
@@ -116,20 +82,35 @@ class _RegisterViewState extends State<RegisterView> {
                   keyboardType: TextInputType.emailAddress,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(hintText: "Enter your email"),
+                  decoration: const InputDecoration(hintText: AppStrings.enterEmail),
                 ),
                 TextField(
                   controller: _password,
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(hintText: "Enter your password"),
+                  decoration: const InputDecoration(hintText: AppStrings.enterPassword),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 50),
-                  child: TextButton(
-                    onPressed: () => _handleRegister(context),
-                    child: Text("Register", style: textTheme.labelMedium),
+                  child: BlocListener<AuthBloc, AuthState>(
+                    listener: (BuildContext context, AuthState state) async {
+                      if (state is AuthStateLoggedOut) {
+                        if (state.exception is WeakPasswordAuthException) {
+                          await showErrorDialog(context, "Weak password");
+                        } else if (state.exception is EmailAlreadyUsedAuthException) {
+                          await showErrorDialog(context, "Email is already used");
+                        } else if (state.exception is InvalidEmailAuthException) {
+                          await showErrorDialog(context, "Invalid email");
+                        } else {
+                          await showErrorDialog(context, "Failed to register");
+                        }
+                      }
+                    },
+                    child: TextButton(
+                      onPressed: () => _handleRegister(context),
+                      child: Text("Register", style: textTheme.labelMedium),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
