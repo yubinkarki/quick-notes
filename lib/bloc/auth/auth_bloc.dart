@@ -7,11 +7,14 @@ import 'package:okaychata/services/auth/auth_provider.dart' show AuthProvider;
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthProvider provider;
 
-  // Providing 'AuthStateLoading' as the initial state for this bloc.
-  AuthBloc(this.provider) : super(const AuthStateLoading()) {
-    on<AuthEventInitialize>(_checkAuthState);
+  // Providing 'AuthStateUninitialized' as the initial state for this bloc.
+  AuthBloc(this.provider) : super(const AuthStateUninitialized()) {
     on<AuthEventLogin>(_login);
     on<AuthEventLogout>(_logout);
+    on<AuthEventRegister>(_register);
+    on<AuthEventInitialize>(_checkAuthState);
+    on<AuthEventShouldRegister>(_shouldRegister);
+    on<AuthEventSendEmailVerification>(_sendEmailVerification);
   }
 
   Future<void> _checkAuthState(
@@ -23,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final user = provider.currentUser;
 
     if (user == null) {
-      emit(const AuthStateLoggedOut());
+      emit(const AuthStateLoggedOut(exception: null, isLoading: false));
     } else if (!user.isEmailVerified) {
       emit(const AuthStateNeedsVerification());
     } else {
@@ -31,18 +34,50 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
+  void _shouldRegister(
+    AuthEventShouldRegister event,
+    Emitter<AuthState> emit,
+  ) {
+    emit(const AuthStateRegistering(null));
+  }
+
+  Future<void> _sendEmailVerification(
+    AuthEventSendEmailVerification event,
+    Emitter<AuthState> emit,
+  ) async {
+    await provider.sendEmailVerification();
+
+    emit(state);
+  }
+
   Future<void> _login(
     AuthEventLogin event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthStateLoading());
-
     try {
       final user = await provider.logIn(email: event.email, password: event.password);
 
-      emit(AuthStateLoggedIn(user));
+      if (!user.isEmailVerified) {
+        emit(const AuthStateNeedsVerification());
+      } else {
+        emit(AuthStateLoggedIn(user));
+      }
     } on Exception catch (e) {
-      emit(AuthStateLoginFailure(e));
+      emit(AuthStateLoggedOut(exception: e, isLoading: false));
+    }
+  }
+
+  Future<void> _register(
+    AuthEventRegister event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      await provider.signUp(email: event.email, password: event.password);
+      await provider.sendEmailVerification();
+
+      emit(const AuthStateNeedsVerification());
+    } on Exception catch (e) {
+      emit(AuthStateRegistering(e));
     }
   }
 
@@ -51,13 +86,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     try {
-      emit(const AuthStateLoading());
-
       await provider.logOut();
 
-      emit(const AuthStateLoggedOut());
+      emit(const AuthStateLoggedOut(exception: null, isLoading: false));
     } on Exception catch (e) {
-      emit(AuthStateLogoutFailure(e));
+      emit(AuthStateLoggedOut(exception: e, isLoading: false));
     }
   }
 }
