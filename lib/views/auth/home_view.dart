@@ -7,6 +7,7 @@ import 'package:okaychata/bloc/auth/auth_state.dart';
 import 'verify_email_view.dart' show VerifyEmailView;
 import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
 import 'package:okaychata/views/note/notes_view.dart' show NotesView;
+import 'package:okaychata/views/auth/register_view.dart' show RegisterView;
 import 'package:okaychata/bloc/auth/auth_event.dart' show AuthEventInitialize;
 
 class HomeView extends StatelessWidget {
@@ -24,12 +25,18 @@ class HomeView extends StatelessWidget {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedOut) {
           return const LoginView();
+        } else if (state is AuthStateRegistering) {
+          return const RegisterView();
         } else {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
+          return spinner();
         }
       },
+    );
+  }
+
+  Scaffold spinner() {
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
