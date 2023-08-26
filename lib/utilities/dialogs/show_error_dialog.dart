@@ -10,6 +10,7 @@ Future<void> showErrorDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
+        elevation: 0,
         title: Text("An error occurred", style: textTheme.labelLarge),
         content: Text(text),
         actions: [
