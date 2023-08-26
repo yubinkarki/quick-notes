@@ -19,7 +19,7 @@ class _RegisterViewState extends State<RegisterView> {
     super.initState();
   }
 
-  void _handleRegister(context) async {
+  void _handleRegister(BuildContext context) async {
     _dismissKeyboard(context);
 
     final email = _email.text;
@@ -32,17 +32,14 @@ class _RegisterViewState extends State<RegisterView> {
     context.read<AuthBloc>().add(AuthEventRegister(email, password));
   }
 
-  void _handleNavigateToLogin(context) async {
+  void _handleNavigateToLogin(BuildContext context) async {
     _dismissKeyboard(context);
 
     await Future.delayed(const Duration(milliseconds: 150));
 
     if (!mounted) return;
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      loginRoute,
-      (route) => false,
-    );
+    context.read<AuthBloc>().add(const AuthEventLogout());
   }
 
   void _dismissKeyboard(BuildContext context) {
@@ -64,61 +61,61 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Register", style: textTheme.titleLarge),
-      ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => _dismissKeyboard(context),
-        child: Container(
-          color: Theme.of(context).colorScheme.background,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                TextField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: const InputDecoration(hintText: AppStrings.enterEmail),
-                ),
-                TextField(
-                  controller: _password,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: const InputDecoration(hintText: AppStrings.enterPassword),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 50),
-                  child: BlocListener<AuthBloc, AuthState>(
-                    listener: (BuildContext context, AuthState state) async {
-                      if (state is AuthStateLoggedOut) {
-                        if (state.exception is WeakPasswordAuthException) {
-                          await showErrorDialog(context, "Weak password");
-                        } else if (state.exception is EmailAlreadyUsedAuthException) {
-                          await showErrorDialog(context, "Email is already used");
-                        } else if (state.exception is InvalidEmailAuthException) {
-                          await showErrorDialog(context, "Invalid email");
-                        } else {
-                          await showErrorDialog(context, "Failed to register");
-                        }
-                      }
-                    },
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (BuildContext context, AuthState state) async {
+        if (state is AuthStateRegistering) {
+          if (state.exception is WeakPasswordAuthException) {
+            await showErrorDialog(context, "Weak password");
+          } else if (state.exception is EmailAlreadyUsedAuthException) {
+            await showErrorDialog(context, "Email is already used");
+          } else if (state.exception is InvalidEmailAuthException) {
+            await showErrorDialog(context, "Invalid email");
+          } else if (state.exception is GenericAuthException) {
+            await showErrorDialog(context, "Failed to register");
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Register", style: textTheme.titleLarge),
+        ),
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => _dismissKeyboard(context),
+          child: Container(
+            color: Theme.of(context).colorScheme.background,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _email,
+                    keyboardType: TextInputType.emailAddress,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(hintText: AppStrings.enterEmail),
+                  ),
+                  TextField(
+                    controller: _password,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(hintText: AppStrings.enterPassword),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 50),
                     child: TextButton(
                       onPressed: () => _handleRegister(context),
                       child: Text("Register", style: textTheme.labelMedium),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: () => _handleNavigateToLogin(context),
-                  child: Text("Go to Login", style: textTheme.labelMedium),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () => _handleNavigateToLogin(context),
+                    child: Text("Go to Login", style: textTheme.labelMedium),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

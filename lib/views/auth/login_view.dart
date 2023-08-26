@@ -25,24 +25,26 @@ class _LoginViewState extends State<LoginView> {
     final email = _email.text;
     final password = _password.text;
 
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 150));
 
     if (!mounted) return;
 
     context.read<AuthBloc>().add(AuthEventLogin(email, password));
   }
 
-  void _handleNavigateToRegister(context) async {
+  Future<void> _handleNavigateToRegister(BuildContext context) async {
     _dismissKeyboard(context);
 
     await Future.delayed(const Duration(milliseconds: 150));
 
     if (!mounted) return;
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      registerRoute,
-      (route) => false,
-    );
+    context.read<AuthBloc>().add(const AuthEventShouldRegister());
+
+    // Navigator.of(context).pushNamedAndRemoveUntil(
+    //   registerRoute,
+    //   (route) => false,
+    // );
   }
 
   void _dismissKeyboard(BuildContext context) {
@@ -64,67 +66,64 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.login, style: textTheme.titleLarge),
-      ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () => _dismissKeyboard(context),
-        child: Container(
-          color: Theme.of(context).colorScheme.background,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: AppPadding.p20,
-              top: AppPadding.p20,
-              right: AppPadding.p20,
-              bottom: AppPadding.p20,
-            ),
-            child: Column(
-              children: [
-                TextField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: const InputDecoration(hintText: AppStrings.enterEmail),
-                ),
-                TextField(
-                  controller: _password,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: const InputDecoration(hintText: AppStrings.enterPassword),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: AppMargin.m50),
-                  child: BlocListener<AuthBloc, AuthState>(
-                    listener: (BuildContext context, AuthState state) async {
-                      if (state is AuthStateLoggedOut) {
-                        if (state.exception is UserNotFoundAuthException) {
-                          await showErrorDialog(context, AppStrings.noUser);
-                        } else if (state.exception is WrongPasswordAuthException) {
-                          await showErrorDialog(context, AppStrings.incorrectPassword);
-                        } else {
-                          await showErrorDialog(context, AppStrings.authError);
-                        }
-                      }
-                    },
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (BuildContext context, AuthState state) async {
+        if (state is AuthStateLoggedOut) {
+          if (state.exception is UserNotFoundAuthException) {
+            await showErrorDialog(context, AppStrings.noUser);
+          } else if (state.exception is WrongPasswordAuthException) {
+            await showErrorDialog(context, AppStrings.incorrectPassword);
+          } else if (state.exception is GenericAuthException) {
+            await showErrorDialog(context, AppStrings.authError);
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppStrings.login, style: textTheme.titleLarge),
+        ),
+        body: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => _dismissKeyboard(context),
+          child: Container(
+            color: Theme.of(context).colorScheme.background,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: AppPadding.p20,
+                top: AppPadding.p20,
+                right: AppPadding.p20,
+                bottom: AppPadding.p20,
+              ),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _email,
+                    keyboardType: TextInputType.emailAddress,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(hintText: AppStrings.enterEmail),
+                  ),
+                  TextField(
+                    controller: _password,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(hintText: AppStrings.enterPassword),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: AppMargin.m50),
                     child: TextButton(
                       onPressed: () => _handleLogin(context),
-                      child: Text(
-                        AppStrings.login,
-                        style: textTheme.labelMedium,
-                      ),
+                      child: Text(AppStrings.login, style: textTheme.labelMedium),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: () => _handleNavigateToRegister(context),
-                  child: Text(AppStrings.goToRegister, style: textTheme.labelMedium),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () => _handleNavigateToRegister(context),
+                    child: Text(AppStrings.goToRegister, style: textTheme.labelMedium),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

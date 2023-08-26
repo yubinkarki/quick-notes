@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:okaychata/bloc/auth/auth_event.dart';
+import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
+import 'package:okaychata/constants/static_strings.dart' show AppStrings;
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -35,7 +38,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     padding: const EdgeInsets.only(left: 50, right: 50),
                     margin: const EdgeInsets.only(bottom: 20),
                     child: Text(
-                      "We've sent you an email verification. Please open it to verify your account.",
+                      AppStrings.emailVerificationConfirmation,
                       textAlign: TextAlign.center,
                       style: textTheme.labelSmall,
                     ),
@@ -43,7 +46,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                   Container(
                     padding: const EdgeInsets.only(left: 50, right: 50),
                     child: Text(
-                      "If you haven't received a verification email yet, press the button below.",
+                      AppStrings.resendEmailVerification,
                       textAlign: TextAlign.center,
                       style: textTheme.labelSmall,
                     ),
@@ -53,11 +56,11 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     height: 60.0,
                     margin: const EdgeInsets.only(top: 60),
                     child: OutlinedButton(
-                      onPressed: () async {
-                        AuthService.factoryFirebase().sendEmailVerification();
+                      onPressed: () {
+                        context.read<AuthBloc>().add(const AuthEventSendEmailVerification());
                       },
                       child: Text(
-                        "Send email verification",
+                        AppStrings.sendEmailVerification,
                         style: textTheme.labelMedium,
                       ),
                     ),
@@ -67,18 +70,11 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     height: 60.0,
                     margin: const EdgeInsets.only(top: 20),
                     child: OutlinedButton(
-                      onPressed: () async {
-                        AuthService.factoryFirebase().logOut();
-
-                        if (!mounted) return;
-
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          loginRoute,
-                          (route) => false,
-                        );
+                      onPressed: () {
+                        context.read<AuthBloc>().add(const AuthEventLogout());
                       },
                       child: Text(
-                        "Go to Login screen",
+                        AppStrings.goToLogin,
                         style: textTheme.labelMedium,
                       ),
                     ),
