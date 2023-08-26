@@ -6,4 +6,10 @@ class AppStrings {
   static const String incorrectPassword = "Incorrect password";
   static const String authError = "Authentication error";
   static const String goToRegister = "Go to Register";
+  static const String goToLogin = "Go to Login";
+  static const String sendEmailVerification = "Send email verification";
+  static const String emailVerificationConfirmation =
+      "We've sent you an email verification. Please open it to verify your account.";
+  static const String resendEmailVerification =
+      "If you haven't received a verification email yet, press the button below.";
 }

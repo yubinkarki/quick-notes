@@ -21,6 +21,7 @@ export 'package:okaychata/constants/value_manager.dart';
 export 'package:okaychata/constants/static_strings.dart';
 export 'package:okaychata/services/auth/auth_service.dart';
 export 'package:okaychata/services/auth/auth_exceptions.dart';
+export 'package:okaychata/utilities/dialogs/loading_dialog.dart';
 export 'package:okaychata/utilities/global/global_media_query.dart';
 export 'package:okaychata/utilities/dialogs/show_error_dialog.dart';
 export 'package:okaychata/services/auth/firebase_auth_provider.dart';
