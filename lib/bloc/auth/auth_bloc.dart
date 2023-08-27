@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEventShouldRegister event,
     Emitter<AuthState> emit,
   ) {
-    emit(const AuthStateRegistering(null));
+    emit(const AuthStateRegistering(exception: null));
   }
 
   Future<void> _sendEmailVerification(
@@ -54,12 +54,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEventLogin event,
     Emitter<AuthState> emit,
   ) async {
+    emit(const AuthStateLoggedOut(exception: null, isLoading: true));
+
     try {
       final user = await provider.logIn(email: event.email, password: event.password);
 
       if (!user.isEmailVerified) {
+        emit(const AuthStateLoggedOut(exception: null, isLoading: false));
         emit(const AuthStateNeedsVerification());
       } else {
+        emit(const AuthStateLoggedOut(exception: null, isLoading: false));
         emit(AuthStateLoggedIn(user));
       }
     } on Exception catch (e) {
@@ -77,7 +81,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(const AuthStateNeedsVerification());
     } on Exception catch (e) {
-      emit(AuthStateRegistering(e));
+      emit(AuthStateRegistering(exception: e));
     }
   }
 
