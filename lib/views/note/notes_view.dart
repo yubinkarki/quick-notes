@@ -7,6 +7,7 @@ import 'package:okaychata/enums/menu_action.dart' show MenuAction;
 import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
 import 'package:okaychata/constants/colors.dart' show CustomColors;
 import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
+import 'package:okaychata/constants/static_strings.dart' show AppStrings;
 import 'package:okaychata/bloc/auth/auth_event.dart' show AuthEventLogout;
 import 'package:okaychata/views/note/note_list_view.dart' show NoteListView;
 import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
@@ -32,7 +33,7 @@ class _NotesViewState extends State<NotesView> {
   }
 
   Future<String> fakeDelay() async {
-    return Future.delayed(const Duration(milliseconds: 1500), () => "Delaying");
+    return await Future.delayed(const Duration(milliseconds: 1500), () => AppStrings.delaying);
   }
 
   @override
@@ -41,13 +42,11 @@ class _NotesViewState extends State<NotesView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your Notes", style: textTheme.titleLarge),
+        title: Text(AppStrings.yourNotes, style: textTheme.titleLarge),
         actions: [
           IconButton(
-            tooltip: "Add new note here",
-            onPressed: () {
-              Navigator.of(context).pushNamed(addNewNoteRoute);
-            },
+            tooltip: AppStrings.addNewNote,
+            onPressed: () => Navigator.of(context).pushNamed(addNewNoteRoute),
             icon: const Icon(Icons.add),
           ),
           PopupMenuButton<MenuAction>(
@@ -70,11 +69,11 @@ class _NotesViewState extends State<NotesView> {
               return [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.nothing,
-                  child: Text("Nothing", style: textTheme.labelMedium),
+                  child: Text(AppStrings.nothing, style: textTheme.labelMedium),
                 ),
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text("Logout", style: textTheme.labelMedium),
+                  child: Text(AppStrings.logout, style: textTheme.labelMedium),
                 ),
               ];
             },
@@ -100,21 +99,16 @@ class _NotesViewState extends State<NotesView> {
                           onDeleteNote: (note) async {
                             await _noteService.deleteNote(documentId: note.documentId);
                           },
-                          onTapNote: (note) {
-                            Navigator.of(context).pushNamed(
-                              addNewNoteRoute,
-                              arguments: note,
-                            );
-                          },
+                          onTapNote: (note) => Navigator.of(context).pushNamed(
+                            addNewNoteRoute,
+                            arguments: note,
+                          ),
                         );
                       } else {
                         return Container(
                           color: Theme.of(context).colorScheme.background,
                           alignment: Alignment.center,
-                          child: Text(
-                            "There are no notes right now...",
-                            style: textTheme.labelMedium,
-                          ),
+                          child: Text(AppStrings.noNotes, style: textTheme.labelMedium),
                         );
                       }
 
