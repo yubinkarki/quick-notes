@@ -1,5 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart' show immutable;
+
+import 'package:equatable/equatable.dart' show EquatableMixin;
 
 import 'package:okaychata/services/auth/auth_user.dart' show AuthUser;
 
@@ -19,6 +20,17 @@ class AuthStateRegistering extends AuthState {
   final Exception? exception;
 
   const AuthStateRegistering({this.exception, bool isLoading = false}) : super(isLoading: isLoading);
+}
+
+class AuthStateForgotPassword extends AuthState {
+  final Exception? exception;
+  final bool hasSentEmail;
+
+  const AuthStateForgotPassword({
+    required this.exception,
+    required this.hasSentEmail,
+    bool isLoading = false,
+  }) : super(isLoading: isLoading);
 }
 
 class AuthStateLoggedIn extends AuthState {
