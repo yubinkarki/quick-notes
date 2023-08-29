@@ -39,7 +39,7 @@ class NoteListView extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 onPressed: () async {
-                  Share.share(note.text, subject: "Sharing a Note");
+                  await Share.share(note.text, subject: "Sharing a Note");
                 },
                 icon: const Icon(Icons.share),
                 iconSize: 20,
