@@ -113,10 +113,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "New Note",
-          style: textTheme.titleLarge,
-        ),
+        title: Text("New Note", style: textTheme.titleLarge),
       ),
       body: FutureBuilder(
         future: populateTextField(context),
@@ -149,17 +146,11 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
                       child: inputTextValue != null
                           ? OutlinedButton(
                               onPressed: _handleUpdateButton,
-                              child: Text(
-                                "Update",
-                                style: textTheme.labelMedium,
-                              ),
+                              child: Text("Update", style: textTheme.labelMedium),
                             )
                           : OutlinedButton(
                               onPressed: _handleAddButton,
-                              child: Text(
-                                "Add",
-                                style: textTheme.labelMedium,
-                              ),
+                              child: Text("Add", style: textTheme.labelMedium),
                             ),
                     ),
                   ],
@@ -167,9 +158,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
               );
 
             default:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
           }
         },
       ),
