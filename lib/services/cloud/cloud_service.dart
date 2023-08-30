@@ -16,14 +16,16 @@ class CloudService {
 
   // Custom formatting for this block.
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
-    return notes.snapshots().map(
-          (event) =>
-              event.docs.map((doc) => CloudNote.fromSnapshot(doc))
-              .where((note) => note.ownerUserId == ownerUserId),
-        );
+    return notes.snapshots().map((event) => event.docs
+      .map((doc) => CloudNote.fromSnapshot(doc))
+      .where((note) => note.ownerUserId == ownerUserId),
+    );
   }
 
-  Future<CloudNote> createNewNote({required String ownerUserId, required String text}) async {
+  Future<CloudNote> createNewNote({
+    required String ownerUserId,
+    required String text,
+  }) async {
     final document = await notes.add({
       ownerUserIdFieldName: ownerUserId,
       textFieldName: text,
@@ -54,7 +56,10 @@ class CloudService {
     }
   }
 
-  Future<void> updateNote({required String documentId, required String text}) async {
+  Future<void> updateNote({
+    required String documentId,
+    required String text,
+  }) async {
     try {
       await notes.doc(documentId).update({textFieldName: text});
     } catch (e) {
