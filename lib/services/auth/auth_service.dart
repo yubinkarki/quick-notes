@@ -21,10 +21,7 @@ class AuthService implements AuthProvider {
     required String email,
     required String password,
   }) =>
-      provider.logIn(
-        email: email,
-        password: password,
-      );
+      provider.logIn(email: email, password: password);
 
   @override
   Future<void> sendEmailVerification() => provider.sendEmailVerification();
@@ -34,11 +31,11 @@ class AuthService implements AuthProvider {
     required String email,
     required String password,
   }) =>
-      provider.signUp(
-        email: email,
-        password: password,
-      );
+      provider.signUp(email: email, password: password);
 
   @override
   Future<void> logOut() => provider.logOut();
+
+  @override
+  Future<void> passwordReset({required String email}) => provider.passwordReset(email: email);
 }
