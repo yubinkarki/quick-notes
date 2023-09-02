@@ -11,10 +11,12 @@ class AppStrings {
   static const String addNewNote = "Add new note here";
   static const String passwordReset = "Reset Password";
   static const String authError = "Authentication error";
+  static const String forgotPassword = "Forgot password";
   static const String enterPassword = "Enter your password";
   static const String incorrectPassword = "Incorrect password";
   static const String noNotes = "There are no notes right now...";
   static const String sendEmailVerification = "Send email verification";
+  static const String resetPasswordMessage = "Enter your email to get a link to reset your password.";
   static const String resendEmailVerification =
       "If you haven't received a verification email yet, press the button below.";
   static const String emailVerificationConfirmation =
