@@ -119,6 +119,11 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   const SizedBox(height: 10),
                   TextButton(
+                    onPressed: () => context.read<AuthBloc>().add(const AuthEventForgotPassword()),
+                    child: Text(AppStrings.forgotPassword, style: textTheme.labelMedium),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
                     onPressed: () => _handleNavigateToRegister(context),
                     child: Text(AppStrings.goToRegister, style: textTheme.labelMedium),
                   ),
