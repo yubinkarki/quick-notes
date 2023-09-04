@@ -11,6 +11,8 @@ ThemeData lightTheme(BuildContext context) {
     colorScheme: const ColorScheme.light(
       primary: CustomColors.teal,
       background: CustomColors.lightTeal,
+      error: CustomColors.red,
+      outline: CustomColors.darkTeal,
     ),
     textTheme: lightTextTheme(base.textTheme),
   );

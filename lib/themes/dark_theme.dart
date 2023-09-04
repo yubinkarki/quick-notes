@@ -11,6 +11,8 @@ ThemeData darkTheme(BuildContext context) {
     colorScheme: const ColorScheme.dark(
       primary: CustomColors.slightlyWhite,
       background: CustomColors.slightlyDark,
+      error: CustomColors.red,
+      outline: CustomColors.teal,
     ),
     textTheme: darkTextTheme(base.textTheme),
   );
