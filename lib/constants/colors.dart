@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomColors {
   static const Color black = Color.fromRGBO(0, 0, 0, 1.0);
   static const Color dark = Color.fromRGBO(29, 29, 29, 1.0);
+  static const Color red = Color.fromRGBO(236, 71, 66, 1.0);
   static const Color teal = Color.fromRGBO(16, 155, 147, 1.0);
   static const Color transparent = Color.fromRGBO(0, 0, 0, 0);
   static const Color gray = Color.fromRGBO(138, 138, 138, 1.0);
