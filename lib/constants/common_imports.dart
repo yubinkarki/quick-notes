@@ -7,6 +7,7 @@ export 'package:flutter/services.dart';
 
 // Flutter third-party packages.
 export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:flutter_native_splash/flutter_native_splash.dart';
 
 // Self owned packages.
 export 'package:okaychata/constants/routes.dart';
