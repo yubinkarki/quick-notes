@@ -15,23 +15,31 @@ import 'package:okaychata/constants/common_imports.dart'
         SystemChrome,
         BlocProvider,
         LayoutBuilder,
+        WidgetsBinding,
         BoxConstraints,
         StatelessWidget,
         GlobalMediaQuery,
         MultiBlocProvider,
+        FlutterNativeSplash,
         SystemUiOverlayStyle,
         FirebaseAuthProvider,
         WidgetsFlutterBinding;
 
-void main() {
+void main() async {
   // To call native code by Firebase before running application.
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(systemNavigationBarColor: CustomColors.black),
   );
 
   runApp(const MyApp());
+
+  await Future.delayed(const Duration(seconds: 1));
+
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
