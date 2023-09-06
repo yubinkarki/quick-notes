@@ -79,13 +79,13 @@ android {
     productFlavors {
         dev {
             dimension "default"
-            resValue "string", "app_name", "My Notes [Dev]"
+            resValue "string", "app_name", "My Notes Dev"
             versionNameSuffix ".dev"
             applicationId "com.baalho.okaychata.dev"
         }
         stag {
             dimension "default"
-            resValue "string", "app_name", "My Notes [Stag]"
+            resValue "string", "app_name", "My Notes Stag"
             versionNameSuffix ".stag"
             applicationId "com.baalho.okaychata.stag"
         }
