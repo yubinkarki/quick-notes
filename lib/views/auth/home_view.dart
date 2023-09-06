@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext, BlocConsumer;
+import 'package:flutter_native_splash/flutter_native_splash.dart' show FlutterNativeSplash;
 
 import 'login_view.dart' show LoginView;
 import 'verify_email_view.dart' show VerifyEmailView;
@@ -15,8 +16,16 @@ import 'package:okaychata/views/auth/forgot_password_view.dart' show ForgotPassw
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
+  Future<void> closeSplash() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    FlutterNativeSplash.remove();
+  }
+
   @override
   Widget build(BuildContext context) {
+    closeSplash();
+
     context.read<AuthBloc>().add(const AuthEventInitialize());
 
     return BlocConsumer<AuthBloc, AuthState>(
