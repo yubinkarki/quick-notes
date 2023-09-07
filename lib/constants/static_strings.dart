@@ -15,11 +15,11 @@ class AppStrings {
   static const String passwordReset = "Reset Password";
   static const String authError = "Authentication error";
   static const String emptyValidation = "Please provide";
-  static const String emailValidation = "Please enter a valid email";
   static const String forgotPassword = "Forgot password";
   static const String enterPassword = "Enter your password";
   static const String incorrectPassword = "Incorrect password";
   static const String noNotes = "There are no notes right now...";
+  static const String emailValidation = "Please enter a valid email";
   static const String sendEmailVerification = "Send email verification";
   static const String sendPasswordResetLink = "Send password reset link";
   static const String resendEmailVerification =
