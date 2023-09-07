@@ -14,6 +14,10 @@ import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
 import 'package:okaychata/services/cloud/cloud_service.dart' show CloudService;
 import 'package:okaychata/utilities/dialogs/show_logout_dialog.dart' show showLogoutDialog;
 
+extension Count<T extends Iterable> on Stream<T> {
+  Stream<int> get getLength => map((event) => event.length);
+}
+
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
 
@@ -42,7 +46,18 @@ class _NotesViewState extends State<NotesView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.yourNotes, style: textTheme.titleLarge),
+        title: StreamBuilder<int>(
+          stream: _noteService.allNotes(ownerUserId: userId).getLength,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final int noteCount = snapshot.data ?? 0;
+
+              return Text("You have $noteCount notes", style: textTheme.titleLarge);
+            } else {
+              return Text(AppStrings.empty, style: textTheme.titleLarge);
+            }
+          },
+        ),
         actions: [
           IconButton(
             tooltip: AppStrings.addNewNote,
