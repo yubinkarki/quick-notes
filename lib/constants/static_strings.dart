@@ -31,4 +31,8 @@ class AppStrings {
   static const String resetPasswordMessage = "Enter your email to get a link to reset your password.";
   static const String emailRegEx =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+  static String notesCount(int count) {
+    return "All Notes - $count";
+  }
 }
