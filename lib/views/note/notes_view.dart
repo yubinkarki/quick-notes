@@ -52,7 +52,7 @@ class _NotesViewState extends State<NotesView> {
             if (snapshot.hasData) {
               final int noteCount = snapshot.data ?? 0;
 
-              return Text("You have $noteCount notes", style: textTheme.titleLarge);
+              return Text(AppStrings.notesCount(noteCount), style: textTheme.titleLarge);
             } else {
               return Text(AppStrings.empty, style: textTheme.titleLarge);
             }
