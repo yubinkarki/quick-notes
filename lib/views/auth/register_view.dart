@@ -10,6 +10,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  bool _passwordVisible = false;
 
   @override
   void initState() {
@@ -97,10 +98,19 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                   TextField(
                     controller: _password,
-                    obscureText: true,
+                    obscureText: !_passwordVisible,
                     enableSuggestions: false,
                     autocorrect: false,
-                    decoration: const InputDecoration(hintText: AppStrings.enterPassword),
+                    decoration: InputDecoration(
+                      hintText: AppStrings.enterPassword,
+                      suffixIcon: IconButton(
+                        onPressed: () => setState(() => _passwordVisible = !_passwordVisible),
+                        icon: Icon(
+                          _passwordVisible ? Icons.visibility_off : Icons.visibility,
+                          size: 22.0,
+                        ),
+                      ),
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 50),
