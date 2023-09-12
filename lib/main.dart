@@ -1,29 +1,9 @@
-import 'package:okaychata/constants/common_imports.dart'
-    show
-        Key,
-        Widget,
-        runApp,
-        AuthBloc,
-        darkTheme,
-        ThemeMode,
-        AppRouter,
-        homeRoute,
-        lightTheme,
-        MaterialApp,
-        CustomColors,
-        BuildContext,
-        SystemChrome,
-        BlocProvider,
-        LayoutBuilder,
-        WidgetsBinding,
-        BoxConstraints,
-        StatelessWidget,
-        GlobalMediaQuery,
-        MultiBlocProvider,
-        FlutterNativeSplash,
-        SystemUiOverlayStyle,
-        FirebaseAuthProvider,
-        WidgetsFlutterBinding;
+import "package:okaychata/imports/flutter_imports.dart";
+
+import "package:okaychata/imports/third_party_imports.dart" show FlutterNativeSplash, MultiBlocProvider, BlocProvider;
+
+import "package:okaychata/imports/first_party_imports.dart"
+    show AuthBloc, AppRouter, lightTheme, darkTheme, GlobalMediaQuery, FirebaseAuthProvider, homeRoute, CustomColors;
 
 void main() async {
   // To call native code by Firebase before running application.
