@@ -16,6 +16,37 @@ platform :android do
     end
   end
 
+  desc "Set version name and build number"
+  lane :set_versions do
+    app = load_json(json_path: "../app.json")
+
+    android_set_version_name(version_name: app["android"]["version"])
+
+    android_set_version_code(version_code: app["android"]["buildNumber"])
+  end
+
+  desc "Generic function to use firebase_app_distribution plugin"
+  lane :distribute_to_firebase do |options|
+    app_id = options[:app_id]
+    groups = options[:groups]
+    firebase_cli_token = options[:firebase_cli_token]
+    apk_path = options[:apk_path]
+
+    missing_parameters = [app_id, groups, firebase_cli_token, apk_path].any? { |param| param.nil? }
+
+    if missing_parameters
+      raise "Missing required parameters. Make sure to provide all values."
+    end
+
+    firebase_app_distribution(
+      app: app_id,
+      groups: groups,
+      release_notes: File.read("../../release_notes.txt"),
+      firebase_cli_token: firebase_cli_token,
+      apk_path: apk_path
+    )
+  end
+
   desc "Submit a new Dev build to Firebase App Distribution"
   lane :dev_distribution do |options|
     clean
@@ -24,10 +55,9 @@ platform :android do
       sh("flutter build apk -t lib/main.dart --flavor=dev --release")
     end
 
-    firebase_app_distribution(
-      app: "1:102007304767:android:469d2c3080022a9340fe8a",
+    distribute_to_firebase(
+      app_id: "1:102007304767:android:469d2c3080022a9340fe8a",
       groups: "heavenly-delusion",
-      release_notes: "Initial release note for dev build.",
       firebase_cli_token: options[:firebase_token],
       apk_path: "../build/app/outputs/flutter-apk/app-dev-release.apk"
     )
