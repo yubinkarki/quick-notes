@@ -1,0 +1,133 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Set version name and build number"
+  lane :set_versions do
+    app = load_json(json_path: "../app.json")
+
+    increment_version_number(version_number: app["ios"]["version"])
+
+    increment_build_number(build_number: app["ios"]["buildNumber"])
+  end
+
+  desc 'Register new device'
+    lane :register_new_devices do
+      register_devices(
+        devices: {
+          "Device Name 1" => "Device ID 1",
+          "Device Name 2" => "Device ID 2"
+      }
+    )
+  end
+
+  desc "Generic function to use firebase_app_distribution plugin"
+  lane :distribute_to_firebase do |options|
+    app_id = options[:app_id]
+    groups = options[:groups]
+    firebase_cli_token = options[:firebase_cli_token]
+    ipa_path = options[:ipa_path]
+
+    missing_parameters = [app_id, groups, firebase_cli_token, ipa_path].any? { |param| param.nil? }
+
+    if missing_parameters
+      raise "Missing required parameters. Make sure to provide all values."
+    end
+
+    firebase_app_distribution(
+      app: app_id,
+      groups: groups,
+      release_notes: File.read("../../release_notes.txt"),
+      firebase_cli_token: firebase_cli_token,
+      ipa_path: ipa_path
+    )
+  end
+
+  desc "Run gym to build ipa"
+  lane :build_ipa do |options|
+    scheme = options[:scheme]
+    config = options[:config]
+    ipa_name = options[:ipa_name]
+
+    missing_parameters = [scheme, config, ipa_name].any? { |param| param.nil? }
+
+    if missing_parameters
+      raise "Missing required parameters. Make sure to provide all values."
+    end
+
+    gym(
+      workspace: "Runner.xcworkspace",
+      scheme: scheme,
+      configuration: config,
+      clean: true,
+      output_directory: "archives",
+      output_name: ipa_name,
+      export_method: "ad-hoc"
+    )
+  end
+
+  desc 'Match development scheme for debug mode'
+  lane :match_debug do
+    match(
+      type: "development",
+      readonly: true,
+      app_identifier: ["com.baalho.okaychata.development"],
+      git_basic_authorization: "gitrepoauthtokenbase64"
+    )
+  end
+
+  desc 'Match development scheme for release mode'
+  lane :match_development do
+    match(
+      type: "adhoc",
+      readonly: true,
+      app_identifier: ["com.baalho.okaychata.development"],
+      git_basic_authorization: "gitrepoauthtokenbase64"
+    )
+  end
+
+  desc 'Match staging scheme for release mode'
+  lane :match_staging do
+    match(
+      type: "adhoc",
+      readonly: true,
+      app_identifier: ["com.baalho.okaychata.staging"],
+      git_basic_authorization: "gitrepoauthtokenbase64"
+    )
+  end
+
+  # This is for Firebase distribution. Development scheme, release apk.
+  lane :development do
+    match_development
+
+    build_ipa(
+      scheme: "Development",
+      config: "DevelopmentRelease",
+      ipa_name: "App-Development.ipa"
+    )
+
+    distribute_to_firebase(
+      app_id: "firebase-appid",
+      groups: "dev-testers",
+      firebase_cli_token: 'token',
+      ipa_path: "archives/App-Development.ipa",
+    )
+  end
+
+  # This is for Firebase distribution. Staging scheme, release apk.
+  lane :staging do
+    match_staging
+
+    build_ipa(
+      scheme: "Staging",
+      config: "StagingRelease",
+      ipa_name: "Mercury-Staging.ipa"
+    )
+
+    distribute_to_firebase(
+      app_id: "firebase-appid",
+      groups: "staging-testers",
+      firebase_cli_token: 'token',
+      ipa_path: "archives/App-Staging.ipa",
+    )
+  end
+end
