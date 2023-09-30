@@ -17,8 +17,6 @@ lib/main_bloc.dart
 *.iws
 .idea/
 
-.vscode/
-
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
