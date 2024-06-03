@@ -12,5 +12,6 @@
         "roboto",
         "sqflite",
         "unfocus"
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }

@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:102007304767:android:5582329ab6062c9240fe8a",
+        "android_client_info": {
+          "package_name": "com.baalho.okaychata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "102007304767-51vrha2f0muqp7r7jo2fqd2en1hm6m5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbhKdL55orppgjP-3tqbu6yQQXFcinCQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "102007304767-51vrha2f0muqp7r7jo2fqd2en1hm6m5e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "102007304767-ktpfsn5n1ua05fatnivg2rcnbad99rsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baalho.okaychata.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:102007304767:android:469d2c3080022a9340fe8a",
         "android_client_info": {
           "package_name": "com.baalho.okaychata.dev"
@@ -31,10 +67,10 @@
               "client_type": 3
             },
             {
-              "client_id": "102007304767-m9tfn95emv2npjt99o2qtr2qubsturls.apps.googleusercontent.com",
+              "client_id": "102007304767-ktpfsn5n1ua05fatnivg2rcnbad99rsv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.baalho.okaychata"
+                "bundle_id": "com.baalho.okaychata.dev"
               }
             }
           ]
