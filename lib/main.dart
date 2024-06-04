@@ -6,7 +6,6 @@ import "package:okaychata/imports/first_party_imports.dart"
     show AuthBloc, AppRouter, lightTheme, darkTheme, GlobalMediaQuery, FirebaseAuthProvider, homeRoute, CustomColors;
 
 void main() async {
-  // To call native code by Firebase before running application.
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -35,12 +34,12 @@ class MyApp extends StatelessWidget {
 
           return MaterialApp(
             title: 'Nice',
-            debugShowCheckedModeBanner: false,
-            theme: lightTheme(context),
-            darkTheme: darkTheme(context),
-            themeMode: ThemeMode.system,
-            onGenerateRoute: AppRouter.generateRoute,
             initialRoute: homeRoute,
+            theme: lightTheme(context),
+            themeMode: ThemeMode.system,
+            darkTheme: darkTheme(context),
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: AppRouter.generateRoute,
           );
         },
       ),
