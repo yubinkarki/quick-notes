@@ -1,10 +1,11 @@
 name: okaychata
-description: A note taking application.
+description: A basic note taking application that uses Firebase for auth and storage.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  flutter: ">=3.22.0"
+  sdk: ">=3.4.0"
 
 dependencies:
   flutter:
