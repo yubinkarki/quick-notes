@@ -28,7 +28,7 @@ class _RegisterViewState extends State<RegisterView> {
 
     await Future.delayed(const Duration(milliseconds: 200));
 
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     context.read<AuthBloc>().add(AuthEventRegister(email, password));
   }
@@ -38,7 +38,7 @@ class _RegisterViewState extends State<RegisterView> {
 
     await Future.delayed(const Duration(milliseconds: 150));
 
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     context.read<AuthBloc>().add(const AuthEventLogout());
   }
@@ -61,6 +61,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState state) async {
@@ -84,30 +85,30 @@ class _RegisterViewState extends State<RegisterView> {
           behavior: HitTestBehavior.opaque,
           onTap: () => _dismissKeyboard(context),
           child: Container(
-            color: Theme.of(context).colorScheme.background,
+            color: colorScheme.surface,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(AppPadding.p20),
               child: Column(
                 children: [
                   TextField(
                     controller: _email,
-                    keyboardType: TextInputType.emailAddress,
-                    enableSuggestions: false,
                     autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(hintText: AppStrings.enterEmail),
                   ),
                   TextField(
-                    controller: _password,
-                    obscureText: !_passwordVisible,
-                    enableSuggestions: false,
                     autocorrect: false,
+                    controller: _password,
+                    enableSuggestions: false,
+                    obscureText: !_passwordVisible,
                     decoration: InputDecoration(
                       hintText: AppStrings.enterPassword,
                       suffixIcon: IconButton(
                         onPressed: () => setState(() => _passwordVisible = !_passwordVisible),
                         icon: Icon(
-                          _passwordVisible ? Icons.visibility_off : Icons.visibility,
                           size: 22.0,
+                          _passwordVisible ? Icons.visibility_off : Icons.visibility,
                         ),
                       ),
                     ),
@@ -116,13 +117,19 @@ class _RegisterViewState extends State<RegisterView> {
                     margin: const EdgeInsets.only(top: 50),
                     child: TextButton(
                       onPressed: () => _handleRegister(context),
-                      child: Text("Register", style: textTheme.labelMedium),
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppPadding.p8),
+                        child: Text("Register", style: textTheme.labelMedium),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
                   TextButton(
                     onPressed: () => _handleNavigateToLogin(context),
-                    child: Text("Go to Login", style: textTheme.labelMedium),
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppPadding.p8),
+                      child: Text("Go to Login", style: textTheme.labelMedium),
+                    ),
                   ),
                 ],
               ),

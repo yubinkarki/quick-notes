@@ -31,7 +31,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     final email = _controller.text;
     await Future.delayed(const Duration(milliseconds: 150));
 
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(AuthEventForgotPassword(email: email));
@@ -42,7 +42,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     _dismissKeyboard(context);
     await Future.delayed(const Duration(milliseconds: 150));
 
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     context.read<AuthBloc>().add(const AuthEventLogout());
   }
@@ -57,11 +57,10 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         if (state is AuthStateForgotPassword) {
           if (state.hasSentEmail) {
             _controller.clear();
-
             await showPasswordResetDialog(context);
           }
 
-          if (!mounted) return;
+          if (!context.mounted) return;
 
           if (state.exception != null) {
             if (state.exception is InvalidEmailAuthException) {
@@ -69,7 +68,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             } else if (state.exception is UserNotFoundAuthException) {
               await showErrorDialog(context, "User Not Found Exception");
             } else {
-              await showErrorDialog(context, "Generic");
+              await showErrorDialog(context, "Something went wrong");
             }
           }
         }
@@ -81,43 +80,47 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         body: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () => _dismissKeyboard(context),
-          child: Padding(
-            padding: const EdgeInsets.all(AppPadding.p20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: AppMargin.m16),
-                  Text(AppStrings.resetPasswordMessage, style: textTheme.labelMedium),
-                  const SizedBox(height: AppMargin.m40),
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    autocorrect: false,
-                    autofocus: true,
-                    controller: _controller,
-                    decoration: inputDecoration(colorTheme: colorTheme),
-                    validator: (String? value) => Validator.emptyValidation(value, "email"),
-                  ),
-                  const SizedBox(height: AppMargin.m40),
-                  OutlinedButton.icon(
-                    label: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: AppPadding.p14),
-                      child: Text(AppStrings.sendPasswordResetLink, style: textTheme.labelSmall),
+          child: Container(
+            height: double.infinity,
+            color: colorTheme.surface,
+            child: Padding(
+              padding: const EdgeInsets.all(AppPadding.p20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: AppMargin.m12),
+                    Text(AppStrings.resetPasswordMessage, style: textTheme.labelMedium),
+                    const SizedBox(height: AppMargin.m40),
+                    TextFormField(
+                      autofocus: true,
+                      autocorrect: false,
+                      controller: _controller,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: inputDecoration(colorTheme: colorTheme),
+                      validator: (String? value) => Validator.emptyValidation(value, "email"),
                     ),
-                    icon: const Icon(Icons.email),
-                    onPressed: () => _handleSendResetLink(context),
-                  ),
-                  const SizedBox(height: AppMargin.m20),
-                  OutlinedButton.icon(
-                    label: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: AppPadding.p14),
-                      child: Text(AppStrings.backToLogin, style: textTheme.labelSmall),
+                    const SizedBox(height: AppMargin.m40),
+                    OutlinedButton.icon(
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: AppPadding.p14),
+                        child: Text(AppStrings.sendPasswordResetLink, style: textTheme.labelSmall),
+                      ),
+                      icon: const Icon(Icons.email),
+                      onPressed: () => _handleSendResetLink(context),
                     ),
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => _handleBackToLogin(context),
-                  )
-                ],
+                    const SizedBox(height: AppMargin.m20),
+                    OutlinedButton.icon(
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: AppPadding.p14),
+                        child: Text(AppStrings.backToLogin, style: textTheme.labelSmall),
+                      ),
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => _handleBackToLogin(context),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

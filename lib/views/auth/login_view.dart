@@ -8,9 +8,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  bool _passwordVisible = false;
+
   late final TextEditingController _email;
   late final TextEditingController _password;
-  bool _passwordVisible = false;
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
 
     await Future.delayed(const Duration(milliseconds: 150));
 
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     context.read<AuthBloc>().add(AuthEventLogin(email, password));
   }
@@ -38,7 +39,7 @@ class _LoginViewState extends State<LoginView> {
 
     await Future.delayed(const Duration(milliseconds: 150));
 
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     context.read<AuthBloc>().add(const AuthEventShouldRegister());
 
@@ -66,6 +67,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final ColorScheme colorTheme = Theme.of(context).colorScheme;
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState state) async {
@@ -87,14 +89,9 @@ class _LoginViewState extends State<LoginView> {
           behavior: HitTestBehavior.translucent,
           onTap: () => _dismissKeyboard(context),
           child: Container(
-            color: Theme.of(context).colorScheme.background,
+            color: colorTheme.surface,
             child: Padding(
-              padding: const EdgeInsets.only(
-                left: AppPadding.p20,
-                top: AppPadding.p20,
-                right: AppPadding.p20,
-                bottom: AppPadding.p20,
-              ),
+              padding: const EdgeInsets.all(AppPadding.p20),
               child: Column(
                 children: [
                   TextField(
@@ -124,18 +121,27 @@ class _LoginViewState extends State<LoginView> {
                     margin: const EdgeInsets.only(top: AppMargin.m50),
                     child: TextButton(
                       onPressed: () => _handleLogin(context),
-                      child: Text(AppStrings.login, style: textTheme.labelMedium),
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppPadding.p8),
+                        child: Text(AppStrings.login, style: textTheme.labelMedium),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
                   TextButton(
                     onPressed: () => context.read<AuthBloc>().add(const AuthEventForgotPassword()),
-                    child: Text(AppStrings.forgotPassword, style: textTheme.labelMedium),
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppPadding.p8),
+                      child: Text(AppStrings.forgotPassword, style: textTheme.labelMedium),
+                    ),
                   ),
                   const SizedBox(height: 10),
                   TextButton(
                     onPressed: () => _handleNavigateToRegister(context),
-                    child: Text(AppStrings.goToRegister, style: textTheme.labelMedium),
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppPadding.p8),
+                      child: Text(AppStrings.goToRegister, style: textTheme.labelMedium),
+                    ),
                   ),
                 ],
               ),
