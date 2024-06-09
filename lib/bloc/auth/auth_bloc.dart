@@ -1,8 +1,23 @@
-import 'package:bloc/bloc.dart' show Bloc, Emitter;
+import "package:okaychata/imports/third_party_imports.dart" show Bloc, Emitter;
 
-import 'package:okaychata/bloc/auth/auth_event.dart';
-import 'package:okaychata/bloc/auth/auth_state.dart';
-import 'package:okaychata/services/auth/auth_provider.dart' show AuthProvider;
+import "package:okaychata/imports/first_party_imports.dart"
+    show
+        AuthState,
+        AuthEvent,
+        AuthProvider,
+        AuthEventLogin,
+        AuthEventLogout,
+        AuthEventRegister,
+        AuthStateLoggedIn,
+        AuthStateLoggedOut,
+        AuthEventInitialize,
+        AuthStateRegistering,
+        AuthStateUninitialized,
+        AuthEventShouldRegister,
+        AuthStateForgotPassword,
+        AuthEventForgotPassword,
+        AuthStateNeedsVerification,
+        AuthEventSendEmailVerification;
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthProvider provider;
