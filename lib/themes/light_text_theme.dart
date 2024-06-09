@@ -1,48 +1,22 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show TextTheme, FontWeight;
 
 import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 
-import 'package:okaychata/constants/colors.dart';
+import 'package:okaychata/constants/colors.dart' show CustomColors;
 
 TextTheme lightTextTheme(TextTheme base) {
+  final baseStyle = GoogleFonts.quicksand(
+    letterSpacing: 0.5,
+    fontWeight: FontWeight.w600,
+    color: CustomColors.darkTeal,
+  );
+
   return base.copyWith(
-    labelSmall: GoogleFonts.quicksand(
-      fontWeight: FontWeight.w600,
-      fontSize: 14,
-      color: CustomColors.darkTeal,
-      letterSpacing: 0.5,
-    ),
-    labelMedium: GoogleFonts.quicksand(
-      fontWeight: FontWeight.w600,
-      fontSize: 18,
-      color: CustomColors.darkTeal,
-      letterSpacing: 0.5,
-    ),
-    labelLarge: GoogleFonts.quicksand(
-      fontWeight: FontWeight.w600,
-      fontSize: 22,
-      color: CustomColors.darkTeal,
-      letterSpacing: 0.5,
-    ),
-    // Used by input field text.
-    titleSmall: GoogleFonts.quicksand(
-      fontWeight: FontWeight.w600,
-      fontSize: 14,
-      color: CustomColors.darkTeal,
-      letterSpacing: 0.5,
-    ),
-    titleMedium: GoogleFonts.quicksand(
-      fontWeight: FontWeight.w600,
-      fontSize: 18,
-      color: CustomColors.darkTeal,
-      letterSpacing: 0.5,
-    ),
-    // Appbar title.
-    titleLarge: GoogleFonts.quicksand(
-      fontWeight: FontWeight.w600,
-      fontSize: 22,
-      color: CustomColors.white,
-      letterSpacing: 0.5,
-    ),
+    labelSmall: baseStyle.copyWith(fontSize: 14),
+    labelLarge: baseStyle.copyWith(fontSize: 22),
+    titleSmall: baseStyle.copyWith(fontSize: 14),
+    titleLarge: baseStyle.copyWith(fontSize: 22),
+    labelMedium: baseStyle.copyWith(fontSize: 18),
+    titleMedium: baseStyle.copyWith(fontSize: 18),
   );
 }

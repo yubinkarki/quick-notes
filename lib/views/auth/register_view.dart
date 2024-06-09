@@ -1,4 +1,8 @@
-import 'package:okaychata/constants/common_imports.dart';
+import "package:okaychata/imports/flutter_imports.dart";
+
+import "package:okaychata/imports/third_party_imports.dart" show BlocListener, ReadContext;
+
+import "package:okaychata/imports/first_party_imports.dart";
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});

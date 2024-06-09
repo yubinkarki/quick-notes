@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show ThemeData, BuildContext, AppBarTheme, ColorScheme;
 
-import 'package:okaychata/constants/colors.dart';
-import 'package:okaychata/themes/light_text_theme.dart';
+import 'package:okaychata/constants/colors.dart' show CustomColors;
+import 'package:okaychata/themes/light_text_theme.dart' show lightTextTheme;
 
 ThemeData lightTheme(BuildContext context) {
   final base = ThemeData.light();
@@ -9,10 +9,10 @@ ThemeData lightTheme(BuildContext context) {
   return base.copyWith(
     appBarTheme: const AppBarTheme(color: CustomColors.teal),
     colorScheme: const ColorScheme.light(
-      primary: CustomColors.teal,
-      background: CustomColors.lightTeal,
       error: CustomColors.red,
+      primary: CustomColors.teal,
       outline: CustomColors.darkTeal,
+      surface: CustomColors.lightTeal,
     ),
     textTheme: lightTextTheme(base.textTheme),
   );

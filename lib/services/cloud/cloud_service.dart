@@ -52,7 +52,7 @@ class CloudService {
             (value) => value.docs.map((doc) => CloudNote.fromSnapshot(doc)),
           );
     } catch (e) {
-      throw CouldNotGetAllNotesException();
+      throw CouldNotGetAllNotesCloudException();
     }
   }
 
@@ -63,7 +63,7 @@ class CloudService {
     try {
       await notes.doc(documentId).update({textFieldName: text});
     } catch (e) {
-      throw CouldNotUpdateNoteException();
+      throw CouldNotUpdateNoteCloudException();
     }
   }
 
@@ -71,7 +71,7 @@ class CloudService {
     try {
       await notes.doc(documentId).delete();
     } catch (e) {
-      throw CouldNotDeleteNoteException();
+      throw CouldNotDeleteNoteCloudException();
     }
   }
 }

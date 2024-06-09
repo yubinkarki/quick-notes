@@ -2,10 +2,10 @@ class CloudStorageException implements Exception {
   const CloudStorageException();
 }
 
-class CouldNotCreateNoteException extends CloudStorageException {}
+class CouldNotCreateNoteCloudException extends CloudStorageException {}
 
-class CouldNotGetAllNotesException extends CloudStorageException {}
+class CouldNotUpdateNoteCloudException extends CloudStorageException {}
 
-class CouldNotUpdateNoteException extends CloudStorageException {}
+class CouldNotDeleteNoteCloudException extends CloudStorageException {}
 
-class CouldNotDeleteNoteException extends CloudStorageException {}
+class CouldNotGetAllNotesCloudException extends CloudStorageException {}

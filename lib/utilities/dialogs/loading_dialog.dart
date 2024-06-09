@@ -1,11 +1,12 @@
-import 'package:okaychata/constants/common_imports.dart';
+import "package:okaychata/imports/flutter_imports.dart"
+    show BuildContext, AlertDialog, CircularProgressIndicator, Column, Colors, MainAxisSize, showDialog, Navigator;
 
 typedef CloseDialog = void Function();
 
 CloseDialog showLoadingDialog({required BuildContext context}) {
   const dialog = AlertDialog(
-    scrollable: false,
     elevation: 0,
+    scrollable: false,
     backgroundColor: Colors.transparent,
     content: Column(
       mainAxisSize: MainAxisSize.min,
@@ -16,8 +17,8 @@ CloseDialog showLoadingDialog({required BuildContext context}) {
   showDialog(
     context: context,
     barrierDismissible: false,
-    // barrierColor: CustomColors.blackTranslucent,
     builder: (context) => dialog,
+    // barrierColor: CustomColors.blackTranslucent,
   );
 
   return () => Navigator.of(context).pop();

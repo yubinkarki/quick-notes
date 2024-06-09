@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:okaychata/constants/routes.dart';
 import 'package:okaychata/enums/menu_action.dart' show MenuAction;
 import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
 import 'package:okaychata/constants/colors.dart' show CustomColors;
+import 'package:okaychata/constants/routes.dart' show addNewNoteRoute;
 import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
 import 'package:okaychata/constants/static_strings.dart' show AppStrings;
 import 'package:okaychata/bloc/auth/auth_event.dart' show AuthEventLogout;
