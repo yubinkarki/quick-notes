@@ -1,14 +1,11 @@
-import 'dart:async' show StreamController;
+import "package:okaychata/imports/dart_imports.dart" show StreamController;
 
-import 'package:flutter/foundation.dart' show immutable;
+import "package:okaychata/imports/flutter_imports.dart" show immutable;
 
-import 'package:path/path.dart' show join;
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart' show Database, openDatabase;
+import "package:okaychata/imports/third_party_imports.dart"
+    show join, Database, openDatabase, getApplicationDocumentsDirectory, MissingPlatformDirectoryException;
 
-import 'package:okaychata/constants/notes.dart';
-import 'package:okaychata/services/note/note_exceptions.dart';
-import 'package:okaychata/utilities/generics/filter.dart' show Filter;
+import "package:okaychata/imports/first_party_imports.dart";
 
 class NoteService {
   Database? _db;

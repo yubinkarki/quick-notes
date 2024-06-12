@@ -69,7 +69,7 @@ class _NotesViewState extends State<NotesView> {
               switch (value) {
                 case MenuAction.logout:
                   final shouldLogout = await showLogoutDialog(context);
-                  if (!mounted) return;
+                  if (!context.mounted) return;
 
                   if (shouldLogout) {
                     context.read<AuthBloc>().add(const AuthEventLogout());
@@ -121,7 +121,7 @@ class _NotesViewState extends State<NotesView> {
                         );
                       } else {
                         return Container(
-                          color: Theme.of(context).colorScheme.background,
+                          color: Theme.of(context).colorScheme.surface,
                           alignment: Alignment.center,
                           child: Text(AppStrings.noNotes, style: textTheme.labelMedium),
                         );

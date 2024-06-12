@@ -1,8 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import "package:okaychata/imports/third_party_imports.dart" show FirebaseFirestore;
 
-import 'package:okaychata/constants/cloud_storage.dart';
-import 'package:okaychata/services/cloud/cloud_storage_exceptions.dart';
-import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
+import "package:okaychata/imports/first_party_imports.dart"
+    show
+        CloudNote,
+        textFieldName,
+        ownerUserIdFieldName,
+        CouldNotUpdateNoteCloudException,
+        CouldNotDeleteNoteCloudException,
+        CouldNotGetAllNotesCloudException;
 
 class CloudService {
   final notes = FirebaseFirestore.instance.collection("notes");
@@ -16,10 +21,10 @@ class CloudService {
 
   // Custom formatting for this block.
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
-    return notes.snapshots().map((event) => event.docs
-      .map((doc) => CloudNote.fromSnapshot(doc))
-      .where((note) => note.ownerUserId == ownerUserId),
-    );
+    return notes.snapshots().map(
+          (event) =>
+              event.docs.map((doc) => CloudNote.fromSnapshot(doc)).where((note) => note.ownerUserId == ownerUserId),
+        );
   }
 
   Future<CloudNote> createNewNote({

@@ -1,6 +1,4 @@
-import 'package:okaychata/services/auth/auth_user.dart' show AuthUser;
-import 'package:okaychata/services/auth/auth_provider.dart' show AuthProvider;
-import 'package:okaychata/services/auth/firebase_auth_provider.dart' show FirebaseAuthProvider;
+import "package:okaychata/imports/first_party_imports.dart" show AuthUser, AuthProvider, FirebaseAuthProvider;
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;

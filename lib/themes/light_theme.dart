@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart' show ThemeData, BuildContext, AppBarTheme, ColorScheme;
+import "package:okaychata/imports/flutter_imports.dart" show ThemeData, BuildContext, AppBarTheme, ColorScheme;
 
-import 'package:okaychata/constants/colors.dart' show CustomColors;
-import 'package:okaychata/themes/light_text_theme.dart' show lightTextTheme;
+import "package:okaychata/imports/first_party_imports.dart" show CustomColors, lightTextTheme;
 
 ThemeData lightTheme(BuildContext context) {
   final base = ThemeData.light();

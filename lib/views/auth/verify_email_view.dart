@@ -26,7 +26,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         ),
       ),
       body: ColoredBox(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

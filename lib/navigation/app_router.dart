@@ -1,13 +1,21 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart"
+    show Route, RouteSettings, MaterialPageRoute, PageRouteBuilder, FadeTransition;
 
-import 'package:okaychata/constants/routes.dart';
-import 'package:okaychata/views/auth/home_view.dart';
-import 'package:okaychata/views/note/notes_view.dart';
-import 'package:okaychata/views/auth/login_view.dart';
-import 'package:okaychata/views/auth/register_view.dart';
-import 'package:okaychata/views/note/add_new_note_view.dart';
-import 'package:okaychata/views/auth/verify_email_view.dart';
-import 'package:okaychata/views/invalid/page_not_found_view.dart';
+import "package:okaychata/imports/first_party_imports.dart"
+    show
+        HomeView,
+        LoginView,
+        homeRoute,
+        NotesView,
+        loginRoute,
+        notesRoute,
+        RegisterView,
+        registerRoute,
+        AddNewNoteView,
+        VerifyEmailView,
+        addNewNoteRoute,
+        verifyEmailRoute,
+        PageNotFoundView;
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {

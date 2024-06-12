@@ -1,10 +1,17 @@
-import "package:firebase_core/firebase_core.dart" show Firebase;
-import "package:firebase_auth/firebase_auth.dart" show FirebaseAuth, FirebaseAuthException;
+import "package:okaychata/imports/third_party_imports.dart" show Firebase, FirebaseAuth, FirebaseAuthException;
 
-import "package:okaychata/services/auth/auth_exceptions.dart";
-import "package:okaychata/services/auth/auth_user.dart" show AuthUser;
-import 'package:okaychata/firebase_options.dart' show DefaultFirebaseOptions;
-import "package:okaychata/services/auth/auth_provider.dart" show AuthProvider;
+import "package:okaychata/imports/first_party_imports.dart"
+    show
+        AuthUser,
+        AuthProvider,
+        GenericAuthException,
+        DefaultFirebaseOptions,
+        UserNotFoundAuthException,
+        InvalidEmailAuthException,
+        WeakPasswordAuthException,
+        WrongPasswordAuthException,
+        UserNotLoggedInAuthException,
+        EmailAlreadyUsedAuthException;
 
 class FirebaseAuthProvider implements AuthProvider {
   @override

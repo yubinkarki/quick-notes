@@ -66,7 +66,7 @@ class LoadingOverlay {
                             return const Placeholder(color: Colors.transparent);
                           }
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),

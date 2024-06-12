@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart" show Color;
 
 class CustomColors {
   static const Color black = Color.fromRGBO(0, 0, 0, 1.0);

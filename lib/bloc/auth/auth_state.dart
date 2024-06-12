@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart' show immutable;
+import "package:okaychata/imports/flutter_imports.dart" show immutable;
 
-import 'package:equatable/equatable.dart' show EquatableMixin;
+import "package:okaychata/imports/third_party_imports.dart" show EquatableMixin;
 
-import 'package:okaychata/services/auth/auth_user.dart' show AuthUser;
+import "package:okaychata/imports/first_party_imports.dart" show AuthUser;
 
 @immutable
 abstract class AuthState {
