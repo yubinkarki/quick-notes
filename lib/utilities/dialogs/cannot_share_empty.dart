@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart" show BuildContext;
 
-import 'package:okaychata/utilities/dialogs/show_generic_dialog.dart' show showGenericDialog;
+import "package:okaychata/imports/first_party_imports.dart" show showGenericDialog;
 
 Future<void> showCannotShareEmptyDialog(BuildContext context) {
   return showGenericDialog<void>(

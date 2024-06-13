@@ -1,8 +1,8 @@
-import 'dart:async' show StreamController;
+import "package:okaychata/imports/dart_imports.dart" show StreamController;
 
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart";
 
-import 'package:okaychata/utilities/global/loading_overlay_controller.dart' show LoadingOverlayController;
+import "package:okaychata/imports/first_party_imports.dart" show LoadingOverlayController;
 
 class LoadingOverlay {
   factory LoadingOverlay() => _shared;

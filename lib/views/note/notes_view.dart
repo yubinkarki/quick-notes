@@ -1,18 +1,20 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart";
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import "package:okaychata/imports/third_party_imports.dart" show ReadContext;
 
-import 'package:okaychata/enums/menu_action.dart' show MenuAction;
-import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
-import 'package:okaychata/constants/colors.dart' show CustomColors;
-import 'package:okaychata/constants/routes.dart' show addNewNoteRoute;
-import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
-import 'package:okaychata/constants/static_strings.dart' show AppStrings;
-import 'package:okaychata/bloc/auth/auth_event.dart' show AuthEventLogout;
-import 'package:okaychata/views/note/note_list_view.dart' show NoteListView;
-import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
-import 'package:okaychata/services/cloud/cloud_service.dart' show CloudService;
-import 'package:okaychata/utilities/dialogs/show_logout_dialog.dart' show showLogoutDialog;
+import "package:okaychata/imports/first_party_imports.dart"
+    show
+        AuthBloc,
+        CloudNote,
+        MenuAction,
+        AppStrings,
+        AuthService,
+        CloudService,
+        CustomColors,
+        NoteListView,
+        addNewNoteRoute,
+        AuthEventLogout,
+        showLogoutDialog;
 
 extension Count<T extends Iterable> on Stream<T> {
   Stream<int> get getLength => map((event) => event.length);

@@ -1,17 +1,24 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart"
+    show StatelessWidget, Key, Widget, BuildContext, debugPrint, Scaffold, CircularProgressIndicator, Center;
 
-import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext, BlocConsumer;
-import 'package:flutter_native_splash/flutter_native_splash.dart' show FlutterNativeSplash;
+import "package:okaychata/imports/third_party_imports.dart" show ReadContext, BlocConsumer, FlutterNativeSplash;
 
-import 'login_view.dart' show LoginView;
-import 'verify_email_view.dart' show VerifyEmailView;
-import 'package:okaychata/bloc/auth/auth_state.dart';
-import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
-import 'package:okaychata/views/note/notes_view.dart' show NotesView;
-import 'package:okaychata/views/auth/register_view.dart' show RegisterView;
-import 'package:okaychata/bloc/auth/auth_event.dart' show AuthEventInitialize;
-import 'package:okaychata/utilities/global/loading_overlay.dart' show LoadingOverlay;
-import 'package:okaychata/views/auth/forgot_password_view.dart' show ForgotPasswordView;
+import "package:okaychata/imports/first_party_imports.dart"
+    show
+        AuthBloc,
+        AuthState,
+        LoginView,
+        NotesView,
+        RegisterView,
+        LoadingOverlay,
+        VerifyEmailView,
+        AuthStateLoggedIn,
+        AuthStateLoggedOut,
+        ForgotPasswordView,
+        AuthEventInitialize,
+        AuthStateRegistering,
+        AuthStateForgotPassword,
+        AuthStateNeedsVerification;
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);

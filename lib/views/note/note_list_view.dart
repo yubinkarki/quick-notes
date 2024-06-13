@@ -1,22 +1,21 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart";
 
-import 'package:share_plus/share_plus.dart' show Share;
+import "package:okaychata/imports/third_party_imports.dart" show Share;
 
-import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
-import 'package:okaychata/utilities/dialogs/show_delete_dialog.dart' show showLDeleteDialog;
+import "package:okaychata/imports/first_party_imports.dart" show CloudNote, showLDeleteDialog;
 
 typedef NoteCallback = void Function(CloudNote note);
 
 class NoteListView extends StatelessWidget {
-  final Iterable<CloudNote> notes;
-  final NoteCallback onDeleteNote;
   final NoteCallback onTapNote;
+  final NoteCallback onDeleteNote;
+  final Iterable<CloudNote> notes;
 
   const NoteListView({
     Key? key,
     required this.notes,
-    required this.onDeleteNote,
     required this.onTapNote,
+    required this.onDeleteNote,
   }) : super(key: key);
 
   @override
@@ -41,8 +40,8 @@ class NoteListView extends StatelessWidget {
                 onPressed: () async {
                   await Share.share(note.text, subject: "Sharing a Note");
                 },
-                icon: const Icon(Icons.share),
                 iconSize: 20,
+                icon: const Icon(Icons.share),
               ),
               IconButton(
                 onPressed: () async {
@@ -52,8 +51,8 @@ class NoteListView extends StatelessWidget {
                     onDeleteNote(note);
                   }
                 },
-                icon: const Icon(Icons.delete),
                 iconSize: 20,
+                icon: const Icon(Icons.delete),
               ),
             ],
           ),

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart' show immutable;
+import "package:okaychata/imports/flutter_imports.dart" show immutable;
 
 typedef CloseLoadingScreen = bool Function();
 typedef UpdateLoadingScreen = bool Function(String text);

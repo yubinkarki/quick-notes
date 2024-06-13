@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart";
 
-import 'package:okaychata/services/cloud/cloud_note.dart' show CloudNote;
-import 'package:okaychata/services/auth/auth_service.dart' show AuthService;
-import 'package:okaychata/services/cloud/cloud_service.dart' show CloudService;
-import 'package:okaychata/utilities/generics/get_arguments.dart' show GetArgument;
-import 'package:okaychata/utilities/dialogs/show_generic_dialog.dart' show showGenericDialog;
+import "package:okaychata/imports/first_party_imports.dart"
+    show CloudNote, AuthService, CloudService, GetArgument, showGenericDialog;
 
 class AddNewNoteView extends StatefulWidget {
   const AddNewNoteView({Key? key}) : super(key: key);

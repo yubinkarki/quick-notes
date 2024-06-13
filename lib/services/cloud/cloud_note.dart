@@ -6,14 +6,14 @@ import "package:okaychata/imports/first_party_imports.dart" show ownerUserIdFiel
 
 @immutable
 class CloudNote {
+  final String text;
   final String documentId;
   final String ownerUserId;
-  final String text;
 
   const CloudNote({
+    required this.text,
     required this.documentId,
     required this.ownerUserId,
-    required this.text,
   });
 
   CloudNote.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)

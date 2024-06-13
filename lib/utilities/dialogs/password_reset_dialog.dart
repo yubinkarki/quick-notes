@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart" show BuildContext;
 
-import 'show_generic_dialog.dart' show showGenericDialog;
-import 'package:okaychata/constants/static_strings.dart' show AppStrings;
+import "package:okaychata/imports/first_party_imports.dart" show AppStrings;
+
+import "show_generic_dialog.dart" show showGenericDialog;
 
 Future<void> showPasswordResetDialog(BuildContext context) {
   return showGenericDialog(

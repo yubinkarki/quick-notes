@@ -1,6 +1,6 @@
 import "package:okaychata/imports/flutter_imports.dart";
 
-import "package:okaychata/imports/third_party_imports.dart" show FlutterNativeSplash, MultiBlocProvider, BlocProvider;
+import 'package:okaychata/imports/third_party_imports.dart' show FlutterNativeSplash, MultiBlocProvider, BlocProvider;
 
 import "package:okaychata/imports/first_party_imports.dart"
     show AuthBloc, AppRouter, lightTheme, darkTheme, GlobalMediaQuery, FirebaseAuthProvider, homeRoute, CustomColors;

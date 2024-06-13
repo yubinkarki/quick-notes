@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart"
+    show StatelessWidget, Key, Widget, BuildContext, Scaffold, Center, Text;
 
 class PageNotFoundView extends StatelessWidget {
   const PageNotFoundView({Key? key}) : super(key: key);

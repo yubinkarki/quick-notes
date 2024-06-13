@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart";
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import "package:okaychata/imports/third_party_imports.dart" show ReadContext;
 
-import 'package:okaychata/bloc/auth/auth_event.dart';
-import 'package:okaychata/bloc/auth/auth_bloc.dart' show AuthBloc;
-import 'package:okaychata/constants/static_strings.dart' show AppStrings;
+import "package:okaychata/imports/first_party_imports.dart"
+    show AppStrings, AuthBloc, AuthEventSendEmailVerification, AuthEventLogout;
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);

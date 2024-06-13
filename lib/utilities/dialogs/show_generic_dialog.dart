@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart"
+    show BuildContext, TextTheme, showDialog, AlertDialog, Text, TextButton, Theme, Navigator;
 
 typedef DialogOptionBuilder<T> = Map<String, T?> Function();
 

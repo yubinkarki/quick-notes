@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import "package:okaychata/imports/flutter_imports.dart"
+    show BuildContext, TextTheme, showDialog, AlertDialog, Text, TextButton, Navigator, Theme;
 
 Future<bool> showLDeleteDialog(BuildContext context) {
   final TextTheme textTheme = Theme.of(context).textTheme;

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show ModalRoute, BuildContext;
+import "package:okaychata/imports/flutter_imports.dart" show BuildContext, ModalRoute;
 
 extension GetArgument on BuildContext {
   T? getArgument<T>() {
