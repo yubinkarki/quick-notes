@@ -6,7 +6,7 @@ import 'package:okaychata/imports/first_party_imports.dart'
     show AppStrings, AuthBloc, AuthEventSendEmailVerification, AuthEventLogout;
 
 class VerifyEmailView extends StatefulWidget {
-  const VerifyEmailView({Key? key}) : super(key: key);
+  const VerifyEmailView({super.key});
 
   @override
   State<VerifyEmailView> createState() => _VerifyEmailViewState();

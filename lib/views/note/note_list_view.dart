@@ -12,11 +12,11 @@ class NoteListView extends StatelessWidget {
   final Iterable<CloudNote> notes;
 
   const NoteListView({
-    Key? key,
+    super.key,
     required this.notes,
     required this.onTapNote,
     required this.onDeleteNote,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:okaychata/imports/first_party_imports.dart'
     show CloudNote, AuthService, CloudService, GetArgument, showGenericDialog;
 
 class AddNewNoteView extends StatefulWidget {
-  const AddNewNoteView({Key? key}) : super(key: key);
+  const AddNewNoteView({super.key});
 
   @override
   State<AddNewNoteView> createState() => _AddNewNoteViewState();

@@ -5,7 +5,7 @@ import 'package:okaychata/imports/third_party_imports.dart' show BlocListener, R
 import 'package:okaychata/imports/first_party_imports.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();

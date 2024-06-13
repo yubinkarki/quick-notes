@@ -21,7 +21,7 @@ import 'package:okaychata/imports/first_party_imports.dart'
         AuthStateNeedsVerification;
 
 class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   Future<void> closeSplash() async {
     await Future.delayed(const Duration(seconds: 2));
