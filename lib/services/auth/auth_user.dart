@@ -1,6 +1,6 @@
-import "package:okaychata/imports/flutter_imports.dart" show immutable;
+import 'package:okaychata/imports/flutter_imports.dart' show immutable;
 
-import "package:okaychata/imports/third_party_imports.dart" show User;
+import 'package:okaychata/imports/third_party_imports.dart' show User;
 
 @immutable
 class AuthUser {

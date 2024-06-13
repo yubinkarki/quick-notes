@@ -1,6 +1,6 @@
-import "package:okaychata/imports/flutter_imports.dart" show ThemeData, BuildContext, AppBarTheme, ColorScheme;
+import 'package:okaychata/imports/flutter_imports.dart' show ThemeData, BuildContext, AppBarTheme, ColorScheme;
 
-import "package:okaychata/imports/first_party_imports.dart" show CustomColors, darkTextTheme;
+import 'package:okaychata/imports/first_party_imports.dart' show CustomColors, darkTextTheme;
 
 ThemeData darkTheme(BuildContext context) {
   final base = ThemeData.dark();

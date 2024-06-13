@@ -1,7 +1,7 @@
-import "package:okaychata/imports/flutter_imports.dart"
+import 'package:okaychata/imports/flutter_imports.dart'
     show Route, RouteSettings, MaterialPageRoute, PageRouteBuilder, FadeTransition;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show
         HomeView,
         LoginView,

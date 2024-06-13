@@ -1,4 +1,4 @@
-import "package:okaychata/imports/first_party_imports.dart" show AuthUser;
+import 'package:okaychata/imports/first_party_imports.dart' show AuthUser;
 
 abstract class AuthProvider {
   Future<void> initialize();

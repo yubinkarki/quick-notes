@@ -1,4 +1,4 @@
-import "package:okaychata/imports/flutter_imports.dart"
+import 'package:okaychata/imports/flutter_imports.dart'
     show StatelessWidget, Key, Widget, BuildContext, Scaffold, Center, Text;
 
 class PageNotFoundView extends StatelessWidget {
@@ -8,7 +8,7 @@ class PageNotFoundView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("Oops! Page not found"),
+        child: Text('Oops! Page not found'),
       ),
     );
   }

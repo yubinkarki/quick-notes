@@ -1,6 +1,6 @@
-import "package:okaychata/imports/third_party_imports.dart" show Firebase, FirebaseAuth, FirebaseAuthException;
+import 'package:okaychata/imports/third_party_imports.dart' show Firebase, FirebaseAuth, FirebaseAuthException;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show
         AuthUser,
         AuthProvider,
@@ -47,11 +47,11 @@ class FirebaseAuthProvider implements AuthProvider {
         throw UserNotLoggedInAuthException();
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == "weak-password") {
+      if (e.code == 'weak-password') {
         throw WeakPasswordAuthException();
-      } else if (e.code == "email-already-in-use") {
+      } else if (e.code == 'email-already-in-use') {
         throw EmailAlreadyUsedAuthException();
-      } else if (e.code == "invalid-email") {
+      } else if (e.code == 'invalid-email') {
         throw InvalidEmailAuthException();
       } else {
         throw GenericAuthException();
@@ -91,9 +91,9 @@ class FirebaseAuthProvider implements AuthProvider {
         throw UserNotLoggedInAuthException();
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
+      if (e.code == 'user-not-found') {
         throw UserNotFoundAuthException();
-      } else if (e.code == "wrong-password") {
+      } else if (e.code == 'wrong-password') {
         throw WrongPasswordAuthException();
       } else {
         throw GenericAuthException();
@@ -120,10 +120,10 @@ class FirebaseAuthProvider implements AuthProvider {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "firebase_auth/invalid-email":
+        case 'firebase_auth/invalid-email':
           throw InvalidEmailAuthException();
 
-        case "firebase_auth/user-not-found":
+        case 'firebase_auth/user-not-found':
           throw UserNotFoundAuthException();
 
         default:

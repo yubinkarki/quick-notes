@@ -1,11 +1,11 @@
-import "package:okaychata/imports/dart_imports.dart" show StreamController;
+import 'package:okaychata/imports/dart_imports.dart' show StreamController;
 
-import "package:okaychata/imports/flutter_imports.dart" show immutable;
+import 'package:okaychata/imports/flutter_imports.dart' show immutable;
 
-import "package:okaychata/imports/third_party_imports.dart"
+import 'package:okaychata/imports/third_party_imports.dart'
     show join, Database, openDatabase, getApplicationDocumentsDirectory, MissingPlatformDirectoryException;
 
-import "package:okaychata/imports/first_party_imports.dart";
+import 'package:okaychata/imports/first_party_imports.dart';
 
 class NoteService {
   Database? _db;
@@ -88,7 +88,7 @@ class NoteService {
         textColumn: newText,
         isSyncedWithCloudColumn: 0,
       },
-      where: "id = ?",
+      where: 'id = ?',
       whereArgs: [note.id],
     );
 
@@ -123,7 +123,7 @@ class NoteService {
     final notes = await db.query(
       noteTable,
       limit: 1,
-      where: "id = ?",
+      where: 'id = ?',
       whereArgs: [id],
     );
 
@@ -160,7 +160,7 @@ class NoteService {
 
     final deletedCount = await db.delete(
       noteTable,
-      where: "id = ?",
+      where: 'id = ?',
       whereArgs: [id],
     );
 
@@ -211,7 +211,7 @@ class NoteService {
     final getResult = await db.query(
       userTable,
       limit: 1,
-      where: "email = ?",
+      where: 'email = ?',
       whereArgs: [email.toLowerCase()],
     );
 
@@ -231,7 +231,7 @@ class NoteService {
     final createResult = await db.query(
       userTable,
       limit: 1,
-      where: "email = ?",
+      where: 'email = ?',
       whereArgs: [email.toLowerCase()],
     );
 
@@ -252,7 +252,7 @@ class NoteService {
 
     final deleteResult = await db.delete(
       userTable,
-      where: "email = ?",
+      where: 'email = ?',
       whereArgs: [email.toLowerCase()],
     );
 
@@ -329,7 +329,7 @@ class DatabaseUser {
         email = mapItem[emailColumn] as String;
 
   @override
-  String toString() => "Person: ID = $id, EMAIL = $email";
+  String toString() => 'Person: ID = $id, EMAIL = $email';
 
   @override
   bool operator ==(covariant DatabaseUser other) => id == other.id;
@@ -358,7 +358,7 @@ class DatabaseNote {
         isSyncedWithCloud = mapItem[isSyncedWithCloudColumn] as int == 1 ? true : false;
 
   @override
-  String toString() => "Note: ID = $id, User ID = $userId, Text = $text, Cloud = $isSyncedWithCloud";
+  String toString() => 'Note: ID = $id, User ID = $userId, Text = $text, Cloud = $isSyncedWithCloud';
 
   @override
   bool operator ==(covariant DatabaseNote other) => id == other.id;

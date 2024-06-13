@@ -1,6 +1,6 @@
-import "package:okaychata/imports/flutter_imports.dart";
+import 'package:okaychata/imports/flutter_imports.dart';
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show CloudNote, AuthService, CloudService, GetArgument, showGenericDialog;
 
 class AddNewNoteView extends StatefulWidget {
@@ -27,7 +27,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
 
     _note = widgetNote;
 
-    _textController.text = widgetNote?.text ?? "";
+    _textController.text = widgetNote?.text ?? '';
 
     return widgetNote;
   }
@@ -42,9 +42,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: "Error",
-          content: "Please write something to add",
-          optionsBuilder: () => {"Got It": null},
+          title: 'Error',
+          content: 'Please write something to add',
+          optionsBuilder: () => {'Got It': null},
         ),
       );
     } else {
@@ -57,9 +57,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: "Success",
-          content: "Note added successfully",
-          optionsBuilder: () => {"Great": null},
+          title: 'Success',
+          content: 'Note added successfully',
+          optionsBuilder: () => {'Great': null},
         ),
       );
     }
@@ -78,9 +78,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: "Success",
-          content: "Note updated successfully",
-          optionsBuilder: () => {"Great": null},
+          title: 'Success',
+          content: 'Note updated successfully',
+          optionsBuilder: () => {'Great': null},
         ),
       );
     } else {
@@ -88,9 +88,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: "Error",
-          content: "Please write something to update",
-          optionsBuilder: () => {"Got It": null},
+          title: 'Error',
+          content: 'Please write something to update',
+          optionsBuilder: () => {'Got It': null},
         ),
       );
     }
@@ -110,7 +110,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("New Note", style: textTheme.titleLarge),
+        title: Text('New Note', style: textTheme.titleLarge),
       ),
       body: FutureBuilder(
         future: populateTextField(context),
@@ -132,7 +132,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
                         decoration: const InputDecoration(
                           constraints: BoxConstraints(maxHeight: 250.0),
                           border: OutlineInputBorder(),
-                          hintText: "Write your note here...",
+                          hintText: 'Write your note here...',
                         ),
                       ),
                     ),
@@ -143,11 +143,11 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
                       child: inputTextValue != null
                           ? OutlinedButton(
                               onPressed: _handleUpdateButton,
-                              child: Text("Update", style: textTheme.labelMedium),
+                              child: Text('Update', style: textTheme.labelMedium),
                             )
                           : OutlinedButton(
                               onPressed: _handleAddButton,
-                              child: Text("Add", style: textTheme.labelMedium),
+                              child: Text('Add', style: textTheme.labelMedium),
                             ),
                     ),
                   ],

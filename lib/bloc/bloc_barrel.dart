@@ -1,1 +1,1 @@
-export "auth/auth_barrel.dart";
+export 'auth/auth_barrel.dart';

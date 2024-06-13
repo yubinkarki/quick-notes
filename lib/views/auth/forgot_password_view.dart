@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart";
+import 'package:okaychata/imports/flutter_imports.dart';
 
-import "package:okaychata/imports/third_party_imports.dart" show BlocListener, ReadContext;
+import 'package:okaychata/imports/third_party_imports.dart' show BlocListener, ReadContext;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show
         AppSize,
         AuthBloc,
@@ -82,18 +82,18 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
           if (state.exception != null) {
             if (state.exception is InvalidEmailAuthException) {
-              await showErrorDialog(context, "Invalid Auth Exception");
+              await showErrorDialog(context, 'Invalid Auth Exception');
             } else if (state.exception is UserNotFoundAuthException) {
-              await showErrorDialog(context, "User Not Found Exception");
+              await showErrorDialog(context, 'User Not Found Exception');
             } else {
-              await showErrorDialog(context, "Something went wrong");
+              await showErrorDialog(context, 'Something went wrong');
             }
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Forgot Password"),
+          title: const Text('Forgot Password'),
         ),
         body: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -117,7 +117,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                       controller: _controller,
                       keyboardType: TextInputType.emailAddress,
                       decoration: inputDecoration(colorTheme: colorTheme),
-                      validator: (String? value) => Validator.emptyValidation(value, "email"),
+                      validator: (String? value) => Validator.emptyValidation(value, 'email'),
                     ),
                     const SizedBox(height: AppMargin.m40),
                     OutlinedButton.icon(

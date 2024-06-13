@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart";
+import 'package:okaychata/imports/flutter_imports.dart';
 
-import "package:okaychata/imports/third_party_imports.dart" show Share;
+import 'package:okaychata/imports/third_party_imports.dart' show Share;
 
-import "package:okaychata/imports/first_party_imports.dart" show CloudNote, showLDeleteDialog;
+import 'package:okaychata/imports/first_party_imports.dart' show CloudNote, showLDeleteDialog;
 
 typedef NoteCallback = void Function(CloudNote note);
 
@@ -38,7 +38,7 @@ class NoteListView extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 onPressed: () async {
-                  await Share.share(note.text, subject: "Sharing a Note");
+                  await Share.share(note.text, subject: 'Sharing a Note');
                 },
                 iconSize: 20,
                 icon: const Icon(Icons.share),

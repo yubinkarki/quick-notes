@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart";
+import 'package:okaychata/imports/flutter_imports.dart';
 
-import "package:okaychata/imports/third_party_imports.dart" show BlocListener, ReadContext;
+import 'package:okaychata/imports/third_party_imports.dart' show BlocListener, ReadContext;
 
-import "package:okaychata/imports/first_party_imports.dart";
+import 'package:okaychata/imports/first_party_imports.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -71,19 +71,19 @@ class _RegisterViewState extends State<RegisterView> {
       listener: (BuildContext context, AuthState state) async {
         if (state is AuthStateRegistering) {
           if (state.exception is WeakPasswordAuthException) {
-            await showErrorDialog(context, "Weak password");
+            await showErrorDialog(context, 'Weak password');
           } else if (state.exception is EmailAlreadyUsedAuthException) {
-            await showErrorDialog(context, "Email is already used");
+            await showErrorDialog(context, 'Email is already used');
           } else if (state.exception is InvalidEmailAuthException) {
-            await showErrorDialog(context, "Invalid email");
+            await showErrorDialog(context, 'Invalid email');
           } else if (state.exception is GenericAuthException) {
-            await showErrorDialog(context, "Failed to register");
+            await showErrorDialog(context, 'Failed to register');
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Register", style: textTheme.titleLarge),
+          title: Text('Register', style: textTheme.titleLarge),
         ),
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -123,7 +123,7 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () => _handleRegister(context),
                       child: Padding(
                         padding: const EdgeInsets.all(AppPadding.p8),
-                        child: Text("Register", style: textTheme.labelMedium),
+                        child: Text('Register', style: textTheme.labelMedium),
                       ),
                     ),
                   ),
@@ -132,7 +132,7 @@ class _RegisterViewState extends State<RegisterView> {
                     onPressed: () => _handleNavigateToLogin(context),
                     child: Padding(
                       padding: const EdgeInsets.all(AppPadding.p8),
-                      child: Text("Go to Login", style: textTheme.labelMedium),
+                      child: Text('Go to Login', style: textTheme.labelMedium),
                     ),
                   ),
                 ],

@@ -1,15 +1,15 @@
-import "package:okaychata/imports/flutter_imports.dart" show immutable;
+import 'package:okaychata/imports/flutter_imports.dart' show immutable;
 
-import "package:okaychata/imports/third_party_imports.dart" show EquatableMixin;
+import 'package:okaychata/imports/third_party_imports.dart' show EquatableMixin;
 
-import "package:okaychata/imports/first_party_imports.dart" show AuthUser;
+import 'package:okaychata/imports/first_party_imports.dart' show AuthUser;
 
 @immutable
 abstract class AuthState {
   final bool? isLoading;
   final String? loadingText;
 
-  const AuthState({this.isLoading = false, this.loadingText = "Please wait..."});
+  const AuthState({this.isLoading = false, this.loadingText = 'Please wait...'});
 }
 
 class AuthStateUninitialized extends AuthState {

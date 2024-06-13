@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart";
+import 'package:okaychata/imports/flutter_imports.dart';
 
-import "package:okaychata/imports/third_party_imports.dart" show ReadContext;
+import 'package:okaychata/imports/third_party_imports.dart' show ReadContext;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show
         AuthBloc,
         CloudNote,

@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart";
+import 'package:okaychata/imports/flutter_imports.dart';
 
-import "package:okaychata/imports/third_party_imports.dart" show BlocListener, ReadContext;
+import 'package:okaychata/imports/third_party_imports.dart' show BlocListener, ReadContext;
 
-import "package:okaychata/imports/first_party_imports.dart";
+import 'package:okaychata/imports/first_party_imports.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);

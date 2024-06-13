@@ -1,6 +1,6 @@
-import "package:okaychata/imports/third_party_imports.dart" show Bloc, Emitter;
+import 'package:okaychata/imports/third_party_imports.dart' show Bloc, Emitter;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show
         AuthState,
         AuthEvent,

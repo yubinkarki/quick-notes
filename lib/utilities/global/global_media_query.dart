@@ -1,4 +1,4 @@
-import "package:okaychata/imports/flutter_imports.dart" show Size, BuildContext, MediaQuery;
+import 'package:okaychata/imports/flutter_imports.dart' show Size, BuildContext, MediaQuery;
 
 class GlobalMediaQuery {
   static double? screenWidth;

@@ -1,4 +1,4 @@
-import "package:okaychata/imports/flutter_imports.dart"
+import 'package:okaychata/imports/flutter_imports.dart'
     show BuildContext, TextTheme, showDialog, AlertDialog, Text, TextButton, Theme, Navigator;
 
 Future<bool> showLogoutDialog(BuildContext context) {
@@ -8,9 +8,9 @@ Future<bool> showLogoutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text("Logout", style: textTheme.labelLarge),
+        title: Text('Logout', style: textTheme.labelLarge),
         content: Text(
-          "Are you sure you want to log out?",
+          'Are you sure you want to log out?',
           style: textTheme.labelMedium,
         ),
         actions: [
@@ -18,13 +18,13 @@ Future<bool> showLogoutDialog(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: Text("Cancel", style: textTheme.labelMedium),
+            child: Text('Cancel', style: textTheme.labelMedium),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: Text("Logout", style: textTheme.labelMedium),
+            child: Text('Logout', style: textTheme.labelMedium),
           ),
         ],
       );

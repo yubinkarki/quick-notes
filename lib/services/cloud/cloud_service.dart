@@ -1,6 +1,6 @@
-import "package:okaychata/imports/third_party_imports.dart" show FirebaseFirestore;
+import 'package:okaychata/imports/third_party_imports.dart' show FirebaseFirestore;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show
         CloudNote,
         textFieldName,
@@ -10,7 +10,7 @@ import "package:okaychata/imports/first_party_imports.dart"
         CouldNotGetAllNotesCloudException;
 
 class CloudService {
-  final notes = FirebaseFirestore.instance.collection("notes");
+  final notes = FirebaseFirestore.instance.collection('notes');
 
   static final CloudService _shared = CloudService._sharedInstance();
 

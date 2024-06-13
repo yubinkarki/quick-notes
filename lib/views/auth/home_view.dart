@@ -1,9 +1,9 @@
-import "package:okaychata/imports/flutter_imports.dart"
+import 'package:okaychata/imports/flutter_imports.dart'
     show StatelessWidget, Key, Widget, BuildContext, debugPrint, Scaffold, CircularProgressIndicator, Center;
 
-import "package:okaychata/imports/third_party_imports.dart" show ReadContext, BlocConsumer, FlutterNativeSplash;
+import 'package:okaychata/imports/third_party_imports.dart' show ReadContext, BlocConsumer, FlutterNativeSplash;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show
         AuthBloc,
         AuthState,
@@ -38,7 +38,7 @@ class HomeView extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.isLoading ?? false) {
-          debugPrint("${state.isLoading}");
+          debugPrint('${state.isLoading}');
         } else {
           LoadingOverlay().hide();
         }

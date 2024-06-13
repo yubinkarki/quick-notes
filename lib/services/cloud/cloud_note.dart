@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart" show immutable;
+import 'package:okaychata/imports/flutter_imports.dart' show immutable;
 
-import "package:okaychata/imports/third_party_imports.dart" show QueryDocumentSnapshot;
+import 'package:okaychata/imports/third_party_imports.dart' show QueryDocumentSnapshot;
 
-import "package:okaychata/imports/first_party_imports.dart" show ownerUserIdFieldName, textFieldName;
+import 'package:okaychata/imports/first_party_imports.dart' show ownerUserIdFieldName, textFieldName;
 
 @immutable
 class CloudNote {

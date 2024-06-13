@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart";
+import 'package:okaychata/imports/flutter_imports.dart';
 
-import "package:okaychata/imports/third_party_imports.dart" show ReadContext;
+import 'package:okaychata/imports/third_party_imports.dart' show ReadContext;
 
-import "package:okaychata/imports/first_party_imports.dart"
+import 'package:okaychata/imports/first_party_imports.dart'
     show AppStrings, AuthBloc, AuthEventSendEmailVerification, AuthEventLogout;
 
 class VerifyEmailView extends StatefulWidget {
@@ -20,7 +20,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Verify your email",
+          'Verify your email',
           style: textTheme.titleLarge,
         ),
       ),

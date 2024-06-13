@@ -1,4 +1,4 @@
-import "package:okaychata/imports/flutter_imports.dart"
+import 'package:okaychata/imports/flutter_imports.dart'
     show BuildContext, TextTheme, showDialog, AlertDialog, Text, TextButton, Navigator, Theme;
 
 Future<void> showErrorDialog(
@@ -12,14 +12,14 @@ Future<void> showErrorDialog(
     builder: (context) {
       return AlertDialog(
         elevation: 0,
-        title: Text("An error occurred", style: textTheme.labelLarge),
+        title: Text('An error occurred', style: textTheme.labelLarge),
         content: Text(text),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("Ok", style: textTheme.labelMedium),
+            child: Text('Ok', style: textTheme.labelMedium),
           ),
         ],
       );

@@ -1,8 +1,8 @@
-import "package:okaychata/imports/flutter_imports.dart" show TextTheme, FontWeight;
+import 'package:okaychata/imports/flutter_imports.dart' show TextTheme, FontWeight;
 
-import "package:okaychata/imports/third_party_imports.dart" show GoogleFonts;
+import 'package:okaychata/imports/third_party_imports.dart' show GoogleFonts;
 
-import "package:okaychata/imports/first_party_imports.dart" show CustomColors;
+import 'package:okaychata/imports/first_party_imports.dart' show CustomColors;
 
 TextTheme darkTextTheme(TextTheme base) {
   final baseStyle = GoogleFonts.quicksand(

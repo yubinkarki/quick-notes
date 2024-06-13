@@ -1,4 +1,4 @@
-import "package:okaychata/imports/flutter_imports.dart" show immutable;
+import 'package:okaychata/imports/flutter_imports.dart' show immutable;
 
 @immutable
 abstract class AuthEvent {

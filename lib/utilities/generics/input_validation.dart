@@ -1,4 +1,4 @@
-import "package:okaychata/imports/first_party_imports.dart" show AppStrings;
+import 'package:okaychata/imports/first_party_imports.dart' show AppStrings;
 
 class Validator {
   static String? emptyValidation(String? inputValue, String? inputName) {
