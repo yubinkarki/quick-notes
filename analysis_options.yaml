@@ -1,5 +1,16 @@
+# https://github.com/flutter/flutter/blob/master/analysis_options.yaml
 include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-inference: true
+    strict-raw-types: true
 
 linter:
   rules:
-    require_trailing_commas: true
+    - avoid_print
+    - always_specify_types
+    - use_super_parameters
+    - prefer_single_quotes
+    - require_trailing_commas
+    - always_declare_return_types
