@@ -1,6 +1,8 @@
 flutter_launcher_icons:
-  android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/appicon.png"
+  min_sdk_android: 25 # android min sdk min:16, default 21
   remove_alpha_ios: true
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  android: "launcher_icon"
+  adaptive_icon_background: "#05171F"
+  image_path_ios: "assets/icons/appicon-v2.png"
+  adaptive_icon_foreground: "assets/icons/appicon-v2.png"
