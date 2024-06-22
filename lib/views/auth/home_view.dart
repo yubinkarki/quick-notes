@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   Future<void> closeSplash() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 2));
 
     FlutterNativeSplash.remove();
   }
@@ -36,14 +36,14 @@ class HomeView extends StatelessWidget {
     context.read<AuthBloc>().add(const AuthEventInitialize());
 
     return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
+      listener: (BuildContext context, AuthState state) {
         if (state.isLoading ?? false) {
           debugPrint('${state.isLoading}');
         } else {
           LoadingOverlay().hide();
         }
       },
-      builder: (context, state) {
+      builder: (BuildContext context, AuthState state) {
         if (state is AuthStateLoggedIn) {
           return const NotesView();
         } else if (state is AuthStateNeedsVerification) {

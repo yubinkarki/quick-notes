@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
+      providers: <BlocProvider<dynamic>>[
         BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(FirebaseAuthProvider()),
+          create: (BuildContext context) => AuthBloc(FirebaseAuthProvider()),
         ),
       ],
       child: LayoutBuilder(

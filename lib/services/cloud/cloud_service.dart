@@ -1,4 +1,4 @@
-import 'package:okaychata/imports/third_party_imports.dart' show FirebaseFirestore;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:okaychata/imports/first_party_imports.dart'
     show
@@ -10,7 +10,7 @@ import 'package:okaychata/imports/first_party_imports.dart'
         CouldNotGetAllNotesCloudException;
 
 class CloudService {
-  final notes = FirebaseFirestore.instance.collection('notes');
+  final CollectionReference<Map<String, dynamic>> notes = FirebaseFirestore.instance.collection('notes');
 
   static final CloudService _shared = CloudService._sharedInstance();
 
@@ -22,26 +22,27 @@ class CloudService {
   // Custom formatting for this block.
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
     return notes.snapshots().map(
-          (event) =>
-              event.docs.map((doc) => CloudNote.fromSnapshot(doc)).where((note) => note.ownerUserId == ownerUserId),
+          (QuerySnapshot<Map<String, dynamic>> event) => event.docs
+              .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => CloudNote.fromSnapshot(doc))
+              .where((CloudNote note) => note.ownerUserId == ownerUserId),
         );
   }
 
   Future<CloudNote> createNewNote({
-    required String ownerUserId,
     required String text,
+    required String ownerUserId,
   }) async {
-    final document = await notes.add({
-      ownerUserIdFieldName: ownerUserId,
+    final DocumentReference<Map<String, dynamic>> document = await notes.add(<String, dynamic>{
       textFieldName: text,
+      ownerUserIdFieldName: ownerUserId,
     });
 
-    final fetchedNote = await document.get();
+    final DocumentSnapshot<Map<String, dynamic>> fetchedNote = await document.get();
 
     return CloudNote(
-      documentId: fetchedNote.id,
-      ownerUserId: ownerUserId,
       text: text,
+      ownerUserId: ownerUserId,
+      documentId: fetchedNote.id,
     );
   }
 
@@ -54,7 +55,9 @@ class CloudService {
           )
           .get()
           .then(
-            (value) => value.docs.map((doc) => CloudNote.fromSnapshot(doc)),
+            (QuerySnapshot<Map<String, dynamic>> value) => value.docs.map(
+              (QueryDocumentSnapshot<Map<String, dynamic>> doc) => CloudNote.fromSnapshot(doc),
+            ),
           );
     } catch (e) {
       throw CouldNotGetAllNotesCloudException();
@@ -66,7 +69,7 @@ class CloudService {
     required String text,
   }) async {
     try {
-      await notes.doc(documentId).update({textFieldName: text});
+      await notes.doc(documentId).update(<Object, Object?>{textFieldName: text});
     } catch (e) {
       throw CouldNotUpdateNoteCloudException();
     }

@@ -1,7 +1,7 @@
 import 'package:okaychata/imports/flutter_imports.dart';
 
 import 'package:okaychata/imports/first_party_imports.dart'
-    show CloudNote, AuthService, CloudService, GetArgument, showGenericDialog;
+    show CloudNote, AuthService, CloudService, GetArgument, showGenericDialog, AuthUser;
 
 class AddNewNoteView extends StatefulWidget {
   const AddNewNoteView({super.key});
@@ -23,7 +23,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
   }
 
   Future<CloudNote?> populateTextField(BuildContext context) async {
-    final widgetNote = context.getArgument<CloudNote>();
+    final CloudNote? widgetNote = context.getArgument<CloudNote>();
 
     _note = widgetNote;
 
@@ -33,64 +33,64 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
   }
 
   void _handleAddButton() async {
-    final text = _textController.text;
+    final String text = _textController.text;
 
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (text.isEmpty) {
-      Future.delayed(
+      Future<dynamic>.delayed(
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
           title: 'Error',
           content: 'Please write something to add',
-          optionsBuilder: () => {'Got It': null},
+          optionsBuilder: () => <String, dynamic>{'Got It': null},
         ),
       );
     } else {
-      final existingUser = AuthService.factoryFirebase().currentUser!;
-      final userId = existingUser.id;
+      final AuthUser existingUser = AuthService.factoryFirebase().currentUser!;
+      final String userId = existingUser.id;
 
       await _noteService.createNewNote(ownerUserId: userId, text: text);
 
-      Future.delayed(
+      Future<dynamic>.delayed(
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
           title: 'Success',
           content: 'Note added successfully',
-          optionsBuilder: () => {'Great': null},
+          optionsBuilder: () => <String, dynamic>{'Great': null},
         ),
       );
     }
   }
 
   void _handleUpdateButton() async {
-    final note = _note;
-    final text = _textController.text;
+    final CloudNote? note = _note;
+    final String text = _textController.text;
 
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (text.isNotEmpty && note != null) {
       await _noteService.updateNote(documentId: note.documentId, text: text);
 
-      Future.delayed(
+      Future<dynamic>.delayed(
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
           title: 'Success',
           content: 'Note updated successfully',
-          optionsBuilder: () => {'Great': null},
+          optionsBuilder: () => <String, dynamic>{'Great': null},
         ),
       );
     } else {
-      Future.delayed(
+      Future<dynamic>.delayed(
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
           title: 'Error',
           content: 'Please write something to update',
-          optionsBuilder: () => {'Got It': null},
+          optionsBuilder: () => <String, dynamic>{'Got It': null},
         ),
       );
     }
@@ -105,22 +105,22 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final widgetNote = context.getArgument<CloudNote>();
-    final inputTextValue = widgetNote?.text;
+    final CloudNote? widgetNote = context.getArgument<CloudNote>();
+    final String? inputTextValue = widgetNote?.text;
 
     return Scaffold(
       appBar: AppBar(
         title: Text('New Note', style: textTheme.titleLarge),
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<CloudNote?>(
         future: populateTextField(context),
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<CloudNote?> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: TextField(

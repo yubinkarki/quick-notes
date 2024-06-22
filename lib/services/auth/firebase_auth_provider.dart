@@ -1,4 +1,4 @@
-import 'package:okaychata/imports/third_party_imports.dart' show Firebase, FirebaseAuth, FirebaseAuthException;
+import 'package:okaychata/imports/third_party_imports.dart' show Firebase, FirebaseAuth, FirebaseAuthException, User;
 
 import 'package:okaychata/imports/first_party_imports.dart'
     show
@@ -21,7 +21,7 @@ class FirebaseAuthProvider implements AuthProvider {
 
   @override
   AuthUser? get currentUser {
-    final user = FirebaseAuth.instance.currentUser;
+    final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       // Calling the factory constructor. Returns 'emailVerified' boolean.
@@ -39,7 +39,7 @@ class FirebaseAuthProvider implements AuthProvider {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
 
-      final user = currentUser;
+      final AuthUser? user = currentUser;
 
       if (user != null) {
         return user;
@@ -63,7 +63,7 @@ class FirebaseAuthProvider implements AuthProvider {
 
   @override
   Future<void> sendEmailVerification() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       await user.sendEmailVerification();
@@ -83,7 +83,7 @@ class FirebaseAuthProvider implements AuthProvider {
         password: password,
       );
 
-      final user = currentUser;
+      final AuthUser? user = currentUser;
 
       if (user != null) {
         return user;
@@ -105,7 +105,7 @@ class FirebaseAuthProvider implements AuthProvider {
 
   @override
   Future<void> logOut() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       await FirebaseAuth.instance.signOut();

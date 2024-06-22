@@ -9,12 +9,12 @@ Future<void> showErrorDialog(
 
   return showDialog(
     context: context,
-    builder: (context) {
+    builder: (BuildContext context) {
       return AlertDialog(
         elevation: 0,
         title: Text('An error occurred', style: textTheme.labelLarge),
         content: Text(text),
-        actions: [
+        actions: <TextButton>[
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();

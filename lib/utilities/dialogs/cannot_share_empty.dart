@@ -7,6 +7,6 @@ Future<void> showCannotShareEmptyDialog(BuildContext context) {
     context: context,
     title: 'Sharing',
     content: 'You can not share an empty note.',
-    optionsBuilder: () => {'OK': null},
+    optionsBuilder: () => <String, dynamic>{'OK': null},
   );
 }

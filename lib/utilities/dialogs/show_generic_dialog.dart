@@ -10,15 +10,15 @@ Future<T?> showGenericDialog<T>({
   required DialogOptionBuilder optionsBuilder,
 }) {
   final TextTheme textTheme = Theme.of(context).textTheme;
-  final options = optionsBuilder();
+  final Map<String, dynamic> options = optionsBuilder();
 
   return showDialog<T>(
     context: context,
-    builder: (context) {
+    builder: (BuildContext context) {
       return AlertDialog(
         title: Text(title, style: textTheme.labelLarge),
         content: Text(content, style: textTheme.labelMedium),
-        actions: options.keys.map((optionTitle) {
+        actions: options.keys.map((String optionTitle) {
           final T value = options[optionTitle];
 
           return TextButton(

@@ -22,8 +22,8 @@ class NoteListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: notes.length,
-      itemBuilder: (context, index) {
-        final note = notes.elementAt(index);
+      itemBuilder: (BuildContext context, int index) {
+        final CloudNote note = notes.elementAt(index);
 
         return ListTile(
           onTap: () => onTapNote(note),
@@ -45,7 +45,7 @@ class NoteListView extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () async {
-                  final shouldDelete = await showLDeleteDialog(context);
+                  final bool shouldDelete = await showLDeleteDialog(context);
 
                   if (shouldDelete) {
                     onDeleteNote(note);

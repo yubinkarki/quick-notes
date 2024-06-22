@@ -6,14 +6,14 @@ Future<bool> showLogoutDialog(BuildContext context) {
 
   return showDialog(
     context: context,
-    builder: (context) {
+    builder: (BuildContext context) {
       return AlertDialog(
         title: Text('Logout', style: textTheme.labelLarge),
         content: Text(
           'Are you sure you want to log out?',
           style: textTheme.labelMedium,
         ),
-        actions: [
+        actions: <TextButton>[
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(false);
@@ -29,5 +29,5 @@ Future<bool> showLogoutDialog(BuildContext context) {
         ],
       );
     },
-  ).then((value) => value ?? false);
+  ).then((dynamic value) => value ?? false);
 }

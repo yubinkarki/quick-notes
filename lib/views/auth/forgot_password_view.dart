@@ -27,7 +27,7 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey _formKey = GlobalKey<FormState>();
   late final TextEditingController _controller;
 
   @override
@@ -46,19 +46,19 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Future<void> _handleSendResetLink(BuildContext context) async {
     _dismissKeyboard(context);
-    final email = _controller.text;
-    await Future.delayed(const Duration(milliseconds: 150));
+    final String email = _controller.text;
+    await Future<void>.delayed(const Duration(milliseconds: 150));
 
     if (!context.mounted) return;
 
-    if (_formKey.currentState?.validate() ?? false) {
+    if ((_formKey.currentState as FormState).validate()) {
       context.read<AuthBloc>().add(AuthEventForgotPassword(email: email));
     }
   }
 
   Future<void> _handleBackToLogin(BuildContext context) async {
     _dismissKeyboard(context);
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future<void>.delayed(const Duration(milliseconds: 150));
 
     if (!context.mounted) return;
 
@@ -71,7 +71,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     final ColorScheme colorTheme = Theme.of(context).colorScheme;
 
     return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) async {
+      listener: (BuildContext context, AuthState state) async {
         if (state is AuthStateForgotPassword) {
           if (state.hasSentEmail) {
             _controller.clear();
@@ -107,7 +107,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 key: _formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <Widget>[
                     const SizedBox(height: AppMargin.m12),
                     Text(AppStrings.resetPasswordMessage, style: textTheme.labelMedium),
                     const SizedBox(height: AppMargin.m40),

@@ -28,11 +28,11 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         color: Theme.of(context).colorScheme.surface,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Flexible>[
             Flexible(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Container>[
                   Container(
                     padding: const EdgeInsets.only(left: 50, right: 50),
                     margin: const EdgeInsets.only(bottom: 20),
@@ -55,9 +55,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     height: 60.0,
                     margin: const EdgeInsets.only(top: 60),
                     child: OutlinedButton(
-                      onPressed: () {
-                        context.read<AuthBloc>().add(const AuthEventSendEmailVerification());
-                      },
+                      onPressed: () => context.read<AuthBloc>().add(const AuthEventSendEmailVerification()),
                       child: Text(
                         AppStrings.sendEmailVerification,
                         style: textTheme.labelMedium,
@@ -69,9 +67,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     height: 60.0,
                     margin: const EdgeInsets.only(top: 20),
                     child: OutlinedButton(
-                      onPressed: () {
-                        context.read<AuthBloc>().add(const AuthEventLogout());
-                      },
+                      onPressed: () => context.read<AuthBloc>().add(const AuthEventLogout()),
                       child: Text(
                         AppStrings.goToLogin,
                         style: textTheme.labelMedium,

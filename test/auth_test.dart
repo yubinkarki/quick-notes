@@ -7,7 +7,7 @@ import 'package:okaychata/services/auth/auth_provider.dart' show AuthProvider;
 void main() {
   // 8 tests in total.
   group('Mock Authentication -', () {
-    final provider = MockAuthProvider();
+    final MockAuthProvider provider = MockAuthProvider();
 
     test('Should not be initialized at the start', () {
       expect(provider.isInitialized, false);
@@ -41,7 +41,7 @@ void main() {
 
     test('Signup should delegate to login function', () async {
       // Including await on this signUp function will break this test.
-      final badEmail = provider.signUp(email: 'foo@bar.com', password: 'password');
+      final Future<AuthUser> badEmail = provider.signUp(email: 'foo@bar.com', password: 'password');
 
       expect(
         badEmail,
@@ -49,14 +49,14 @@ void main() {
       );
 
       // Same as above.
-      final badPassword = provider.signUp(email: 'email@bar.com', password: 'foobar');
+      final Future<AuthUser> badPassword = provider.signUp(email: 'email@bar.com', password: 'foobar');
 
       expect(
         badPassword,
         throwsA(const TypeMatcher<WrongPasswordAuthException>()),
       );
 
-      final goodUser = await provider.signUp(email: 'foo@gmail.com', password: 'foobar@123');
+      final AuthUser goodUser = await provider.signUp(email: 'foo@gmail.com', password: 'foobar@123');
 
       expect(provider.currentUser, goodUser);
       expect(goodUser.isEmailVerified, false);
@@ -65,7 +65,7 @@ void main() {
     test('Logged in user should be able to get verified', () async {
       await provider.sendEmailVerification();
 
-      final user = provider.currentUser;
+      final AuthUser? user = provider.currentUser;
 
       expect(user, isNotNull);
       expect(user!.isEmailVerified, true);
@@ -75,7 +75,7 @@ void main() {
       await provider.logOut();
       await provider.logIn(email: 'foo@gmail.com', password: 'foobar@123');
 
-      final user = provider.currentUser;
+      final AuthUser? user = provider.currentUser;
 
       expect(user, isNotNull);
     });
@@ -85,7 +85,7 @@ void main() {
 class MockAuthProvider implements AuthProvider {
   AuthUser? _user;
 
-  var _isInitialized = false;
+  bool _isInitialized = false;
 
   bool get isInitialized => _isInitialized;
 
@@ -94,7 +94,7 @@ class MockAuthProvider implements AuthProvider {
 
   @override
   Future<void> initialize() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
 
     _isInitialized = true;
   }
@@ -105,11 +105,11 @@ class MockAuthProvider implements AuthProvider {
     if (email == 'foo@bar.com') throw UserNotFoundAuthException();
     if (password == 'foobar') throw WrongPasswordAuthException();
 
-    const user = AuthUser(isEmailVerified: false, email: 'random@gmail.com', id: 'random_id');
+    const AuthUser user = AuthUser(isEmailVerified: false, email: 'random@gmail.com', id: 'random_id');
 
     _user = user;
 
-    return Future.value(user);
+    return Future<AuthUser>.value(user);
   }
 
   @override
@@ -117,7 +117,7 @@ class MockAuthProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
     if (_user == null) throw UserNotFoundAuthException();
 
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
 
     _user = null;
   }
@@ -128,7 +128,7 @@ class MockAuthProvider implements AuthProvider {
 
     if (_user == null) throw UserNotFoundAuthException();
 
-    const newUser = AuthUser(isEmailVerified: true, email: 'random@gmail.com', id: 'random_id');
+    const AuthUser newUser = AuthUser(isEmailVerified: true, email: 'random@gmail.com', id: 'random_id');
 
     _user = newUser;
   }
@@ -138,7 +138,7 @@ class MockAuthProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
 
     // Fake delay for imitating api call.
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
 
     return logIn(email: email, password: password);
   }

@@ -27,10 +27,10 @@ class _RegisterViewState extends State<RegisterView> {
   void _handleRegister(BuildContext context) async {
     _dismissKeyboard(context);
 
-    final email = _email.text;
-    final password = _password.text;
+    final String email = _email.text;
+    final String password = _password.text;
 
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     if (!context.mounted) return;
 
@@ -40,7 +40,7 @@ class _RegisterViewState extends State<RegisterView> {
   void _handleNavigateToLogin(BuildContext context) async {
     _dismissKeyboard(context);
 
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future<void>.delayed(const Duration(milliseconds: 150));
 
     if (!context.mounted) return;
 
@@ -93,7 +93,7 @@ class _RegisterViewState extends State<RegisterView> {
             child: Padding(
               padding: const EdgeInsets.all(AppPadding.p20),
               child: Column(
-                children: [
+                children: <Widget>[
                   TextField(
                     controller: _email,
                     autocorrect: false,

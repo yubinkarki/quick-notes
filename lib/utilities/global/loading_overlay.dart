@@ -28,15 +28,15 @@ class LoadingOverlay {
     required BuildContext context,
     required String text,
   }) {
-    final streamText = StreamController<String>();
+    final StreamController<String> streamText = StreamController<String>();
     streamText.add(text);
 
     final OverlayState state = Overlay.of(context);
-    final renderBox = context.findRenderObject() as RenderBox;
-    final size = renderBox.size;
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final Size size = renderBox.size;
 
-    final overlay = OverlayEntry(
-      builder: (context) {
+    final OverlayEntry overlay = OverlayEntry(
+      builder: (BuildContext context) {
         return Material(
           color: Colors.black.withAlpha(150),
           child: Center(
@@ -53,13 +53,13 @@ class LoadingOverlay {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
                       const SizedBox(height: 10),
                       const CircularProgressIndicator(),
                       const SizedBox(height: 40),
-                      StreamBuilder(
+                      StreamBuilder<String>(
                         stream: streamText.stream,
-                        builder: (context, snapshot) {
+                        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                           if (snapshot.hasData) {
                             return Text(snapshot.data as String, textAlign: TextAlign.center);
                           } else {
@@ -86,7 +86,7 @@ class LoadingOverlay {
 
         return true;
       },
-      update: (text) {
+      update: (String text) {
         streamText.add(text);
 
         return true;

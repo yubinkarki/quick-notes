@@ -4,6 +4,7 @@ import 'package:okaychata/imports/third_party_imports.dart' show ReadContext;
 
 import 'package:okaychata/imports/first_party_imports.dart'
     show
+        Count,
         AuthBloc,
         CloudNote,
         MenuAction,
@@ -15,10 +16,6 @@ import 'package:okaychata/imports/first_party_imports.dart'
         addNewNoteRoute,
         AuthEventLogout,
         showLogoutDialog;
-
-extension Count<T extends Iterable> on Stream<T> {
-  Stream<int> get getLength => map((event) => event.length);
-}
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -39,7 +36,7 @@ class _NotesViewState extends State<NotesView> {
   }
 
   Future<String> fakeDelay() async {
-    return await Future.delayed(const Duration(milliseconds: 1500), () => AppStrings.delaying);
+    return await Future<String>.delayed(const Duration(milliseconds: 1500), () => AppStrings.delaying);
   }
 
   @override
@@ -50,7 +47,7 @@ class _NotesViewState extends State<NotesView> {
       appBar: AppBar(
         title: StreamBuilder<int>(
           stream: _noteService.allNotes(ownerUserId: userId).getLength,
-          builder: (context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
             if (snapshot.hasData) {
               final int noteCount = snapshot.data ?? 0;
 
@@ -60,17 +57,17 @@ class _NotesViewState extends State<NotesView> {
             }
           },
         ),
-        actions: [
+        actions: <Widget>[
           IconButton(
             tooltip: AppStrings.addNewNote,
             onPressed: () => Navigator.of(context).pushNamed(addNewNoteRoute),
             icon: const Icon(Icons.add),
           ),
           PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
+            onSelected: (MenuAction value) async {
               switch (value) {
                 case MenuAction.logout:
-                  final shouldLogout = await showLogoutDialog(context);
+                  final bool shouldLogout = await showLogoutDialog(context);
                   if (!context.mounted) return;
 
                   if (shouldLogout) {
@@ -82,8 +79,8 @@ class _NotesViewState extends State<NotesView> {
                   break;
               }
             },
-            itemBuilder: (context) {
-              return [
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuEntry<MenuAction>>[
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.nothing,
                   child: Text(AppStrings.nothing, style: textTheme.labelMedium),
@@ -97,26 +94,26 @@ class _NotesViewState extends State<NotesView> {
           ),
         ],
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<String>(
         future: fakeDelay(),
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              return StreamBuilder(
+              return StreamBuilder<Iterable<CloudNote>>(
                 stream: _noteService.allNotes(ownerUserId: userId),
-                builder: (context, snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<Iterable<CloudNote>> snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.done:
                     case ConnectionState.active:
                       if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                        final allNotes = snapshot.data as Iterable<CloudNote>;
+                        final Iterable<CloudNote> allNotes = snapshot.data as Iterable<CloudNote>;
 
                         return NoteListView(
                           notes: allNotes,
-                          onDeleteNote: (note) async {
+                          onDeleteNote: (CloudNote note) async {
                             await _noteService.deleteNote(documentId: note.documentId);
                           },
-                          onTapNote: (note) => Navigator.of(context).pushNamed(
+                          onTapNote: (CloudNote note) => Navigator.of(context).pushNamed(
                             addNewNoteRoute,
                             arguments: note,
                           ),

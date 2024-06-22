@@ -28,10 +28,10 @@ class _LoginViewState extends State<LoginView> {
   Future<void> _handleLogin(BuildContext context) async {
     _dismissKeyboard(context);
 
-    final email = _email.text;
-    final password = _password.text;
+    final String email = _email.text;
+    final String password = _password.text;
 
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future<void>.delayed(const Duration(milliseconds: 150));
 
     if (!context.mounted) return;
 
@@ -41,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
   Future<void> _handleNavigateToRegister(BuildContext context) async {
     _dismissKeyboard(context);
 
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future<void>.delayed(const Duration(milliseconds: 150));
 
     if (!context.mounted) return;
 
@@ -97,12 +97,12 @@ class _LoginViewState extends State<LoginView> {
             child: Padding(
               padding: const EdgeInsets.all(AppPadding.p20),
               child: Column(
-                children: [
+                children: <Widget>[
                   TextField(
                     controller: _email,
-                    keyboardType: TextInputType.emailAddress,
-                    enableSuggestions: false,
                     autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(hintText: AppStrings.enterEmail),
                   ),
                   TextField(
@@ -115,8 +115,8 @@ class _LoginViewState extends State<LoginView> {
                       suffixIcon: IconButton(
                         onPressed: () => setState(() => _passwordVisible = !_passwordVisible),
                         icon: Icon(
-                          _passwordVisible ? Icons.visibility_off : Icons.visibility,
                           size: 22.0,
+                          _passwordVisible ? Icons.visibility_off : Icons.visibility,
                         ),
                       ),
                     ),
