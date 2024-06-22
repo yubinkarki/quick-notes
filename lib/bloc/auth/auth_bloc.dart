@@ -2,6 +2,7 @@ import 'package:okaychata/imports/third_party_imports.dart' show Bloc, Emitter;
 
 import 'package:okaychata/imports/first_party_imports.dart'
     show
+        AuthUser,
         AuthState,
         AuthEvent,
         AuthProvider,
@@ -39,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     await provider.initialize();
 
-    final user = provider.currentUser;
+    final AuthUser? user = provider.currentUser;
 
     if (user == null) {
       emit(const AuthStateLoggedOut(exception: null, isLoading: false));
@@ -73,7 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const AuthStateLoggedOut(exception: null, isLoading: true));
 
     try {
-      final user = await provider.logIn(email: event.email, password: event.password);
+      final AuthUser user = await provider.logIn(email: event.email, password: event.password);
 
       if (!user.isEmailVerified) {
         emit(const AuthStateLoggedOut(exception: null, isLoading: false));
@@ -120,7 +121,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const AuthStateForgotPassword(exception: null, hasSentEmail: false));
 
-    final email = event.email;
+    final String? email = event.email;
 
     if (email == null) return; // User wants to go to forgot-password screen.
 

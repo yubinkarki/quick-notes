@@ -3,7 +3,7 @@ import 'package:okaychata/imports/flutter_imports.dart' show ThemeData, BuildCon
 import 'package:okaychata/imports/first_party_imports.dart' show CustomColors, darkTextTheme;
 
 ThemeData darkTheme(BuildContext context) {
-  final base = ThemeData.dark();
+  final ThemeData base = ThemeData.dark();
 
   return base.copyWith(
     appBarTheme: const AppBarTheme(color: CustomColors.dark),

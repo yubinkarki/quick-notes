@@ -1,11 +1,11 @@
-import 'package:okaychata/imports/flutter_imports.dart' show TextTheme, FontWeight;
+import 'package:okaychata/imports/flutter_imports.dart' show TextTheme, FontWeight, TextStyle;
 
 import 'package:okaychata/imports/third_party_imports.dart' show GoogleFonts;
 
 import 'package:okaychata/imports/first_party_imports.dart' show CustomColors;
 
 TextTheme lightTextTheme(TextTheme base) {
-  final baseStyle = GoogleFonts.quicksand(
+  final TextStyle baseStyle = GoogleFonts.quicksand(
     letterSpacing: 0.5,
     fontWeight: FontWeight.w600,
     color: CustomColors.darkTeal,
