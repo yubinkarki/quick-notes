@@ -14,7 +14,7 @@ CloseDialog showLoadingDialog({required BuildContext context}) {
     ),
   );
 
-  showDialog(
+  showDialog<Future<dynamic>>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => dialog,

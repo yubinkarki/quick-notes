@@ -4,7 +4,7 @@ import 'package:okaychata/imports/flutter_imports.dart'
 Future<bool> showLogoutDialog(BuildContext context) {
   final TextTheme textTheme = Theme.of(context).textTheme;
 
-  return showDialog(
+  return showDialog<Future<dynamic>>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
