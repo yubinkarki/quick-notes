@@ -4,10 +4,10 @@ import 'package:okaychata/imports/flutter_imports.dart'
 typedef DialogOptionBuilder<T> = Map<String, T?> Function();
 
 Future<T?> showGenericDialog<T>({
-  required BuildContext context,
   required String title,
   required String content,
-  required DialogOptionBuilder optionsBuilder,
+  required BuildContext context,
+  required DialogOptionBuilder<T> optionsBuilder,
 }) {
   final TextTheme textTheme = Theme.of(context).textTheme;
   final Map<String, dynamic> options = optionsBuilder();
