@@ -3,7 +3,16 @@ import 'package:okaychata/imports/flutter_imports.dart';
 import 'package:okaychata/imports/third_party_imports.dart' show FlutterNativeSplash, MultiBlocProvider, BlocProvider;
 
 import 'package:okaychata/imports/first_party_imports.dart'
-    show AuthBloc, AppRouter, lightTheme, darkTheme, GlobalMediaQuery, FirebaseAuthProvider, homeRoute, CustomColors;
+    show
+        AuthBloc,
+        AppRouter,
+        darkTheme,
+        homeRoute,
+        AppStrings,
+        lightTheme,
+        CustomColors,
+        GlobalMediaQuery,
+        FirebaseAuthProvider;
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +42,8 @@ class MyApp extends StatelessWidget {
           GlobalMediaQuery.init(context);
 
           return MaterialApp(
-            title: 'Nice',
             initialRoute: homeRoute,
+            title: AppStrings.appName,
             theme: lightTheme(context),
             themeMode: ThemeMode.system,
             darkTheme: darkTheme(context),

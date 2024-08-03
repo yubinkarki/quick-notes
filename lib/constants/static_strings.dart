@@ -5,6 +5,7 @@ class AppStrings {
   static const String logout = 'Logout';
   static const String nothing = 'Nothing';
   static const String delaying = 'Delaying';
+  static const String appName = 'Quick Notes';
   static const String yourNotes = 'Your Notes';
   static const String noUser = 'User not found';
   static const String goToLogin = 'Go to Login';
@@ -22,6 +23,7 @@ class AppStrings {
   static const String emailValidation = 'Please enter a valid email';
   static const String sendEmailVerification = 'Send email verification';
   static const String sendPasswordResetLink = 'Send password reset link';
+
   static const String resendEmailVerification =
       "If you haven't received a verification email yet, press the button below.";
   static const String emailVerificationConfirmation =
