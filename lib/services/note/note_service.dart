@@ -346,8 +346,8 @@ class DatabaseNote {
 
   DatabaseNote({
     required this.id,
-    required this.userId,
     required this.text,
+    required this.userId,
     required this.isSyncedWithCloud,
   });
 

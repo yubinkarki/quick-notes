@@ -24,10 +24,7 @@ class LoadingOverlay {
     }
   }
 
-  LoadingOverlayController showOverlay({
-    required BuildContext context,
-    required String text,
-  }) {
+  LoadingOverlayController showOverlay({required String text, required BuildContext context}) {
     final StreamController<String> streamText = StreamController<String>();
     streamText.add(text);
 

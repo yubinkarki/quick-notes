@@ -9,15 +9,12 @@ class AuthUser {
   final bool isEmailVerified;
 
   const AuthUser({
+    required this.id,
     required this.email,
     required this.isEmailVerified,
-    required this.id,
   });
 
   // Defining a factory constructor called firebaseCheck.
-  factory AuthUser.firebaseCheck(User user) => AuthUser(
-        id: user.uid,
-        email: user.email!,
-        isEmailVerified: user.emailVerified,
-      );
+  factory AuthUser.firebaseCheck(User user) =>
+      AuthUser(id: user.uid, email: user.email!, isEmailVerified: user.emailVerified,);
 }

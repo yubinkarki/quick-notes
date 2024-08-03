@@ -102,8 +102,8 @@ class MockAuthProvider implements AuthProvider {
   @override
   Future<AuthUser> logIn({required String email, required String password}) {
     if (!isInitialized) throw NotInitializedException();
-    if (email == 'foo@bar.com') throw UserNotFoundAuthException();
     if (password == 'foobar') throw WrongPasswordAuthException();
+    if (email == 'foo@bar.com') throw UserNotFoundAuthException();
 
     const AuthUser user = AuthUser(isEmailVerified: false, email: 'random@gmail.com', id: 'random_id');
 

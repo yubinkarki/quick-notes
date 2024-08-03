@@ -32,10 +32,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> signUp({
-    required String email,
-    required String password,
-  }) async {
+  Future<AuthUser> signUp({required String email, required String password}) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
 
@@ -73,10 +70,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> logIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<AuthUser> logIn({required String email, required String password}) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
