@@ -9,11 +9,13 @@ class AppStrings {
   static const String yourNotes = 'Your Notes';
   static const String noUser = 'User not found';
   static const String goToLogin = 'Go to Login';
+  static const String addNewNote = 'Add new note';
+  static const String sharingNote = 'Sharing Note';
   static const String backToLogin = 'Back to Login';
   static const String enterEmail = 'Enter your email';
   static const String goToRegister = 'Go to Register';
-  static const String addNewNote = 'Add new note here';
   static const String passwordReset = 'Reset Password';
+  static const String verifyEmail = 'Verify your email';
   static const String authError = 'Authentication error';
   static const String emptyValidation = 'Please provide';
   static const String forgotPassword = 'Forgot password';
@@ -37,4 +39,10 @@ class AppStrings {
   static String notesCount(int count) {
     return 'All Notes - $count';
   }
+}
+
+class AppExceptions {
+  static const String invalidAuthException = 'Invalid Auth Exception';
+  static const String userNotFoundException = 'User Not Found Exception';
+  static const String somethingWentWrongException = 'Something went wrong';
 }
