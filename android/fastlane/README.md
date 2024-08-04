@@ -31,6 +31,22 @@ Runs all the tests
 
 Gradle and Flutter clean
 
+### android set_versions
+
+```sh
+[bundle exec] fastlane android set_versions
+```
+
+Set version name and build number
+
+### android distribute_to_firebase
+
+```sh
+[bundle exec] fastlane android distribute_to_firebase
+```
+
+Generic function to use firebase_app_distribution plugin
+
 ### android dev_distribution
 
 ```sh

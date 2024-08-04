@@ -13,9 +13,6 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def flutterVersionCode = 1
-def flutterVersionName = "1.0.0"
-
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 
@@ -45,8 +42,8 @@ android {
         applicationId "com.baalho.okaychata"
         minSdkVersion 25
         targetSdkVersion 34
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 10
+        versionName "1.0.0"
     }
 
     signingConfigs {
