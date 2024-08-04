@@ -63,6 +63,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## App Screenshots
 
+<img src="assets/screenshots/app_icon.jpg" width="500" height="500" />
+<img src="assets/screenshots/splash.jpg" width="230" height="500" />
 <img src="assets/screenshots/login_dark.jpg" width="230" height="500" />
 <img src="assets/screenshots/register_error_light.jpg" width="230" height="500" />
 <img src="assets/screenshots/verify_email_light.jpg" width="230" height="500" />
