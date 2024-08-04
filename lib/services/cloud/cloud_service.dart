@@ -1,4 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:okaychata/imports/third_party_imports.dart'
+    show
+        QuerySnapshot,
+        DocumentSnapshot,
+        FirebaseFirestore,
+        DocumentReference,
+        CollectionReference,
+        QueryDocumentSnapshot;
 
 import 'package:okaychata/imports/first_party_imports.dart'
     show
@@ -19,7 +26,6 @@ class CloudService {
 
   factory CloudService() => _shared;
 
-  // Custom formatting for this block.
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
     return notes.snapshots().map(
           (QuerySnapshot<Map<String, dynamic>> event) => event.docs
@@ -28,33 +34,22 @@ class CloudService {
         );
   }
 
-  Future<CloudNote> createNewNote({
-    required String text,
-    required String ownerUserId,
-  }) async {
-    final DocumentReference<Map<String, dynamic>> document = await notes.add(<String, dynamic>{
-      textFieldName: text,
-      ownerUserIdFieldName: ownerUserId,
-    });
+  Future<CloudNote> createNewNote({required String text, required String ownerUserId}) async {
+    final DocumentReference<Map<String, dynamic>> document = await notes.add(
+      <String, dynamic>{
+        textFieldName: text,
+        ownerUserIdFieldName: ownerUserId,
+      },
+    );
 
     final DocumentSnapshot<Map<String, dynamic>> fetchedNote = await document.get();
 
-    return CloudNote(
-      text: text,
-      ownerUserId: ownerUserId,
-      documentId: fetchedNote.id,
-    );
+    return CloudNote(text: text, ownerUserId: ownerUserId, documentId: fetchedNote.id);
   }
 
   Future<Iterable<CloudNote>> getNotes({required String ownerUserId}) async {
     try {
-      return await notes
-          .where(
-            ownerUserIdFieldName,
-            isEqualTo: ownerUserId,
-          )
-          .get()
-          .then(
+      return await notes.where(ownerUserIdFieldName, isEqualTo: ownerUserId).get().then(
             (QuerySnapshot<Map<String, dynamic>> value) => value.docs.map(
               (QueryDocumentSnapshot<Map<String, dynamic>> doc) => CloudNote.fromSnapshot(doc),
             ),
@@ -64,10 +59,7 @@ class CloudService {
     }
   }
 
-  Future<void> updateNote({
-    required String documentId,
-    required String text,
-  }) async {
+  Future<void> updateNote({required String text, required String documentId}) async {
     try {
       await notes.doc(documentId).update(<Object, Object?>{textFieldName: text});
     } catch (e) {
