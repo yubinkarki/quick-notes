@@ -1,5 +1,19 @@
 import 'package:okaychata/imports/flutter_imports.dart'
-    show Route, RouteSettings, MaterialPageRoute, PageRouteBuilder, FadeTransition, BuildContext, Animation, Widget;
+    show
+        Route,
+        Cubic,
+        Tween,
+        Widget,
+        Offset,
+        Curves,
+        Animation,
+        Animatable,
+        CurveTween,
+        BuildContext,
+        RouteSettings,
+        SlideTransition,
+        PageRouteBuilder,
+        MaterialPageRoute;
 
 import 'package:okaychata/imports/first_party_imports.dart'
     show
@@ -32,7 +46,7 @@ class AppRouter {
       case registerRoute:
         return MaterialPageRoute<Widget>(builder: (BuildContext context) => const RegisterView());
 
-      // Using a fade animation for this view.
+      // Using a slide up animation for this view.
       case addNewNoteRoute:
         return PageRouteBuilder<Widget>(
           pageBuilder: (
@@ -47,8 +61,15 @@ class AppRouter {
             Animation<double> animation,
             Animation<double> secondaryAnimation,
             Widget child,
-          ) =>
-              FadeTransition(opacity: animation, child: child),
+          ) {
+            const Offset end = Offset.zero;
+            const Cubic curve = Curves.ease;
+            const Offset begin = Offset(0.0, 1.0);
+
+            Animatable<Offset> tween = Tween<Offset>(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+            return SlideTransition(position: animation.drive(tween), child: child);
+          },
         );
 
       case verifyEmailRoute:
