@@ -4,15 +4,17 @@ import 'package:okaychata/imports/third_party_imports.dart' show BlocListener, R
 
 import 'package:okaychata/imports/first_party_imports.dart'
     show
-        AppSize,
         AuthBloc,
         AppMargin,
         AuthState,
         Validator,
         AppStrings,
         AppPadding,
-        showErrorDialog,
+        AppExceptions,
+        DoubleExtension,
         AuthEventLogout,
+        showErrorDialog,
+        StringExtension,
         AuthEventForgotPassword,
         showPasswordResetDialog,
         AuthStateForgotPassword,
@@ -27,12 +29,12 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  late final TextEditingController _controller;
+  late final TextEditingController _emailController;
   final GlobalKey _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    _controller = TextEditingController();
+    _emailController = TextEditingController();
     super.initState();
   }
 
@@ -46,7 +48,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Future<void> _handleSendResetLink(BuildContext context) async {
     _dismissKeyboard(context);
-    final String email = _controller.text;
+    final String email = _emailController.text;
     await Future<void>.delayed(const Duration(milliseconds: 150));
 
     if (!context.mounted) return;
@@ -58,7 +60,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Future<void> _handleBackToLogin(BuildContext context) async {
     _dismissKeyboard(context);
-    await Future<void>.delayed(const Duration(milliseconds: 150));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     if (!context.mounted) return;
 
@@ -74,7 +76,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       listener: (BuildContext context, AuthState state) async {
         if (state is AuthStateForgotPassword) {
           if (state.hasSentEmail) {
-            _controller.clear();
+            _emailController.clear();
             await showPasswordResetDialog(context);
           }
 
@@ -82,18 +84,18 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
           if (state.exception != null) {
             if (state.exception is InvalidEmailAuthException) {
-              await showErrorDialog(context, 'Invalid Auth Exception');
+              await showErrorDialog(context: context, text: AppExceptions.invalidAuthException);
             } else if (state.exception is UserNotFoundAuthException) {
-              await showErrorDialog(context, 'User Not Found Exception');
+              await showErrorDialog(context: context, text: AppExceptions.userNotFoundException);
             } else {
-              await showErrorDialog(context, 'Something went wrong');
+              await showErrorDialog(context: context, text: AppExceptions.somethingWentWrongException);
             }
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Forgot Password'),
+          title: Text(AppStrings.forgotPassword.titleCase, style: textTheme.labelLarge?.copyWith(color: Colors.white)),
         ),
         body: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -108,34 +110,48 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const SizedBox(height: AppMargin.m12),
+                    AppMargin.m12.sizedBoxHeight,
                     Text(AppStrings.resetPasswordMessage, style: textTheme.labelMedium),
                     const SizedBox(height: AppMargin.m40),
                     TextFormField(
                       autofocus: true,
                       autocorrect: false,
-                      controller: _controller,
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: inputDecoration(colorTheme: colorTheme),
-                      validator: (String? value) => Validator.emptyValidation(value, 'email'),
+                      decoration: const InputDecoration(labelText: AppStrings.email, helperText: AppStrings.empty),
+                      validator: (String? value) => Validator.emptyValidation(value, AppStrings.email.toLowerCase()),
                     ),
-                    const SizedBox(height: AppMargin.m40),
+                    AppMargin.m40.sizedBoxHeight,
                     OutlinedButton.icon(
+                      icon: const Padding(
+                        padding: EdgeInsets.only(left: AppPadding.p10),
+                        child: Icon(Icons.email),
+                      ),
+                      onPressed: () => _handleSendResetLink(context),
                       label: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: AppPadding.p14),
+                        padding: const EdgeInsets.only(
+                          top: AppPadding.p14,
+                          right: AppPadding.p10,
+                          bottom: AppPadding.p14,
+                        ),
                         child: Text(AppStrings.sendPasswordResetLink, style: textTheme.labelSmall),
                       ),
-                      icon: const Icon(Icons.email),
-                      onPressed: () => _handleSendResetLink(context),
                     ),
-                    const SizedBox(height: AppMargin.m20),
+                    AppMargin.m20.sizedBoxHeight,
                     OutlinedButton.icon(
+                      icon: const Padding(
+                        padding: EdgeInsets.only(left: AppPadding.p4),
+                        child: Icon(Icons.arrow_back),
+                      ),
+                      onPressed: () => _handleBackToLogin(context),
                       label: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: AppPadding.p14),
+                        padding: const EdgeInsets.only(
+                          top: AppPadding.p14,
+                          right: AppPadding.p4,
+                          bottom: AppPadding.p14,
+                        ),
                         child: Text(AppStrings.backToLogin, style: textTheme.labelSmall),
                       ),
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: () => _handleBackToLogin(context),
                     ),
                   ],
                 ),
@@ -147,33 +163,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     );
   }
 
-  InputDecoration inputDecoration({required ColorScheme colorTheme}) {
-    return InputDecoration(
-      labelText: AppStrings.email,
-      helperText: AppStrings.empty,
-      contentPadding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
-      enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(width: 1, color: Colors.grey),
-        borderRadius: BorderRadius.circular(AppSize.s10),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: colorTheme.outline),
-        borderRadius: BorderRadius.circular(AppSize.s10),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: colorTheme.error),
-        borderRadius: BorderRadius.circular(AppSize.s10),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: colorTheme.error),
-        borderRadius: BorderRadius.circular(AppSize.s10),
-      ),
-    );
-  }
-
   @override
   void dispose() {
-    _controller.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 }

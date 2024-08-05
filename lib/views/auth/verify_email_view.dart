@@ -1,28 +1,21 @@
+import 'package:okaychata/constants/value_manager.dart';
 import 'package:okaychata/imports/flutter_imports.dart';
 
 import 'package:okaychata/imports/third_party_imports.dart' show ReadContext;
 
 import 'package:okaychata/imports/first_party_imports.dart'
-    show AppStrings, AuthBloc, AuthEventSendEmailVerification, AuthEventLogout;
+    show AppStrings, AuthBloc, AuthEventSendEmailVerification, AuthEventLogout, StringExtension;
 
-class VerifyEmailView extends StatefulWidget {
+class VerifyEmailView extends StatelessWidget {
   const VerifyEmailView({super.key});
 
-  @override
-  State<VerifyEmailView> createState() => _VerifyEmailViewState();
-}
-
-class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Verify your email',
-          style: textTheme.titleLarge,
-        ),
+        title: Text(AppStrings.verifyEmail.titleCase, style: textTheme.titleLarge?.copyWith(color: Colors.white)),
       ),
       body: ColoredBox(
         color: Theme.of(context).colorScheme.surface,
@@ -34,8 +27,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Container>[
                   Container(
-                    padding: const EdgeInsets.only(left: 50, right: 50),
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const EdgeInsets.only(bottom: AppMargin.m20),
+                    padding: const EdgeInsets.symmetric(horizontal: AppPadding.p50),
                     child: Text(
                       AppStrings.emailVerificationConfirmation,
                       textAlign: TextAlign.center,
@@ -43,7 +36,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(left: 50, right: 50),
+                    padding: const EdgeInsets.symmetric(horizontal: AppPadding.p50),
                     child: Text(
                       AppStrings.resendEmailVerification,
                       textAlign: TextAlign.center,
@@ -51,9 +44,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     ),
                   ),
                   Container(
-                    width: 260.0,
-                    height: 60.0,
-                    margin: const EdgeInsets.only(top: 60),
+                    width: AppSize.s260,
+                    height: AppSize.s60,
+                    margin: const EdgeInsets.only(top: AppMargin.m40),
                     child: OutlinedButton(
                       onPressed: () => context.read<AuthBloc>().add(const AuthEventSendEmailVerification()),
                       child: Text(
@@ -63,9 +56,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     ),
                   ),
                   Container(
-                    width: 260.0,
-                    height: 60.0,
-                    margin: const EdgeInsets.only(top: 20),
+                    width: AppSize.s260,
+                    height: AppSize.s60,
+                    margin: const EdgeInsets.only(top: AppMargin.m20),
                     child: OutlinedButton(
                       onPressed: () => context.read<AuthBloc>().add(const AuthEventLogout()),
                       child: Text(

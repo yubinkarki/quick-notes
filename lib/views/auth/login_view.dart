@@ -62,13 +62,6 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
-  void dispose() {
-    _email.dispose();
-    _password.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme colorTheme = Theme.of(context).colorScheme;
@@ -77,17 +70,17 @@ class _LoginViewState extends State<LoginView> {
       listener: (BuildContext context, AuthState state) async {
         if (state is AuthStateLoggedOut) {
           if (state.exception is UserNotFoundAuthException) {
-            await showErrorDialog(context, AppStrings.noUser);
+            await showErrorDialog(context: context, text: AppStrings.noUser);
           } else if (state.exception is WrongPasswordAuthException) {
-            await showErrorDialog(context, AppStrings.incorrectPassword);
+            await showErrorDialog(context: context, text: AppStrings.incorrectPassword);
           } else if (state.exception is GenericAuthException) {
-            await showErrorDialog(context, AppStrings.authError);
+            await showErrorDialog(context: context, text: AppStrings.authError);
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppStrings.login, style: textTheme.titleLarge),
+          title: Text(AppStrings.login, style: textTheme.titleLarge?.copyWith(color: Colors.white)),
         ),
         body: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -98,26 +91,25 @@ class _LoginViewState extends State<LoginView> {
               padding: const EdgeInsets.all(AppPadding.p20),
               child: Column(
                 children: <Widget>[
+                  AppSize.s20.sizedBoxHeight,
                   TextField(
                     controller: _email,
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(hintText: AppStrings.enterEmail),
+                    decoration: const InputDecoration(labelText: AppStrings.enterEmail, helperText: AppStrings.empty),
                   ),
                   TextField(
-                    controller: _password,
-                    obscureText: !_passwordVisible,
-                    enableSuggestions: false,
                     autocorrect: false,
+                    controller: _password,
+                    enableSuggestions: false,
+                    obscureText: !_passwordVisible,
                     decoration: InputDecoration(
-                      hintText: AppStrings.enterPassword,
+                      helperText: AppStrings.empty,
+                      labelText: AppStrings.enterPassword,
                       suffixIcon: IconButton(
                         onPressed: () => setState(() => _passwordVisible = !_passwordVisible),
-                        icon: Icon(
-                          size: 22.0,
-                          _passwordVisible ? Icons.visibility_off : Icons.visibility,
-                        ),
+                        icon: Icon(size: AppSize.s22, _passwordVisible ? Icons.visibility_off : Icons.visibility),
                       ),
                     ),
                   ),
@@ -154,5 +146,12 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
   }
 }

@@ -56,50 +56,44 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   @override
-  void dispose() {
-    _email.dispose();
-    _password.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final ColorScheme colorTheme = Theme.of(context).colorScheme;
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState state) async {
         if (state is AuthStateRegistering) {
           if (state.exception is WeakPasswordAuthException) {
-            await showErrorDialog(context, 'Weak password');
+            await showErrorDialog(context: context, text: 'Weak password');
           } else if (state.exception is EmailAlreadyUsedAuthException) {
-            await showErrorDialog(context, 'Email is already used');
+            await showErrorDialog(context: context, text: 'Email is already used');
           } else if (state.exception is InvalidEmailAuthException) {
-            await showErrorDialog(context, 'Invalid email');
+            await showErrorDialog(context: context, text: 'Invalid email');
           } else if (state.exception is GenericAuthException) {
-            await showErrorDialog(context, 'Failed to register');
+            await showErrorDialog(context: context, text: 'Failed to register');
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Register', style: textTheme.titleLarge),
+          title: Text('Register', style: textTheme.titleLarge?.copyWith(color: Colors.white)),
         ),
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => _dismissKeyboard(context),
           child: Container(
-            color: colorScheme.surface,
+            color: colorTheme.surface,
             child: Padding(
               padding: const EdgeInsets.all(AppPadding.p20),
               child: Column(
                 children: <Widget>[
+                  AppSize.s20.sizedBoxHeight,
                   TextField(
                     controller: _email,
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(hintText: AppStrings.enterEmail),
+                    decoration: const InputDecoration(labelText: AppStrings.enterEmail, helperText: AppStrings.empty),
                   ),
                   TextField(
                     autocorrect: false,
@@ -107,13 +101,11 @@ class _RegisterViewState extends State<RegisterView> {
                     enableSuggestions: false,
                     obscureText: !_passwordVisible,
                     decoration: InputDecoration(
-                      hintText: AppStrings.enterPassword,
+                      helperText: AppStrings.empty,
+                      labelText: AppStrings.enterPassword,
                       suffixIcon: IconButton(
                         onPressed: () => setState(() => _passwordVisible = !_passwordVisible),
-                        icon: Icon(
-                          size: 22.0,
-                          _passwordVisible ? Icons.visibility_off : Icons.visibility,
-                        ),
+                        icon: Icon(size: AppSize.s22, _passwordVisible ? Icons.visibility_off : Icons.visibility),
                       ),
                     ),
                   ),
@@ -142,5 +134,12 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
   }
 }

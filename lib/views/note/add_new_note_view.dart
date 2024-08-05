@@ -1,7 +1,18 @@
 import 'package:okaychata/imports/flutter_imports.dart';
 
 import 'package:okaychata/imports/first_party_imports.dart'
-    show CloudNote, AuthService, CloudService, GetArgument, showGenericDialog, AuthUser;
+    show
+        AppSize,
+        AuthUser,
+        CloudNote,
+        AppMargin,
+        AppStrings,
+        AuthService,
+        GetArgument,
+        CloudService,
+        DoubleExtension,
+        StringExtension,
+        showGenericDialog;
 
 class AddNewNoteView extends StatefulWidget {
   const AddNewNoteView({super.key});
@@ -42,9 +53,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: 'Error',
-          content: 'Please write something to add',
-          optionsBuilder: () => <String, dynamic>{'Got It': null},
+          title: AppStrings.error,
+          content: AppStrings.addError,
+          optionsBuilder: () => <String, dynamic>{AppStrings.ok: null},
         ),
       );
     } else {
@@ -57,9 +68,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: 'Success',
-          content: 'Note added successfully',
-          optionsBuilder: () => <String, dynamic>{'Great': null},
+          title: AppStrings.success,
+          content: AppStrings.noteAdded,
+          optionsBuilder: () => <String, dynamic>{AppStrings.ok: null},
         ),
       );
     }
@@ -78,9 +89,9 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: 'Success',
-          content: 'Note updated successfully',
-          optionsBuilder: () => <String, dynamic>{'Great': null},
+          title: AppStrings.success,
+          content: AppStrings.noteAdded,
+          optionsBuilder: () => <String, dynamic>{AppStrings.ok: null},
         ),
       );
     } else {
@@ -88,77 +99,85 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         const Duration(milliseconds: 200),
         () => showGenericDialog(
           context: context,
-          title: 'Error',
-          content: 'Please write something to update',
-          optionsBuilder: () => <String, dynamic>{'Got It': null},
+          title: AppStrings.error,
+          content: AppStrings.updateError,
+          optionsBuilder: () => <String, dynamic>{AppStrings.ok: null},
         ),
       );
     }
   }
 
   @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final ColorScheme colorTheme = Theme.of(context).colorScheme;
     final CloudNote? widgetNote = context.getArgument<CloudNote>();
     final String? inputTextValue = widgetNote?.text;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Note', style: textTheme.titleLarge),
+        leading: const BackButton(color: Colors.white),
+        title: Text(AppStrings.addNewNote.titleCase, style: textTheme.titleLarge?.copyWith(color: Colors.white)),
       ),
       body: FutureBuilder<CloudNote?>(
         future: populateTextField(context),
         builder: (BuildContext context, AsyncSnapshot<CloudNote?> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: TextField(
-                        controller: _textController,
-                        keyboardType: TextInputType.multiline,
-                        minLines: 4,
-                        maxLines: null,
-                        autocorrect: false,
-                        decoration: const InputDecoration(
-                          constraints: BoxConstraints(maxHeight: 250.0),
-                          border: OutlineInputBorder(),
-                          hintText: 'Write your note here...',
+              return Expanded(
+                child: ColoredBox(
+                  color: colorTheme.surface,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      AppSize.s20.sizedBoxHeight,
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: TextField(
+                          minLines: 4,
+                          maxLines: null,
+                          autocorrect: false,
+                          controller: _textController,
+                          keyboardType: TextInputType.multiline,
+                          decoration: const InputDecoration(
+                            hintText: AppStrings.addNote,
+                            constraints: BoxConstraints(maxHeight: AppSize.s260),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: 120.0,
-                      height: 45.0,
-                      margin: const EdgeInsets.only(top: 10, bottom: 50),
-                      child: inputTextValue != null
-                          ? OutlinedButton(
-                              onPressed: _handleUpdateButton,
-                              child: Text('Update', style: textTheme.labelMedium),
-                            )
-                          : OutlinedButton(
-                              onPressed: _handleAddButton,
-                              child: Text('Add', style: textTheme.labelMedium),
-                            ),
-                    ),
-                  ],
+                      Container(
+                        width: AppSize.s120,
+                        height: AppSize.s45,
+                        margin: const EdgeInsets.only(top: AppMargin.m10, bottom: AppMargin.m50),
+                        child: inputTextValue != null
+                            ? OutlinedButton(
+                                onPressed: _handleUpdateButton,
+                                child: Text(AppStrings.update, style: textTheme.labelMedium),
+                              )
+                            : OutlinedButton(
+                                onPressed: _handleAddButton,
+                                child: Text(AppStrings.add, style: textTheme.labelMedium),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
               );
 
             default:
-              return const Center(child: CircularProgressIndicator());
+              return ColoredBox(
+                color: colorTheme.surface,
+                child: const Center(child: CircularProgressIndicator()),
+              );
           }
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
   }
 }

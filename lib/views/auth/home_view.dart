@@ -1,5 +1,16 @@
 import 'package:okaychata/imports/flutter_imports.dart'
-    show StatelessWidget, Widget, BuildContext, debugPrint, Scaffold, CircularProgressIndicator, Center;
+    show
+        Widget,
+        Center,
+        Scaffold,
+        Threshold,
+        Animation,
+        debugPrint,
+        BuildContext,
+        FadeTransition,
+        StatelessWidget,
+        AnimatedSwitcher,
+        CircularProgressIndicator;
 
 import 'package:okaychata/imports/third_party_imports.dart' show ReadContext, BlocConsumer, FlutterNativeSplash;
 
@@ -43,27 +54,33 @@ class HomeView extends StatelessWidget {
           LoadingOverlay().hide();
         }
       },
-      builder: (BuildContext context, AuthState state) {
-        if (state is AuthStateLoggedIn) {
-          return const NotesView();
-        } else if (state is AuthStateNeedsVerification) {
-          return const VerifyEmailView();
-        } else if (state is AuthStateLoggedOut) {
-          return const LoginView();
-        } else if (state is AuthStateForgotPassword) {
-          return const ForgotPasswordView();
-        } else if (state is AuthStateRegistering) {
-          return const RegisterView();
-        } else {
-          return spinner();
-        }
-      },
+      builder: (BuildContext context, AuthState state) => AnimatedSwitcher(
+        switchOutCurve: const Threshold(0),
+        duration: const Duration(milliseconds: 200),
+        transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+        child: buildScreen(state),
+      ),
     );
   }
 
-  Scaffold spinner() {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
-    );
+  Widget buildScreen(AuthState state) {
+    if (state is AuthStateLoggedIn) {
+      return const NotesView();
+    } else if (state is AuthStateNeedsVerification) {
+      return const VerifyEmailView();
+    } else if (state is AuthStateLoggedOut) {
+      return const LoginView();
+    } else if (state is AuthStateForgotPassword) {
+      return const ForgotPasswordView();
+    } else if (state is AuthStateRegistering) {
+      return const RegisterView();
+    } else {
+      return spinner();
+    }
   }
+
+  Scaffold spinner() => const Scaffold(body: Center(child: CircularProgressIndicator()));
 }
