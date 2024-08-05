@@ -1,28 +1,12 @@
-import 'package:okaychata/imports/flutter_imports.dart'
-    show BuildContext, TextTheme, showDialog, AlertDialog, Text, TextButton, Navigator, Theme;
+import 'package:okaychata/imports/flutter_imports.dart' show BuildContext;
 
-Future<void> showErrorDialog(
-  BuildContext context,
-  String text,
-) {
-  final TextTheme textTheme = Theme.of(context).textTheme;
+import 'package:okaychata/imports/first_party_imports.dart' show AppStrings, AppExceptions, showGenericDialog;
 
-  return showDialog(
+Future<void> showErrorDialog({required String text, required BuildContext context}) {
+  return showGenericDialog<void>(
+    content: text,
     context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        elevation: 0,
-        title: Text('An error occurred', style: textTheme.labelLarge),
-        content: Text(text),
-        actions: <TextButton>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Ok', style: textTheme.labelMedium),
-          ),
-        ],
-      );
-    },
+    title: AppExceptions.somethingWentWrongException,
+    optionsBuilder: () => <String, dynamic>{AppStrings.ok: null},
   );
 }

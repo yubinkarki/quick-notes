@@ -9,6 +9,6 @@ Future<void> showPasswordResetDialog(BuildContext context) {
     context: context,
     title: AppStrings.passwordReset,
     content: AppStrings.passwordResetSubtitle,
-    optionsBuilder: () => <String, dynamic>{'OK': null},
+    optionsBuilder: () => <String, dynamic>{AppStrings.ok: null},
   );
 }
