@@ -50,7 +50,7 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
 
     if (text.isEmpty) {
       Future<dynamic>.delayed(
-        const Duration(milliseconds: 200),
+        const Duration(milliseconds: 300),
         () => showGenericDialog(
           context: context,
           title: AppStrings.error,
@@ -124,43 +124,41 @@ class _AddNewNoteViewState extends State<AddNewNoteView> {
         builder: (BuildContext context, AsyncSnapshot<CloudNote?> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              return Expanded(
-                child: ColoredBox(
-                  color: colorTheme.surface,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      AppSize.s20.sizedBoxHeight,
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: TextField(
-                          minLines: 4,
-                          maxLines: null,
-                          autocorrect: false,
-                          controller: _textController,
-                          keyboardType: TextInputType.multiline,
-                          decoration: const InputDecoration(
-                            hintText: AppStrings.addNote,
-                            constraints: BoxConstraints(maxHeight: AppSize.s260),
-                          ),
+              return ColoredBox(
+                color: colorTheme.surface,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    AppSize.s20.sizedBoxHeight,
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: TextField(
+                        minLines: 4,
+                        maxLines: null,
+                        autocorrect: false,
+                        controller: _textController,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          hintText: AppStrings.addNote,
+                          constraints: BoxConstraints(maxHeight: AppSize.s260),
                         ),
                       ),
-                      Container(
-                        width: AppSize.s120,
-                        height: AppSize.s45,
-                        margin: const EdgeInsets.only(top: AppMargin.m10, bottom: AppMargin.m50),
-                        child: inputTextValue != null
-                            ? OutlinedButton(
-                                onPressed: _handleUpdateButton,
-                                child: Text(AppStrings.update, style: textTheme.labelMedium),
-                              )
-                            : OutlinedButton(
-                                onPressed: _handleAddButton,
-                                child: Text(AppStrings.add, style: textTheme.labelMedium),
-                              ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      width: AppSize.s120,
+                      height: AppSize.s45,
+                      margin: const EdgeInsets.only(top: AppMargin.m10, bottom: AppMargin.m50),
+                      child: inputTextValue != null
+                          ? OutlinedButton(
+                              onPressed: _handleUpdateButton,
+                              child: Text(AppStrings.update, style: textTheme.labelMedium),
+                            )
+                          : OutlinedButton(
+                              onPressed: _handleAddButton,
+                              child: Text(AppStrings.add, style: textTheme.labelMedium),
+                            ),
+                    ),
+                  ],
                 ),
               );
 
